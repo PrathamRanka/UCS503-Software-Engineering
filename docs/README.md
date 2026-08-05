@@ -14,7 +14,28 @@ The documents in this directory are the engineering source of truth. If implemen
 | [TESTING.md](TESTING.md) | Test strategy, quality gates, and acceptance scenarios |
 | [OPERATIONS.md](OPERATIONS.md) | Environments, observability, recovery, and incident handling |
 | [ROADMAP.md](ROADMAP.md) | Delivery phases, ownership, risks, and definition of done |
+| [TECHNOLOGY.md](TECHNOLOGY.md) | Version policy and zero-cost technology decisions |
+| [ERD.md](ERD.md) | Entity-relationship design and ownership boundaries |
+| [USER_FLOWS.md](USER_FLOWS.md) | Sitemap and primary user journeys |
+| [MODERATION_POLICY.md](MODERATION_POLICY.md) | Automated screening and human review policy |
+| [GOVERNANCE_AND_DATA_RIGHTS.md](GOVERNANCE_AND_DATA_RIGHTS.md) | Terms, privacy, copyright, export, and deletion decisions |
+| [CI_CD.md](CI_CD.md) | Continuous integration, delivery, and release controls |
+| [MIGRATIONS.md](MIGRATIONS.md) | Database and event evolution policy |
+| [DEVELOPMENT.md](DEVELOPMENT.md) | Local development and environment setup |
+| [INCIDENT_RUNBOOK.md](runbooks/INCIDENT_RUNBOOK.md) | Security and availability incident response |
+| [DATABASE_RECOVERY.md](runbooks/DATABASE_RECOVERY.md) | Backup, restoration, and integrity verification |
 | [ADR-001](adr/001-feature-based-modular-monolith.md) | Decision to use feature-based architecture |
+| [ADR-002](adr/002-zero-cost-open-source-baseline.md) | Decision to require a zero-cost runnable baseline |
+
+Executable contracts live outside this directory:
+
+- `contracts/openapi.yaml`: REST API contract
+- `contracts/asyncapi.yaml`: Kafka event contract
+- `contracts/events/*.schema.json`: machine-readable event payload schemas
+- `infra/sql/0001_initial_schema.sql`: initial PostgreSQL schema contract
+- `infra/sql/0002_storage_buckets.sql`: private Storage bucket baseline
+- `infra/valkey/KEYSPACE.md`: cache, rate-limit, and lock catalogue
+- `.env.example`: environment configuration contract
 
 ## Document status
 

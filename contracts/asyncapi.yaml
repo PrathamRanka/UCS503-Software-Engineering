@@ -1,0 +1,139 @@
+asyncapi: 2.6.0
+info:
+  title: TIET Social Domain Events
+  version: 0.1.0
+  description: Versioned Kafka contracts for asynchronous application workflows.
+defaultContentType: application/json
+servers:
+  local:
+    url: kafka:9092
+    protocol: kafka
+    description: Local zero-cost Kafka KRaft broker.
+channels:
+  tiet-social.local.content.events:
+    publish:
+      operationId: publishContentEvent
+      message:
+        oneOf:
+          - $ref: "#/components/messages/ContentSubmitted"
+          - $ref: "#/components/messages/ModerationCompleted"
+  tiet-social.local.engagement.events:
+    publish:
+      operationId: publishEngagementEvent
+      message:
+        $ref: "#/components/messages/EngagementRecorded"
+  tiet-social.local.messaging.events:
+    publish:
+      operationId: publishMessagingEvent
+      message:
+        $ref: "#/components/messages/MessageSubmitted"
+  tiet-social.local.system.dead-letter:
+    subscribe:
+      operationId: inspectDeadLetterEvent
+      message:
+        $ref: "#/components/messages/DeadLetterEvent"
+components:
+  messages:
+    ContentSubmitted:
+      name: content.submitted.v1
+      messageId: content.submitted.v1
+      correlationId:
+        location: $message.payload#/correlationId
+      payload:
+        allOf:
+          - $ref: "#/components/schemas/EventEnvelope"
+          - type: object
+            properties:
+              eventType:
+                const: content.submitted.v1
+              payload:
+                $ref: "./events/content-submitted.v1.schema.json"
+    ModerationCompleted:
+      name: content.moderation_completed.v1
+      messageId: content.moderation_completed.v1
+      payload:
+        allOf:
+          - $ref: "#/components/schemas/EventEnvelope"
+          - type: object
+            properties:
+              eventType:
+                const: content.moderation_completed.v1
+              payload:
+                $ref: "./events/moderation-completed.v1.schema.json"
+    EngagementRecorded:
+      name: engagement.recorded.v1
+      messageId: engagement.recorded.v1
+      payload:
+        allOf:
+          - $ref: "#/components/schemas/EventEnvelope"
+          - type: object
+            properties:
+              eventType:
+                const: engagement.recorded.v1
+              payload:
+                $ref: "./events/engagement-recorded.v1.schema.json"
+    MessageSubmitted:
+      name: message.submitted.v1
+      messageId: message.submitted.v1
+      payload:
+        allOf:
+          - $ref: "#/components/schemas/EventEnvelope"
+          - type: object
+            properties:
+              eventType:
+                const: message.submitted.v1
+              payload:
+                $ref: "./events/message-submitted.v1.schema.json"
+    DeadLetterEvent:
+      name: system.dead_letter.v1
+      payload:
+        type: object
+        required: [failedEvent, consumer, attempts, failedAt, errorCode]
+        properties:
+          failedEvent:
+            $ref: "#/components/schemas/EventEnvelope"
+          consumer:
+            type: string
+          attempts:
+            type: integer
+            minimum: 1
+          failedAt:
+            type: string
+            format: date-time
+          errorCode:
+            type: string
+  schemas:
+    EventEnvelope:
+      type: object
+      required:
+        [
+          eventId,
+          eventType,
+          version,
+          aggregateId,
+          occurredAt,
+          correlationId,
+          payload,
+        ]
+      properties:
+        eventId:
+          type: string
+          format: uuid
+        eventType:
+          type: string
+        version:
+          type: integer
+          minimum: 1
+        aggregateId:
+          type: string
+          format: uuid
+        actorId:
+          type: [string, "null"]
+          format: uuid
+        occurredAt:
+          type: string
+          format: date-time
+        correlationId:
+          type: string
+        payload:
+          type: object

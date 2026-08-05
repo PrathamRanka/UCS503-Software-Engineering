@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tiet-social.local/schemas/event-envelope.schema.json",
+  "title": "Domain Event Envelope",
+  "type": "object",
+  "required": ["eventId", "eventType", "version", "aggregateId", "occurredAt", "correlationId", "payload"],
+  "properties": {
+    "eventId": { "type": "string", "format": "uuid" },
+    "eventType": { "type": "string", "minLength": 3, "maxLength": 120 },
+    "version": { "type": "integer", "minimum": 1 },
+    "aggregateId": { "type": "string", "format": "uuid" },
+    "actorId": { "type": ["string", "null"], "format": "uuid" },
+    "occurredAt": { "type": "string", "format": "date-time" },
+    "correlationId": { "type": "string", "minLength": 8, "maxLength": 120 },
+    "payload": { "type": "object" }
+  },
+  "additionalProperties": false
+}

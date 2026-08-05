@@ -15,6 +15,8 @@
 
 - `profiles`: public identity, username, display name, biography, avatar, account state.
 - `user_private`: private email/provider data linked one-to-one with a profile.
+- `legal_documents`, `consent_records`: versioned member agreements and acceptance evidence.
+- `data_exports`: asynchronous personal-data export lifecycle.
 - `role_assignments`: role, assigner, reason, start and revocation metadata.
 - `follows`: follower/followed relation and state.
 - `blocks`: directional block relation.

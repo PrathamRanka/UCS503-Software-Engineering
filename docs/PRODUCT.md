@@ -46,7 +46,7 @@ Public profiles use a chosen username and display name. Institutional email addr
 - A moderator can understand why content was flagged and record a decision.
 - Private content and messages are inaccessible to unrelated users.
 - Core user journeys work on a phone-sized browser and install as a PWA.
-- Loss of Kafka, Redis, or a worker does not lose authoritative user data.
+- Loss of Kafka, Valkey, or a worker does not lose authoritative user data.
 
 ## Product identity
 

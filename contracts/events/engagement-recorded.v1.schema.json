@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tiet-social.local/schemas/engagement-recorded.v1.schema.json",
+  "title": "engagement.recorded.v1 payload",
+  "type": "object",
+  "required": ["viewerId", "contentId", "action", "rankingVersion"],
+  "properties": {
+    "viewerId": { "type": "string", "format": "uuid" },
+    "contentId": { "type": "string", "format": "uuid" },
+    "action": { "enum": ["impression", "play", "pause", "complete", "skip", "like", "comment", "save", "share", "report"] },
+    "watchMs": { "type": "integer", "minimum": 0 },
+    "position": { "type": "integer", "minimum": 0 },
+    "rankingVersion": { "type": "string" },
+    "sessionId": { "type": ["string", "null"] }
+  },
+  "additionalProperties": false
+}

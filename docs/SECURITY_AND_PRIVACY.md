@@ -13,8 +13,9 @@
 - The browser is untrusted.
 - Next.js public environment values contain no service credentials.
 - Express authenticates every protected request independently.
+- Supabase PostgREST is not exposed through the public gateway; browsers reach Auth, signed Storage, and authorized Realtime channels only.
 - Kafka payloads and worker inputs are treated as untrusted serialized data and validated.
-- Redis is not an authorization source.
+- Valkey is not an authorization source.
 - Only workers and narrowly scoped administrative paths use privileged database credentials.
 
 ## Authentication
@@ -70,7 +71,7 @@
 | Malicious media | Quarantine, signature checks, moderation, isolated processing |
 | Credential leakage | Environment separation, secret scanning, no service role in browser |
 | Kafka event forgery | Private network, schema validation, producer identity, correlation logs |
-| Redis poisoning | Namespaced keys, validation, Redis never grants permission |
+| Valkey poisoning | Namespaced keys, validation, Valkey never grants permission |
 | Moderator abuse | Least privilege, immutable audit log, appeal workflow |
 | User enumeration | Generic unavailable responses and limited search results |
 

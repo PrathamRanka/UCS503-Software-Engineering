@@ -16,7 +16,7 @@ Use Vitest for ranking functions, visibility policies, role policies, validators
 
 ### API integration tests
 
-Use Supertest against Express with a disposable database. Tests must exercise real authentication claims, transactions, RLS, Redis behavior, and outbox records rather than mocking repositories on critical paths.
+Use Supertest against Express with a disposable database. Tests must exercise real authentication claims, transactions, RLS, Valkey behavior, and outbox records rather than mocking repositories on critical paths.
 
 ### Worker and event tests
 
@@ -59,9 +59,9 @@ Use k6 and scripted failure tests to measure:
 - Upload-session creation
 - Kafka producer and consumer lag
 - Worker throughput
-- Redis cache hit ratio
+- Valkey cache hit ratio
 - Replica lag and primary fallback
-- Recovery after Kafka, Redis, worker, replica, and Realtime interruption
+- Recovery after Kafka, Valkey, worker, replica, and Realtime interruption
 
 ## Security test matrix
 
@@ -82,7 +82,7 @@ A change may merge only when:
 
 - No open severity-one defect.
 - Identity, authorization, moderation, and message privacy suites pass completely.
-- Kafka and Redis failure demonstrations preserve authoritative data.
+- Kafka and Valkey failure demonstrations preserve authoritative data.
 - The full Docker environment can be started from documented commands.
 - Seeded demo data can be reproduced.
 - A clean environment can complete the critical E2E suite.

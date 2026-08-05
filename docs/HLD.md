@@ -9,7 +9,7 @@ The system uses a **feature-based modular monolith with event-driven workers**.
 - Feature modules are the primary code boundary.
 - Kafka connects durable asynchronous workflows.
 - Supabase Realtime provides transient WebSocket communication.
-- Redis accelerates operations but never owns permanent data.
+- Valkey accelerates operations through the Redis protocol but never owns permanent data.
 - PostgreSQL is the source of truth.
 
 This gives the project production-oriented boundaries without the deployment and consistency cost of premature microservices. A module may later be extracted behind its existing API and event contracts.
@@ -26,7 +26,7 @@ flowchart LR
     API --> Auth[Supabase Auth]
     API --> Primary[(PostgreSQL Primary)]
     API --> Replica[(Read Replica)]
-    API --> Redis[(Redis)]
+    API --> Redis[(Valkey)]
     Primary --> Outbox[Outbox Publisher]
     Outbox --> Kafka[(Kafka)]
     Kafka --> Worker[Node.js Workers]
@@ -75,9 +75,9 @@ flowchart LR
 
 Kafka carries durable domain events. The local demonstration uses one KRaft broker. Production scale would require multiple brokers and replicated partitions.
 
-### Redis
+### Valkey
 
-Redis stores feed cache entries, rate-limit counters, idempotency keys, temporary locks, and trending sorted sets. All entries have bounded lifetimes or can be reconstructed.
+Valkey is the fully open-source Redis-compatible store for feed cache entries, rate-limit counters, idempotency keys, temporary locks, and trending sorted sets. All entries have bounded lifetimes or can be reconstructed.
 
 ## 4. Read/write strategy
 
@@ -116,7 +116,7 @@ The architecture uses command-query separation, not a literal write-only databas
 
 1. Interaction events are stored and published.
 2. Feed workers update aggregate ranking features.
-3. Workers maintain Redis trending sets and invalidate affected feed caches.
+3. Workers maintain Valkey trending sets and invalidate affected feed caches.
 4. API retrieves candidates from aggregate tables, filters authorization, and ranks them.
 5. The replica serves safe feed queries; primary fallback handles lag or failure.
 
@@ -126,7 +126,7 @@ The architecture uses command-query separation, not a literal write-only databas
 
 - Next.js and Express on developer machine
 - Free hosted Supabase
-- Optional local Redis
+- Optional local Valkey
 - In-process event adapter or local Kafka
 - Mock moderation provider
 
@@ -137,7 +137,7 @@ The architecture uses command-query separation, not a literal write-only databas
 - Self-hosted Supabase services
 - PostgreSQL primary and streaming replica
 - Kafka KRaft broker
-- Redis
+- Valkey
 - Prometheus and Grafana
 
 ### Production evolution
@@ -145,7 +145,7 @@ The architecture uses command-query separation, not a literal write-only databas
 - Multiple stateless web/API/worker replicas
 - Managed PostgreSQL failover and read replicas
 - Three or more Kafka brokers
-- Replicated Redis or managed equivalent
+- Replicated Valkey or compatible managed equivalent
 - CDN-backed media delivery
 - Centralized telemetry and alerting
 
@@ -153,7 +153,7 @@ The architecture uses command-query separation, not a literal write-only databas
 
 | Failure | Expected behavior |
 | --- | --- |
-| Redis unavailable | Bypass cache, use database-backed limits where essential |
+| Valkey unavailable | Bypass cache, use database-backed limits where essential |
 | Kafka unavailable | Transactions succeed; outbox remains pending for later delivery |
 | Worker crashes | Kafka reassigns/redelivers; idempotency prevents duplicate effects |
 | Replica unavailable or lagging | Query router falls back to primary |

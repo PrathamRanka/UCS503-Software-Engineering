@@ -5,7 +5,7 @@
 
 ## Context
 
-The application contains several distinct domains: identity, social content, feed ranking, communities, messaging, Stories, moderation, and administration. The project also needs to demonstrate Kafka, Redis, workers, WebSockets, and database replication while remaining achievable by a four-to-five-person semester team.
+The application contains several distinct domains: identity, social content, feed ranking, communities, messaging, Stories, moderation, and administration. The project also needs to demonstrate Kafka, Valkey, workers, WebSockets, and database replication while remaining achievable by a four-to-five-person semester team.
 
 A traditional horizontal MVC layout would place all controllers, services, and models in global folders. That structure makes feature ownership unclear and creates broad coupling as the application grows. Full microservices would create substantial deployment, networking, schema, transaction, and observability work before the product has measured scaling needs.
 

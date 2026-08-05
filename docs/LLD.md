@@ -12,7 +12,7 @@ apps/
   api/src/
     app/                    Express composition and middleware
     features/               Backend feature modules
-    infrastructure/         Database, Kafka, Redis, storage, telemetry
+    infrastructure/         Database, Kafka, Valkey, storage, telemetry
     shared/                 Errors, validation, IDs, clocks, pagination
   worker/src/
     consumers/              Kafka consumer modules
@@ -131,7 +131,7 @@ Initial event types include:
 
 Ordering is guaranteed only within the selected aggregate partition key. Consumers must tolerate duplicates, delayed events, and newer unknown event versions.
 
-## 8. Redis key conventions
+## 8. Valkey key conventions
 
 ```text
 rate:{scope}:{actor}:{window}

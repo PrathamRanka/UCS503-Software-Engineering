@@ -4,7 +4,7 @@
 
 | Environment | Purpose | Infrastructure |
 | --- | --- | --- |
-| Development | Daily feature work | Local apps, hosted Supabase, optional Kafka/Redis |
+| Development | Daily feature work | Local apps, hosted Supabase, optional Kafka/Valkey |
 | Test | Automated integration | Disposable containers and deterministic mocks |
 | Demo | Full architecture presentation | Complete Docker Compose topology |
 | Production-like | Performance rehearsal | Same images and configuration model as demo |
@@ -17,7 +17,7 @@ Express and workers expose:
 
 - `/health/live`: process is running.
 - `/health/ready`: required dependencies are usable.
-- `/health/details`: protected diagnostic view for database, replica lag, Redis, Kafka, Storage, and consumer status.
+- `/health/details`: protected diagnostic view for database, replica lag, Valkey, Kafka, Storage, and consumer status.
 
 Readiness failure removes a process from service; liveness does not fail merely because an optional dependency is degraded.
 
@@ -29,12 +29,24 @@ Readiness failure removes a process from service; liveness does not fail merely 
 - Traces through OpenTelemetry-compatible instrumentation
 - Audit events stored separately from operational logs
 
+## Pilot service objectives
+
+- API availability target: 99.5% monthly, excluding announced maintenance.
+- Cached feed latency target: p95 below 300 ms at the API.
+- Normal non-media API latency target: p95 below 800 ms.
+- Message persistence target: p95 below 500 ms before moderation/delivery processing.
+- Critical moderation queue age target: below 15 minutes while moderators are on duty.
+- Standard moderation queue age target: below 24 hours.
+- Outbox oldest-pending target: below 60 seconds during healthy operation.
+
+These are engineering targets for a pilot. They become contractual SLOs only after monitoring demonstrates they are achievable.
+
 Required metrics:
 
 - Request count, latency, and error rate by route
 - Authentication and rate-limit failures
 - Primary/replica connection use and replica lag
-- Redis latency and cache-hit ratio
+- Valkey latency and cache-hit ratio
 - Outbox backlog and oldest pending event
 - Kafka producer errors and consumer lag
 - Moderation queue age and decision time
@@ -55,7 +67,7 @@ Required metrics:
 
 - Database backups are the recovery authority.
 - Storage objects and database metadata require a reconciliation process.
-- Redis is rebuilt from PostgreSQL and event replay.
+- Valkey is rebuilt from PostgreSQL and event replay.
 - Kafka is not the sole store for business state.
 - Restore exercises must validate profiles, permissions, content metadata, moderation history, and outbox consistency.
 
@@ -82,7 +94,7 @@ For any security incident: contain access, preserve evidence, rotate affected cr
 ## Demo runbook
 
 1. Validate Docker resources and environment configuration.
-2. Start primary infrastructure, then Supabase services, then Kafka/Redis.
+2. Start primary infrastructure, then Supabase services, then Kafka/Valkey.
 3. Verify database replication and Kafka topic creation.
 4. Start API, publisher, worker, and web application.
 5. Apply migrations and deterministic seed data.

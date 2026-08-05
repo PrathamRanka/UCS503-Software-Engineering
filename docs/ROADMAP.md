@@ -44,7 +44,7 @@ Exit: complete campus social flow works without asynchronous optimization.
 
 - Transactional outbox
 - Kafka broker, publisher, consumers, retries, and dead-letter topic
-- Redis caching, rate limits, locks, and trending sets
+- Valkey caching, rate limits, locks, and trending sets
 - Media processing and moderation adapter
 - Admin queue, decisions, appeals, and audit log
 
@@ -75,7 +75,7 @@ Exit: Stories expire reliably across worker restarts and highlights persist.
 - Load, resilience, and recovery tests
 - Architecture demonstration script
 
-Exit: the team demonstrates Kafka retry, Redis degradation, replica fallback, and preserved data.
+Exit: the team demonstrates Kafka retry, Valkey degradation, replica fallback, and preserved data.
 
 ## Definition of done
 

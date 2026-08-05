@@ -77,7 +77,7 @@ The system is a mobile-first progressive web application for verified TIET users
 - NFR-PERF-001: Cached feed requests should complete within 300 ms at the API under normal local test load.
 - NFR-PERF-002: Non-cached API reads should complete within 800 ms at p95, excluding media transfer and external moderation.
 - NFR-SCALE-001: The design shall support 25,000 registered accounts and 2,000 concurrent realtime connections through horizontal scaling.
-- NFR-AVAIL-001: Redis, Kafka, or worker unavailability shall degrade features without corrupting authoritative records.
+- NFR-AVAIL-001: Valkey, Kafka, or worker unavailability shall degrade features without corrupting authoritative records.
 - NFR-SEC-001: Every protected endpoint shall authenticate and authorize the caller.
 - NFR-SEC-002: Every user-owned database table shall enforce Row Level Security or an equivalent database policy.
 - NFR-SEC-003: Secrets and service credentials shall never be exposed to the browser.
@@ -88,7 +88,7 @@ The system is a mobile-first progressive web application for verified TIET users
 
 ## 4. Constraints
 
-- The project initially uses only free tiers and local containers.
+- The mandatory project baseline uses only free/open-source software, free tiers, and local containers.
 - Full distributed topology is demonstrated locally rather than presented as highly available production infrastructure.
 - External moderation is accessed through an adapter and must have a deterministic mock implementation.
 - The browser uploads media directly to signed object-storage destinations rather than proxying files through Express.

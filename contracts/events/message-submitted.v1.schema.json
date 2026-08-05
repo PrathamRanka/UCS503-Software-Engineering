@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tiet-social.local/schemas/message-submitted.v1.schema.json",
+  "title": "message.submitted.v1 payload",
+  "type": "object",
+  "required": ["messageId", "conversationId", "senderId", "mediaAssetIds"],
+  "properties": {
+    "messageId": { "type": "string", "format": "uuid" },
+    "conversationId": { "type": "string", "format": "uuid" },
+    "senderId": { "type": "string", "format": "uuid" },
+    "body": { "type": ["string", "null"], "maxLength": 4000 },
+    "replyToMessageId": { "type": ["string", "null"], "format": "uuid" },
+    "mediaAssetIds": {
+      "type": "array",
+      "items": { "type": "string", "format": "uuid" },
+      "maxItems": 4,
+      "uniqueItems": true
+    }
+  },
+  "additionalProperties": false
+}
