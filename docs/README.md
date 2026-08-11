@@ -4,6 +4,7 @@ The documents in this directory are the engineering source of truth. If implemen
 
 | Document | Purpose |
 | --- | --- |
+| [ARCHITECTURE_DIAGRAM.md](ARCHITECTURE_DIAGRAM.md) | Presentation-ready system architecture diagram and short explanation |
 | [PRODUCT.md](PRODUCT.md) | Product vision, scope, users, and success criteria |
 | [SRS.md](SRS.md) | Functional and non-functional software requirements |
 | [HLD.md](HLD.md) | System context, major components, deployment, and data flow |
