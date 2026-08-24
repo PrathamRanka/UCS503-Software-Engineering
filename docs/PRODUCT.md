@@ -28,6 +28,11 @@ The frontend demo includes:
 - Mock Google/Thapar sign-in and account onboarding
 - Search, Explore, Reels, direct messages and notifications
 - Profile grids, saved content, tagged content, settings and logout
+- Full post detail, comments and content-management flows
+- Story creation and highlight management
+- Reel creation, editing and video playback
+- Other-user profiles, follower lists and group messaging
+- Password recovery and account deletion interfaces
 
 All content currently comes from mock data.
 

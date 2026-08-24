@@ -20,6 +20,9 @@ export const people: UserProfile[] = [
   { id: 'dev', name: 'Dev Malhotra', username: 'devmalhotra', email: 'dev@thapar.edu', avatar: '/images/dev.jpg', bio: 'DebSoc · public speaking', branch: 'Computer Science', year: 'Final year', followers: 734, following: 392 },
   { id: 'arjun', name: 'Arjun Singh', username: 'arjun.s', email: 'arjun@thapar.edu', avatar: '/images/arjun.jpg', bio: 'Basketball and bad jokes', branch: 'Civil', year: 'Second year', followers: 620, following: 480 },
   { id: 'simran', name: 'Simran Kaur', username: 'simrank', email: 'simran@thapar.edu', avatar: '/images/simran.jpg', bio: 'Music society', branch: 'Biotechnology', year: 'Third year', followers: 1104, following: 505 },
+  { id: 'photo-club', name: 'Thapar Photography Club', username: 'tiet.photography', email: 'photography@thapar.edu', avatar: '/images/dev.jpg', bio: 'Finding the best frames on campus 📷', branch: 'Student club', year: 'Official account', followers: 4820, following: 126 },
+  { id: 'naina', name: 'Naina Kapoor', username: 'nainak', email: 'naina@thapar.edu', avatar: '/images/naina.jpg', bio: 'CSED · building things with friends', branch: 'Computer Science', year: 'Third year', followers: 692, following: 351 },
+  { id: 'saturnalia', name: 'Saturnalia TIET', username: 'saturnalia.tiet', email: 'saturnalia@thapar.edu', avatar: '/images/arjun.jpg', bio: 'Official cultural festival account', branch: 'Student festival', year: 'Official account', followers: 9840, following: 94 },
 ]
 
 export const stories: Story[] = [
@@ -59,14 +62,14 @@ export const exploreItems: ExploreItem[] = [
 ]
 
 export const reels: Reel[] = [
-  { id: 1, creator: 'saturnalia.tiet', avatar: '/images/arjun.jpg', image: '/images/event.jpg', caption: 'POV: the fest preparations finally begin 🔥', likes: '12.4K', comments: '318', audio: 'Original audio · Saturnalia TIET' },
+  { id: 1, creator: 'saturnalia.tiet', avatar: '/images/arjun.jpg', image: '/images/event.jpg', video: '/videos/campus-reel.mp4', caption: 'POV: the fest preparations finally begin 🔥', likes: '12.4K', comments: '318', audio: 'Original audio · Saturnalia TIET' },
   { id: 2, creator: 'arjun.s', avatar: '/images/arjun.jpg', image: '/images/sports.jpg', caption: 'Last shot decides the match.', likes: '8,942', comments: '146', audio: 'Campus courts · Original audio' },
   { id: 3, creator: 'codechef.tiet', avatar: '/images/rohan.jpg', image: '/images/coding.jpg', caption: 'When the code runs one minute before submission.', likes: '6,201', comments: '204', audio: 'Late night lab sounds' },
 ]
 
 export const conversations: Conversation[] = [
   { id: 1, name: 'Meher Kaur', username: 'meherkaur', avatar: '/images/meher.jpg', lastMessage: 'See you near the library!', time: '2m', unread: true, messages: [{ id: 1, text: 'Are you coming to the photo walk?', mine: false, time: '4:18 PM' }, { id: 2, text: 'Yes! I’ll meet you at the library gate.', mine: true, time: '4:19 PM' }, { id: 3, text: 'See you near the library!', mine: false, time: '4:20 PM' }] },
-  { id: 2, name: 'Project Crew', username: 'project.crew', avatar: '/images/team.jpg', lastMessage: 'Naina sent a photo', time: '18m', messages: [{ id: 1, text: 'The final slides are in the drive.', mine: false, time: '3:40 PM' }, { id: 2, text: 'I’ll review them tonight.', mine: true, time: '3:44 PM' }] },
+  { id: 2, name: 'Project Crew', username: 'project.crew', avatar: '/images/team.jpg', lastMessage: 'Naina sent a photo', time: '18m', group: true, messages: [{ id: 1, text: 'The final slides are in the drive.', mine: false, time: '3:40 PM' }, { id: 2, text: 'I’ll review them tonight.', mine: true, time: '3:44 PM' }] },
   { id: 3, name: 'Aarav Mehta', username: 'aarav.jpg', avatar: '/images/aarav.jpg', lastMessage: 'Match at 6?', time: '1h', messages: [{ id: 1, text: 'Match at 6?', mine: false, time: '2:10 PM' }] },
   { id: 4, name: 'Simran Kaur', username: 'simrank', avatar: '/images/simran.jpg', lastMessage: 'That reel was too accurate 😂', time: '3h', messages: [{ id: 1, text: 'That reel was too accurate 😂', mine: false, time: '12:32 PM' }] },
 ]

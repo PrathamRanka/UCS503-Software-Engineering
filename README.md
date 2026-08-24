@@ -20,6 +20,18 @@ A complete client-side Instagram-style campus social prototype for TIET students
 - Post creation with local image upload
 - Profile posts, saved posts, tagged posts and highlights
 - Profile settings, privacy controls and logout
+- Routed post details and full comment threads
+- Story creation, editing, deletion and highlights
+- Reel upload, editing, deletion and real video playback
+- Other-user profiles and follower/following lists
+- New direct/group chats and image messages
+- Edit, archive, restore, delete, report, block and mute flows
+- Password recovery and account deletion
+- Loading, empty, error and not-found states
+
+## Client routes
+
+`/`, `/search`, `/explore`, `/reels`, `/messages`, `/notifications`, `/profile`, `/profile/:username`, `/post/:postId`, `/archive`, `/settings`, `/reset-password`
 
 The project intentionally uses a small stack that the team can understand, run, and extend quickly.
 

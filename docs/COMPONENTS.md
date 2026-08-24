@@ -7,6 +7,7 @@ web/src/
   components/
     auth/
       AuthScreen.tsx
+      PasswordResetScreen.tsx
     feed/
       FeedHeader.tsx
       PostCard.tsx
@@ -17,11 +18,17 @@ web/src/
       Sidebar.tsx
     modals/
       ComposerModal.tsx
+      ContentMenuModal.tsx
+      SocialListModal.tsx
+      StoryManagerModal.tsx
       StoryViewer.tsx
     views/
+      ArchivedPostsView.tsx
       ExploreView.tsx
       MessagesView.tsx
       NotificationsView.tsx
+      OtherProfileView.tsx
+      PostDetailView.tsx
       ProfileView.tsx
       ReelsView.tsx
       SearchView.tsx
@@ -30,6 +37,7 @@ web/src/
       Avatar.tsx
       Brand.tsx
       PageHeader.tsx
+      StatePanel.tsx
   data/
     mockData.ts
   types/
@@ -47,6 +55,7 @@ web/src/
 - `components/modals`: temporary overlays and focused actions.
 - `components/auth`: mock authentication and account onboarding.
 - `components/views`: complete application destinations selected by navigation.
+- React Router owns URL navigation; feature views should not recreate routing state.
 - `components/ui`: small reusable visual elements.
 - `data/mockData.ts`: temporary demo content. Replace this module with API calls later.
 - `types/social.ts`: shared frontend data shapes.

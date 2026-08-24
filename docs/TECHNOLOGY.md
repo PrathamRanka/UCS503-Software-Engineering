@@ -8,6 +8,7 @@
 | Language | TypeScript | Safer component and API contracts |
 | Styling | Tailwind CSS | Component-local utility styling without a growing global stylesheet |
 | Icons | Lucide React | Small, consistent icon set |
+| Routing | React Router | Direct URLs and browser navigation for every screen |
 | Backend | Node.js + Express | Simple JavaScript/TypeScript API |
 | Database | PostgreSQL | Add when persistent data is required |
 | Testing | Vitest + React Testing Library | Add with connected features |

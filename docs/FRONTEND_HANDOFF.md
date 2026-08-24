@@ -13,11 +13,14 @@ The client-side product flow is complete. The next phase should preserve these i
 | Follow | Local relationship state | Follow/unfollow endpoints |
 | Search | Filters local student profiles | User and club search endpoint |
 | Explore | Displays local discovery grid | Ranked discovery endpoint |
-| Reels | Interactive vertical reel feed | Reel feed, media URLs and engagement endpoints |
-| Messages | Local conversations and sending | Conversation/message endpoints and realtime delivery |
+| Stories | Create, replace, delete and add to highlights locally | Story upload, expiry, views and highlights endpoints |
+| Reels | Upload/edit/delete UI and local video playback | Reel upload, processing, feed and engagement endpoints |
+| Messages | Direct/group conversations, text and image messages | Conversation/message endpoints and realtime delivery |
 | Notifications | Local activity list | Notification list and read-state endpoints |
 | Profile | Posts, saved and tagged grids | Profile and profile-content endpoints |
 | Settings | Persists profile in browser storage | Profile update, privacy and notification preferences |
+| Content controls | Edit/archive/delete/report/block/mute/unfollow UI | Authorization, moderation and relationship endpoints |
+| Routing | Browser URLs with Vercel SPA rewrites | Optional server-side route metadata later |
 
 ## Recommended backend order
 

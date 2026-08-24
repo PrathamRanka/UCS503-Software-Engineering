@@ -1,5 +1,6 @@
 import { FormEvent, useState } from 'react'
 import { ArrowLeft, ArrowRight, CheckCircle2, GraduationCap, Lock, Mail, ShieldCheck, UserRound } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
 import { demoUser } from '../../data/mockData'
 import type { UserProfile } from '../../types/social'
 import { Brand } from '../ui/Brand'
@@ -8,6 +9,7 @@ type AuthScreenProps = { onAuthenticated: (user: UserProfile) => void }
 type AuthStep = 'signin' | 'signup' | 'onboarding'
 
 export function AuthScreen({ onAuthenticated }: AuthScreenProps) {
+  const navigate = useNavigate()
   const [step, setStep] = useState<AuthStep>('signin')
   const [showAccounts, setShowAccounts] = useState(false)
   const [error, setError] = useState('')
@@ -121,7 +123,7 @@ export function AuthScreen({ onAuthenticated }: AuthScreenProps) {
                   {error ? <p className="text-xs font-medium text-red-500">{error}</p> : null}
                   <button className={`${primaryButton} mt-2`} type="submit">Sign in <ArrowRight size={17} /></button>
                 </form>
-                <button className="mt-4 w-full text-center text-xs text-[#00376b]" onClick={() => setError('A mock reset link has been sent to your Thapar email.')}>Forgot password?</button>
+                <button className="mt-4 w-full text-center text-xs text-[#00376b]" onClick={() => navigate('/reset-password')}>Forgot password?</button>
                 <p className="mt-8 text-center text-sm">New to Thapar Talks? <button className="font-semibold text-blue-500" onClick={() => { setStep('signup'); setError('') }}>Create an account</button></p>
               </>
             ) : null}

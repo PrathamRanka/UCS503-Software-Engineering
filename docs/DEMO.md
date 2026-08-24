@@ -19,7 +19,10 @@ Open the URL shown by Vite. The photos are stored locally, so the demo feed does
 5. Open Search, Explore, Reels, Messages and Notifications from the sidebar.
 6. Select **Create**, choose **Use demo photo**, write a caption and share it.
 7. Open Profile to show posts, saved content, highlights and settings.
-8. Resize to mobile width and show the bottom navigation.
+8. Open a feed post to show its routed detail/comments screen and content menu.
+9. Create a Story and Reel; play the local Reel video.
+10. Start a direct or group conversation and send an image.
+11. Resize to mobile width and show the bottom navigation.
 
 ## Demo limitations
 

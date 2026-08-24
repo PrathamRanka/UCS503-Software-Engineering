@@ -4,9 +4,9 @@ import type { UserProfile } from '../../types/social'
 import { Avatar } from '../ui/Avatar'
 import { PageHeader } from '../ui/PageHeader'
 
-type SettingsViewProps = { user: UserProfile; onUpdate: (user: UserProfile) => void; onLogout: () => void }
+type SettingsViewProps = { user: UserProfile; onUpdate: (user: UserProfile) => void; onLogout: () => void; onPasswordReset: () => void; onDeleteAccount: () => void }
 
-export function SettingsView({ user, onUpdate, onLogout }: SettingsViewProps) {
+export function SettingsView({ user, onUpdate, onLogout, onPasswordReset, onDeleteAccount }: SettingsViewProps) {
   const [name, setName] = useState(user.name)
   const [avatar, setAvatar] = useState(user.avatar)
   const [username, setUsername] = useState(user.username)
@@ -14,6 +14,7 @@ export function SettingsView({ user, onUpdate, onLogout }: SettingsViewProps) {
   const [privateAccount, setPrivateAccount] = useState(true)
   const [notifications, setNotifications] = useState(true)
   const [saved, setSaved] = useState(false)
+  const [confirmDelete, setConfirmDelete] = useState(false)
 
   const submit = (event: FormEvent) => {
     event.preventDefault()
@@ -47,8 +48,11 @@ export function SettingsView({ user, onUpdate, onLogout }: SettingsViewProps) {
           <div className="flex items-center gap-3 border-b border-neutral-100 p-4"><Lock size={20} /><div className="flex-1"><strong className="text-sm">Account privacy</strong><p className="text-xs text-neutral-500">Verified Thapar members only</p></div><span className="text-xs font-medium text-green-600">Protected</span></div>
           <div className="flex items-center gap-3 p-4"><UserRound size={20} /><div className="flex-1"><strong className="text-sm">Personal details</strong><p className="text-xs text-neutral-500">{user.email}</p></div><span className="text-xs text-neutral-400">Verified</span></div>
         </div>
+        <button className="mt-5 flex w-full items-center justify-between rounded-xl border border-neutral-200 p-4 text-left" onClick={onPasswordReset}><span><b className="block text-sm">Change password</b><small className="text-neutral-500">Send a reset link to your Thapar email</small></span><Lock size={19} /></button>
         <button className="mt-5 flex w-full items-center justify-center gap-2 rounded-xl border border-red-200 p-4 text-sm font-semibold text-red-500 hover:bg-red-50" onClick={onLogout}><LogOut size={19} />Log out of Thapar Talks</button>
+        <button className="mt-3 w-full py-3 text-xs font-semibold text-red-500" onClick={() => setConfirmDelete(true)}>Deactivate or delete account</button>
       </div>
+      {confirmDelete ? <div className="fixed inset-0 z-50 grid place-items-center bg-black/60 p-4"><section className="w-full max-w-sm rounded-xl bg-white p-6 text-center"><h2 className="text-lg font-semibold">Delete account?</h2><p className="mt-2 text-sm leading-5 text-neutral-500">This mock removes your local session and returns to sign in. A real backend will add a recovery period.</p><div className="mt-6 grid gap-2"><button className="rounded-lg bg-red-500 py-3 text-sm font-semibold text-white" onClick={onDeleteAccount}>Delete account</button><button className="rounded-lg bg-neutral-100 py-3 text-sm font-semibold" onClick={() => setConfirmDelete(false)}>Cancel</button></div></section></div> : null}
     </section>
   )
 }

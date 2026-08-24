@@ -15,6 +15,8 @@ export type Story = {
   name: string
   image: string
   mine?: boolean
+  own?: boolean
+  highlighted?: boolean
 }
 
 export type Post = {
@@ -43,6 +45,13 @@ export type NewPostInput = {
   image: string
 }
 
+export type ContentKind = 'post' | 'story' | 'reel'
+
+export type NewContentInput = NewPostInput & {
+  kind: ContentKind
+  mediaType?: 'image' | 'video'
+}
+
 export type ExploreItem = {
   id: number
   image: string
@@ -60,6 +69,7 @@ export type Reel = {
   likes: string
   comments: string
   audio: string
+  video?: string
 }
 
 export type Message = {
@@ -67,6 +77,7 @@ export type Message = {
   text: string
   mine: boolean
   time: string
+  image?: string
 }
 
 export type Conversation = {
@@ -77,6 +88,7 @@ export type Conversation = {
   lastMessage: string
   time: string
   unread?: boolean
+  group?: boolean
   messages: Message[]
 }
 
