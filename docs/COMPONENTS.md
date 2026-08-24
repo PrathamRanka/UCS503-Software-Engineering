@@ -5,6 +5,8 @@ The frontend is organized by what each component does.
 ```text
 web/src/
   components/
+    auth/
+      AuthScreen.tsx
     feed/
       FeedHeader.tsx
       PostCard.tsx
@@ -16,9 +18,18 @@ web/src/
     modals/
       ComposerModal.tsx
       StoryViewer.tsx
+    views/
+      ExploreView.tsx
+      MessagesView.tsx
+      NotificationsView.tsx
+      ProfileView.tsx
+      ReelsView.tsx
+      SearchView.tsx
+      SettingsView.tsx
     ui/
       Avatar.tsx
       Brand.tsx
+      PageHeader.tsx
   data/
     mockData.ts
   types/
@@ -34,6 +45,8 @@ web/src/
 - `components/feed`: content shown in the central feed.
 - `components/layout`: desktop and mobile page structure.
 - `components/modals`: temporary overlays and focused actions.
+- `components/auth`: mock authentication and account onboarding.
+- `components/views`: complete application destinations selected by navigation.
 - `components/ui`: small reusable visual elements.
 - `data/mockData.ts`: temporary demo content. Replace this module with API calls later.
 - `types/social.ts`: shared frontend data shapes.

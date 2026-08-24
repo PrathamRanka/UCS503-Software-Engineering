@@ -23,6 +23,11 @@ The frontend demo includes:
 - Suggested people and clubs
 - Post creation modal
 - Mobile and desktop navigation
+- Local demo media that works without internet access
+- Working post creation, comments, likes, saves, follows, and story navigation
+- Mock Google/Thapar sign-in and account onboarding
+- Search, Explore, Reels, direct messages and notifications
+- Profile grids, saved content, tagged content, settings and logout
 
 All content currently comes from mock data.
 

@@ -1,6 +1,6 @@
 # Thapar Talks
 
-A simple Instagram-style campus social application for TIET students. The current version is a polished frontend demo built for fast iteration and presentation.
+A complete client-side Instagram-style campus social prototype for TIET students. It is built for presentation now and structured so a Node.js backend can replace the mock data next.
 
 ## Current stack
 
@@ -8,6 +8,18 @@ A simple Instagram-style campus social application for TIET students. The curren
 - Icons: Lucide React
 - Backend: Node.js and Express planned for the next phase
 - Data: Mock data today; PostgreSQL can be added when the API is built
+
+## Frontend feature coverage
+
+- Mock Google sign-in restricted to `@thapar.edu`
+- Account registration and profile onboarding
+- Home feed, stories, likes, comments, saves, follows and sharing
+- Search, Explore grid and Reels interface
+- Direct messages and conversation UI
+- Notifications and follow requests
+- Post creation with local image upload
+- Profile posts, saved posts, tagged posts and highlights
+- Profile settings, privacy controls and logout
 
 The project intentionally uses a small stack that the team can understand, run, and extend quickly.
 

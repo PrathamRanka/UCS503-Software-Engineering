@@ -10,5 +10,5 @@ export function Avatar({ src, size = 'md' }: AvatarProps) {
     lg: 'size-14',
   }
 
-  return <img className={`${sizes[size]} shrink-0 rounded-full bg-neutral-100 object-cover object-center`} src={src} alt="" />
+  return <img className={`${sizes[size]} shrink-0 rounded-full bg-neutral-100 object-cover object-center`} src={src} alt="" loading="lazy" decoding="async" />
 }
