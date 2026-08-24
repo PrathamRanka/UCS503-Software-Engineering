@@ -4,7 +4,7 @@ A complete client-side Instagram-style campus social prototype for TIET students
 
 ## Current stack
 
-- Frontend: React, Vite, TypeScript, Tailwind CSS
+- Frontend: React, Vite, TypeScript, Tailwind CSS v4
 - Icons: Lucide React
 - Backend: Node.js and Express planned for the next phase
 - Data: Mock data today; PostgreSQL can be added when the API is built
@@ -28,6 +28,9 @@ A complete client-side Instagram-style campus social prototype for TIET students
 - Edit, archive, restore, delete, report, block and mute flows
 - Password recovery and account deletion
 - Loading, empty, error and not-found states
+- TIET-centered society and event content based on public institute pages
+- Persistent light and dark modes, with light mode as the default
+- WebP-only bundled raster assets
 
 ## Client routes
 
@@ -65,3 +68,4 @@ project-proposal/      Original submission material
 ```
 
 Start with [docs/README.md](docs/README.md) for the active documentation.
+See [docs/CONTENT.md](docs/CONTENT.md) for content sourcing and mock-data boundaries.

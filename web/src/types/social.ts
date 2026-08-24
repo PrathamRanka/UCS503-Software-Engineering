@@ -1,103 +1,110 @@
 export type UserProfile = {
-  id: string
-  name: string
-  username: string
-  email: string
-  avatar: string
-  bio: string
-  branch: string
-  year: string
-  followers: number
-  following: number
-}
+  id: string;
+  name: string;
+  username: string;
+  email: string;
+  avatar: string;
+  bio: string;
+  branch: string;
+  year: string;
+  followers: number;
+  following: number;
+};
 
 export type Story = {
-  name: string
-  image: string
-  mine?: boolean
-  own?: boolean
-  highlighted?: boolean
-}
+  name: string;
+  image: string;
+  mine?: boolean;
+  own?: boolean;
+  highlighted?: boolean;
+};
 
 export type Post = {
-  id: number
-  author: string
-  handle: string
-  avatar: string
-  image: string
-  place: string
-  time: string
-  caption: string
-  likes: number
-  comments: number
-  tags: string[]
-  featured?: boolean
-}
+  id: number;
+  author: string;
+  handle: string;
+  avatar: string;
+  image: string;
+  place: string;
+  time: string;
+  caption: string;
+  likes: number;
+  comments: number;
+  tags: string[];
+  featured?: boolean;
+};
 
 export type Suggestion = {
-  name: string
-  handle: string
-  image: string
-}
+  name: string;
+  handle: string;
+  image: string;
+};
 
 export type NewPostInput = {
-  caption: string
-  image: string
-}
+  caption: string;
+  image: string;
+};
 
-export type ContentKind = 'post' | 'story' | 'reel'
+export type ContentKind = "post" | "story" | "reel";
 
 export type NewContentInput = NewPostInput & {
-  kind: ContentKind
-  mediaType?: 'image' | 'video'
-}
+  kind: ContentKind;
+  mediaType?: "image" | "video";
+};
 
 export type ExploreItem = {
-  id: number
-  image: string
-  likes: number
-  comments: number
-  video?: boolean
-}
+  id: number;
+  image: string;
+  likes: number;
+  comments: number;
+  video?: boolean;
+};
 
 export type Reel = {
-  id: number
-  creator: string
-  avatar: string
-  image: string
-  caption: string
-  likes: string
-  comments: string
-  audio: string
-  video?: string
-}
+  id: number;
+  creator: string;
+  avatar: string;
+  image: string;
+  caption: string;
+  likes: string;
+  comments: string;
+  audio: string;
+  video?: string;
+};
 
 export type Message = {
-  id: number
-  text: string
-  mine: boolean
-  time: string
-  image?: string
-}
+  id: number;
+  text: string;
+  mine: boolean;
+  time: string;
+  image?: string;
+};
 
 export type Conversation = {
-  id: number
-  name: string
-  username: string
-  avatar: string
-  lastMessage: string
-  time: string
-  unread?: boolean
-  group?: boolean
-  messages: Message[]
-}
+  id: number;
+  name: string;
+  username: string;
+  avatar: string;
+  lastMessage: string;
+  time: string;
+  unread?: boolean;
+  group?: boolean;
+  messages: Message[];
+};
 
 export type NotificationItem = {
-  id: number
-  user: string
-  avatar: string
-  text: string
-  time: string
-  image?: string
-  follow?: boolean
-}
+  id: number;
+  user: string;
+  avatar: string;
+  text: string;
+  time: string;
+  image?: string;
+  follow?: boolean;
+};
+
+export type CampusEvent = {
+  name: string;
+  host: string;
+  category: string;
+  image: string;
+};

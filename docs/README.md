@@ -5,6 +5,7 @@ These files describe the current, simplified project. Keep them short and update
 | Document | Purpose |
 | --- | --- |
 | [PRODUCT.md](PRODUCT.md) | Product idea, audience, MVP scope, and exclusions |
+| [CONTENT.md](CONTENT.md) | TIET source policy, fictional-data boundary, and media rules |
 | [ARCHITECTURE.md](ARCHITECTURE.md) | Simple frontend and future backend structure |
 | [COMPONENTS.md](COMPONENTS.md) | Frontend component organization and extension rules |
 | [USER_FLOWS.md](USER_FLOWS.md) | Main user journeys for the demo and MVP |

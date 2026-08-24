@@ -34,7 +34,9 @@ The frontend demo includes:
 - Other-user profiles, follower lists and group messaging
 - Password recovery and account deletion interfaces
 
-All content currently comes from mock data.
+All interactions currently use mock client-side data. TIET society and event names are based on public TIET pages, while student identities, messages, captions, counts, and account handles are fictional demo content.
+
+The interface includes a persistent light/dark appearance setting. Light mode is the default presentation theme.
 
 ## MVP scope
 

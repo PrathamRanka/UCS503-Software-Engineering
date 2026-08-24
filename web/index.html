@@ -7,8 +7,12 @@
     <meta name="description" content="Thapar Talks — campus moments, shared." />
     <meta property="og:title" content="Thapar Talks" />
     <meta property="og:description" content="Campus moments, shared." />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.webp" type="image/webp" />
     <link rel="manifest" href="/site.webmanifest" />
+    <script>
+      if (localStorage.getItem("thapar-talks-theme-v1") === "dark")
+        document.documentElement.classList.add("dark");
+    </script>
     <title>Thapar Talks</title>
   </head>
   <body>
