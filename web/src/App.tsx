@@ -136,6 +136,9 @@ function App() {
 
   useEffect(() => () => window.clearTimeout(toastTimer.current), []);
   useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  }, [location.pathname]);
+  useEffect(() => {
     document.documentElement.classList.toggle("dark", theme === "dark");
     document.documentElement.style.colorScheme = theme;
     document
@@ -407,7 +410,7 @@ function App() {
   );
 
   return (
-    <div className="min-h-screen bg-white font-sans text-black dark:bg-black dark:text-white lg:pl-[74px] xl:pl-[245px]">
+    <div className="min-h-[100dvh] bg-white font-sans text-black dark:bg-black dark:text-white lg:pl-[74px] xl:pl-[245px]">
       <Sidebar
         activeNav={activeNav}
         user={user}

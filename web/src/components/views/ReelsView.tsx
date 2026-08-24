@@ -57,9 +57,9 @@ export function ReelsView({
   };
 
   return (
-    <section className="mx-auto h-screen w-full max-w-3xl overflow-hidden">
+    <section className="mx-auto h-[calc(100dvh-52px)] w-full max-w-3xl overflow-hidden lg:h-[100dvh]">
       <PageHeader title="Reels" />
-      <div className="h-[calc(100vh-60px)] snap-y snap-mandatory overflow-y-auto bg-neutral-950 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+      <div className="h-[calc(100dvh-112px)] snap-y snap-mandatory overflow-y-auto overscroll-contain bg-neutral-950 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:h-[calc(100dvh-60px)]">
         {reels.map((reel) => (
           <article
             className="relative mx-auto flex h-full max-w-[470px] snap-start items-center bg-black text-white"

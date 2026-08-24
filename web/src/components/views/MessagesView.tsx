@@ -171,10 +171,10 @@ export function MessagesView({
   };
 
   return (
-    <section className="mx-auto h-screen w-full max-w-5xl border-x border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 lg:h-[calc(100vh-40px)] lg:translate-y-5 lg:overflow-hidden lg:rounded-xl lg:border">
-      <div className="grid h-full md:grid-cols-[350px_1fr]">
+    <section className="mx-auto h-[calc(100dvh-52px)] w-full max-w-5xl overflow-hidden border-x border-neutral-200 bg-white dark:border-neutral-800 dark:bg-neutral-950 lg:h-[calc(100dvh-40px)] lg:translate-y-5 lg:rounded-xl lg:border">
+      <div className="grid h-full min-h-0 md:grid-cols-[350px_1fr]">
         <aside
-          className={`${selectedId ? "hidden md:block" : "block"} border-r border-neutral-200 dark:border-neutral-800`}
+          className={`${selectedId ? "hidden md:flex" : "flex"} min-h-0 flex-col border-r border-neutral-200 dark:border-neutral-800`}
         >
           <header className="flex h-[60px] items-center justify-between border-b border-neutral-200 dark:border-neutral-800 px-5">
             <strong>{username}</strong>
@@ -196,7 +196,7 @@ export function MessagesView({
               />
             </label>
           </div>
-          <div className="overflow-y-auto">
+          <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain">
             {filtered.map((conversation) => (
               <button
                 className={`flex w-full items-center gap-3 px-5 py-3 text-left hover:bg-neutral-50 dark:hover:bg-neutral-800 ${selectedId === conversation.id ? "bg-neutral-100 dark:bg-neutral-800" : ""}`}
@@ -246,7 +246,7 @@ export function MessagesView({
                 <Info size={22} />
               </button>
             </header>
-            <div className="flex-1 overflow-y-auto p-5">
+            <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain p-5">
               <div className="mb-8 flex flex-col items-center">
                 <Avatar src={selected.avatar} size="lg" />
                 <strong className="mt-2">{selected.name}</strong>
