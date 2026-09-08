@@ -33,7 +33,7 @@ export function ContentMenuModal(props: ContentMenuModalProps) {
               className="w-full border-b border-neutral-100 dark:border-neutral-800 p-4 text-sm font-semibold"
               onClick={() => action(props.onEdit)}
             >
-              Edit post
+              Edit update
             </button>
             <button
               className="w-full border-b border-neutral-100 dark:border-neutral-800 p-4 text-sm font-semibold"

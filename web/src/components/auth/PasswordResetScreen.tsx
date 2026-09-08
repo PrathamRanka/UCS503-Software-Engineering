@@ -24,11 +24,11 @@ export function PasswordResetScreen({
     setSent(true);
   };
   return (
-    <main className="relative grid min-h-screen place-items-center bg-neutral-50 p-5 font-sans text-black dark:bg-black dark:text-white">
+    <main className="relative grid min-h-screen place-items-center bg-[#f7f7f5] p-5 font-sans text-black dark:bg-[#050505] dark:text-white">
       <div className="absolute right-5 top-4">
         <ThemeToggle theme={theme} onToggle={onToggleTheme} compact />
       </div>
-      <section className="w-full max-w-sm rounded-xl border border-neutral-200 bg-white p-8 text-center shadow-sm dark:border-neutral-800 dark:bg-neutral-950">
+      <section className="w-full max-w-md rounded-2xl border border-black/10 bg-white p-8 text-center shadow-[0_30px_100px_rgba(0,0,0,.12)] dark:border-white/10 dark:bg-[#111113]">
         <div className="flex justify-center">
           <Brand />
         </div>
@@ -59,7 +59,7 @@ export function PasswordResetScreen({
               {error ? (
                 <p className="mt-2 text-left text-xs text-red-500">{error}</p>
               ) : null}
-              <button className="mt-3 h-11 w-full rounded-lg bg-blue-500 text-sm font-semibold text-white">
+              <button className="mt-3 h-12 w-full rounded-xl bg-[#ed111c] text-sm font-semibold text-white shadow-lg shadow-red-600/15">
                 Send reset link
               </button>
             </form>

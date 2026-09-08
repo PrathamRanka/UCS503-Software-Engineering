@@ -1,16 +1,13 @@
 {
-  "name": "Thapar Talks",
-  "short_name": "Talks",
-  "description": "Campus moments, shared.",
+  "name": "titalks",
+  "short_name": "titalks",
+  "description": "Your verified TIET campus network.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#ffffff",
+  "background_color": "#050505",
+  "theme_color": "#ed111c",
   "icons": [
-    {
-      "src": "/favicon.webp",
-      "sizes": "192x192",
-      "type": "image/webp"
-    }
+    { "src": "/titalks-icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/titalks-icon-512.png", "sizes": "512x512", "type": "image/png" }
   ]
 }

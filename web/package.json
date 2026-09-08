@@ -1,15 +1,17 @@
 {
-  "name": "@thapar-talks/web",
+  "name": "@titalks/web",
   "private": true,
   "version": "0.1.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
+    "test:ui": "node scripts/smoke-ui.mjs",
     "preview": "vite preview",
     "images:webp": "node scripts/convert-images.mjs"
   },
   "dependencies": {
+    "lenis": "^1.3.26",
     "lucide-react": "^0.468.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -20,6 +22,7 @@
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
     "@vitejs/plugin-react": "^4.3.4",
+    "playwright-core": "^1.63.0",
     "sharp": "^0.34.3",
     "tailwindcss": "^4.3.3",
     "typescript": "^5.7.2",

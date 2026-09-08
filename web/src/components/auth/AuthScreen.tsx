@@ -100,27 +100,28 @@ export function AuthScreen({
   const inputClass =
     "h-11 w-full rounded-md border border-neutral-300 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-900 px-3 text-sm outline-none transition focus:border-neutral-500 focus:bg-white motion-reduce:transition-none";
   const primaryButton =
-    "flex h-11 w-full items-center justify-center gap-2 rounded-lg bg-blue-500 px-4 text-sm font-semibold text-white transition duration-150 ease-out hover:bg-blue-600 active:scale-[.98] disabled:opacity-40 motion-reduce:transition-none";
+    "flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-[#ed111c] px-4 text-sm font-semibold text-white shadow-lg shadow-red-600/15 transition duration-150 ease-out hover:-translate-y-0.5 hover:bg-[#c70d16] active:scale-[.98] disabled:opacity-40 motion-reduce:transition-none";
 
   return (
-    <main className="relative min-h-screen bg-neutral-50 px-5 py-8 font-sans text-black dark:bg-black dark:text-white sm:grid sm:place-items-center">
+    <main className="relative min-h-screen overflow-hidden bg-[#f7f7f5] px-5 py-8 font-sans text-[#171719] dark:bg-[#050505] dark:text-white sm:grid sm:place-items-center">
       <div className="absolute right-5 top-4">
         <ThemeToggle theme={theme} onToggle={onToggleTheme} compact />
       </div>
-      <div className="mx-auto grid w-full max-w-[940px] overflow-hidden rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 shadow-sm md:grid-cols-[1.08fr_.92fr]">
-        <section className="relative hidden min-h-[680px] overflow-hidden bg-neutral-950 p-10 text-white md:block">
-          <div className="absolute -right-20 -top-20 size-72 rounded-full bg-fuchsia-600/30 blur-3xl" />
-          <div className="absolute -bottom-24 -left-16 size-80 rounded-full bg-orange-500/25 blur-3xl" />
+      <div className="mx-auto grid w-full max-w-[1080px] overflow-hidden rounded-[28px] border border-black/10 bg-white shadow-[0_40px_120px_rgba(0,0,0,.14)] dark:border-white/10 dark:bg-[#0b0b0c] md:grid-cols-[1.08fr_.92fr]">
+        <section className="relative hidden min-h-[700px] overflow-hidden bg-black p-10 text-white md:block">
+          <div className="absolute -right-32 -top-32 size-96 rounded-full bg-[#ed111c]/25 blur-3xl" />
+          <div className="absolute -bottom-28 -left-20 size-80 rounded-full bg-[#ed111c]/15 blur-3xl" />
           <div className="relative z-10">
-            <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-1.5 text-xs">
+            <img className="h-16 w-auto" src="/titalks-wordmark.webp" alt="titalks" />
+            <span className="mt-10 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-1.5 text-xs">
               <ShieldCheck size={14} /> Verified campus community
             </span>
             <h1 className="mt-7 max-w-md text-5xl font-bold leading-[1.05] tracking-[-0.045em]">
-              Every campus moment, in one place.
+              Campus life, without the noise.
             </h1>
             <p className="mt-4 max-w-sm text-sm leading-6 text-white/65">
-              Share, discover and talk with verified Thapar students. Your
-              campus ID keeps the community private.
+              Find people, spaces, and things worth showing up for. Verified
+              TIET access keeps the network focused and useful.
             </p>
           </div>
           <div className="absolute bottom-9 left-10 right-10 grid grid-cols-3 gap-2">
@@ -148,7 +149,7 @@ export function AuthScreen({
             {step === "signin" ? (
               <>
                 <h2 className="text-center text-xl font-semibold">
-                  Sign in to your campus
+                  Welcome back to titalks
                 </h2>
                 <p className="mt-2 text-center text-sm text-neutral-500 dark:text-neutral-400">
                   Only verified Thapar accounts can join.
@@ -157,7 +158,7 @@ export function AuthScreen({
                   className={`${primaryButton} mt-7 bg-white dark:bg-neutral-950 text-neutral-900 dark:text-neutral-100 ring-1 ring-neutral-300 dark:ring-neutral-700 hover:bg-neutral-50 dark:hover:bg-neutral-800`}
                   onClick={() => setShowAccounts((current) => !current)}
                 >
-                  <span className="text-lg font-bold text-blue-500">G</span>{" "}
+                  <span className="text-lg font-bold text-[#ed111c]">G</span>{" "}
                   Continue with Google
                 </button>
                 {showAccounts ? (
@@ -244,9 +245,9 @@ export function AuthScreen({
                   Forgot password?
                 </button>
                 <p className="mt-8 text-center text-sm">
-                  New to Thapar Talks?{" "}
+                  New to titalks?{" "}
                   <button
-                    className="font-semibold text-blue-500"
+                    className="font-semibold text-[#ed111c]"
                     onClick={() => {
                       setStep("signup");
                       setError("");
@@ -310,7 +311,7 @@ export function AuthScreen({
 
             {step === "onboarding" ? (
               <>
-                <div className="mb-5 grid size-11 place-items-center rounded-full bg-blue-50 text-blue-500">
+                <div className="mb-5 grid size-11 place-items-center rounded-full bg-red-50 text-[#ed111c]">
                   <GraduationCap />
                 </div>
                 <h2 className="text-xl font-semibold">Complete your profile</h2>
@@ -365,7 +366,7 @@ export function AuthScreen({
             ) : null}
 
             <p className="mt-8 text-center text-[11px] text-neutral-400">
-              Frontend demo · Authentication is simulated locally
+              Verified TIET access · Demo authentication runs locally
             </p>
           </div>
         </section>

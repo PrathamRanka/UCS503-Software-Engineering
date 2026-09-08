@@ -40,9 +40,9 @@ export function StoryManagerModal({
       >
         <header className="flex items-center justify-between">
           <div>
-            <h2 className="text-lg font-semibold">Stories and highlights</h2>
+            <h2 className="text-lg font-semibold">Campus moments</h2>
             <p className="text-xs text-neutral-500 dark:text-neutral-400">
-              Manage your active campus stories.
+              Manage invitations and moments you have shared.
             </p>
           </div>
           <button className="grid size-9 place-items-center" onClick={onClose}>
@@ -50,11 +50,11 @@ export function StoryManagerModal({
           </button>
         </header>
         <button
-          className="mt-5 flex w-full items-center justify-center gap-2 rounded-lg bg-blue-500 py-3 text-sm font-semibold text-white"
+          className="mt-5 flex w-full items-center justify-center gap-2 rounded-lg bg-[#ed111c] py-3 text-sm font-semibold text-white"
           onClick={onCreate}
         >
           <Plus size={18} />
-          Create story
+          Create a moment
         </button>
         {owned.length ? (
           <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3">
@@ -66,12 +66,12 @@ export function StoryManagerModal({
                 <img
                   className="aspect-[9/16] w-full object-cover"
                   src={story.image}
-                  alt="Your story"
+                  alt="Your campus moment"
                 />
                 <div className="flex justify-around p-2">
                   <label
                     className="cursor-pointer text-neutral-500 dark:text-neutral-400"
-                    title="Replace story image"
+                    title="Replace moment image"
                   >
                     <Pencil size={19} />
                     <input
@@ -86,7 +86,7 @@ export function StoryManagerModal({
                       story.highlighted ? "text-amber-500" : "text-neutral-400"
                     }
                     onClick={() => onToggleHighlight(index)}
-                    title="Toggle highlight"
+                    title="Pin to profile"
                   >
                     <Star
                       size={20}
@@ -96,7 +96,7 @@ export function StoryManagerModal({
                   <button
                     className="text-red-500"
                     onClick={() => onDelete(index)}
-                    title="Delete story"
+                    title="Delete moment"
                   >
                     <Trash2 size={20} />
                   </button>
@@ -106,7 +106,7 @@ export function StoryManagerModal({
           </div>
         ) : (
           <div className="py-12 text-center text-sm text-neutral-500 dark:text-neutral-400">
-            No active stories. Create one to add it to a highlight.
+            No active moments. Share an invitation or update to begin.
           </div>
         )}
       </section>

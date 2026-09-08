@@ -36,7 +36,7 @@ export function SocialListModal({
         onMouseDown={(event) => event.stopPropagation()}
       >
         <header className="relative flex h-12 items-center justify-center border-b border-neutral-200 dark:border-neutral-800">
-          <strong>{title}</strong>
+          <strong>{title === "Followers" ? "Connections" : "People you know"}</strong>
           <button
             className="absolute right-2 grid size-9 place-items-center"
             onClick={onClose}
@@ -76,10 +76,10 @@ export function SocialListModal({
                   </span>
                 </button>
                 <button
-                  className={`rounded-lg px-3 py-2 text-xs font-semibold ${following.has(handle) ? "bg-neutral-100 dark:bg-neutral-800" : "bg-blue-500 text-white"}`}
+                  className={`rounded-lg px-3 py-2 text-xs font-semibold ${following.has(handle) ? "bg-neutral-100 dark:bg-neutral-800" : "bg-[#ed111c] text-white"}`}
                   onClick={() => onToggleFollow(handle)}
                 >
-                  {following.has(handle) ? "Following" : "Follow"}
+                  {following.has(handle) ? "Connected" : "Connect"}
                 </button>
               </div>
             );

@@ -1,73 +1,8 @@
-import { Clapperboard, Home, Search, SquarePlus } from "lucide-react";
+import { BookOpen, Compass, Home, Plus, Search } from "lucide-react";
 import type { UserProfile } from "../../types/social";
-import { Avatar } from "../ui/Avatar";
-
-type MobileNavigationProps = {
-  onCreate: () => void;
-  activeNav: string;
-  user: UserProfile;
-  onNavigate: (label: string) => void;
-};
-
-const buttonClass = "grid size-11 place-items-center bg-transparent";
-
-export function MobileNavigation({
-  onCreate,
-  activeNav,
-  user,
-  onNavigate,
-}: MobileNavigationProps) {
-  return (
-    <nav
-      className="fixed inset-x-0 bottom-0 z-20 flex h-[52px] items-center justify-around border-t border-neutral-200 dark:border-neutral-800 bg-white/95 dark:bg-neutral-950/95 lg:hidden"
-      aria-label="Mobile navigation"
-    >
-      <button
-        className={`${buttonClass} ${activeNav === "Home" ? "font-bold" : ""}`}
-        onClick={() => onNavigate("Home")}
-        aria-label="Home"
-      >
-        <Home size={24} strokeWidth={activeNav === "Home" ? 2.7 : 1.9} />
-      </button>
-      <button
-        className={buttonClass}
-        onClick={() => onNavigate("Search")}
-        aria-label="Search"
-      >
-        <Search size={24} strokeWidth={activeNav === "Search" ? 2.7 : 1.9} />
-      </button>
-      <button
-        className={buttonClass}
-        onClick={onCreate}
-        aria-label="Create post"
-      >
-        <SquarePlus size={24} />
-      </button>
-      <button
-        className={buttonClass}
-        onClick={() => onNavigate("Reels")}
-        aria-label="Reels"
-      >
-        <Clapperboard
-          size={24}
-          strokeWidth={activeNav === "Reels" ? 2.7 : 1.9}
-        />
-      </button>
-      <button
-        className={buttonClass}
-        onClick={() => onNavigate("Profile")}
-        aria-label="Profile"
-      >
-        <span
-          className={
-            activeNav === "Profile"
-              ? "rounded-full ring-2 ring-black ring-offset-1"
-              : ""
-          }
-        >
-          <Avatar src={user.avatar} size="sm" />
-        </span>
-      </button>
-    </nav>
-  );
-}
+type Props={onCreate:()=>void;activeNav:string;user:UserProfile;onNavigate:(label:string)=>void};
+const items=[{label:"Today",title:"Today",icon:Home},{label:"Pulse",title:"Pulse",icon:Compass},{label:"People",title:"People",icon:Search},{label:"Spaces",title:"Spaces",icon:BookOpen}];
+export function MobileNavigation({onCreate,activeNav,onNavigate}:Props){return <nav className="fixed inset-x-3 bottom-3 z-30 grid h-16 grid-cols-5 rounded-2xl border border-black/10 bg-[#ffffff]/90 px-2 shadow-[0_18px_50px_rgba(25,40,32,.16)] backdrop-blur-xl dark:border-white/10 dark:bg-[#111113]/90 lg:hidden" aria-label="Mobile navigation">
+  {items.map(({label,title,icon:Icon})=><button key={label} className={`flex flex-col items-center justify-center gap-1 bg-transparent text-[8px] ${activeNav===label?"text-[#171719] dark:text-white":"text-neutral-500"}`} onClick={()=>onNavigate(label)}><Icon size={20} strokeWidth={activeNav===label?2.3:1.7}/><span>{title}</span></button>)}
+  <button className="flex flex-col items-center justify-center gap-1 bg-transparent text-[8px] text-neutral-500" onClick={onCreate}><span className="grid size-9 place-items-center rounded-full bg-[#171719] text-white dark:bg-white dark:text-[#171719]"><Plus size={21}/></span><span>Add</span></button>
+</nav>}

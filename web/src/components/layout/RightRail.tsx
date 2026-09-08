@@ -1,90 +1,10 @@
-import { suggestions } from "../../data/mockData";
+import { CalendarDays, Check, Clock3, Plus } from "lucide-react";
 import type { UserProfile } from "../../types/social";
-import { Avatar } from "../ui/Avatar";
-
-type RightRailProps = {
-  following: Set<string>;
-  user: UserProfile;
-  onFollow: (handle: string) => void;
-  onPreview: (label: string) => void;
-};
-
-const actionClass = "bg-transparent p-0 text-xs font-semibold text-blue-500";
-
-export function RightRail({
-  following,
-  user,
-  onFollow,
-  onPreview,
-}: RightRailProps) {
-  return (
-    <aside className="hidden w-80 pt-[50px] xl:block">
-      <div className="grid grid-cols-[auto_1fr_auto] items-center gap-3">
-        <Avatar src={user.avatar} size="lg" />
-        <div className="flex min-w-0 flex-col">
-          <strong className="truncate text-sm">{user.username}</strong>
-          <span className="text-sm text-neutral-500 dark:text-neutral-400">
-            {user.name}
-          </span>
-        </div>
-        <button
-          className={actionClass}
-          onClick={() => onPreview("Account switcher")}
-        >
-          Switch
-        </button>
-      </div>
-
-      <section className="mt-6">
-        <div className="flex items-center justify-between">
-          <h2 className="m-0 text-sm font-semibold text-neutral-500 dark:text-neutral-400">
-            Suggested for you
-          </h2>
-          <button
-            className="bg-transparent p-0 text-xs font-semibold"
-            onClick={() => onPreview("Suggestions")}
-          >
-            See All
-          </button>
-        </div>
-        <div className="mt-4 grid gap-3.5">
-          {suggestions.map(({ name, handle, image }) => (
-            <div
-              className="grid grid-cols-[auto_1fr_auto] items-center gap-3"
-              key={handle}
-            >
-              <Avatar src={image} />
-              <div className="flex min-w-0 flex-col">
-                <strong className="truncate text-sm">{handle.slice(1)}</strong>
-                <span className="text-sm text-neutral-500 dark:text-neutral-400">
-                  {name}
-                </span>
-                <small className="mt-0.5 text-[11px] text-neutral-500 dark:text-neutral-400">
-                  Suggested for you
-                </small>
-              </div>
-              <button
-                className={
-                  following.has(handle)
-                    ? "bg-transparent p-0 text-xs font-semibold text-neutral-500 dark:text-neutral-400"
-                    : actionClass
-                }
-                onClick={() => onFollow(handle)}
-              >
-                {following.has(handle) ? "Following" : "Follow"}
-              </button>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <footer className="mt-10 text-[11px] leading-4 text-neutral-300">
-        About · Help · Press · API · Jobs · Privacy · Terms
-        <br />
-        Locations · Language · Meta Verified
-        <br />
-        <br />© 2026 THAPAR TALKS
-      </footer>
-    </aside>
-  );
-}
+type Props={following:Set<string>;user:UserProfile;onFollow:(handle:string)=>void;onPreview:(label:string)=>void};
+const agenda=[{time:"10:30",title:"Design critique",meta:"LT 104 · 7 classmates",color:"bg-[#ed111c]"},{time:"14:00",title:"FAPS photo walk",meta:"Library lawns · Open invite",color:"bg-[#ed111c]"},{time:"18:30",title:"CCS build night",meta:"TAN 201 · Bring your laptop",color:"bg-[#6f91a8]"}];
+export function RightRail({following,onFollow,onPreview}:Props){const joined=following.has("@faps.tiet");return <aside className="hidden w-[310px] shrink-0 border-l border-[#171719]/10 pl-8 pt-[58px] dark:border-white/10 xl:block">
+  <div className="flex items-center justify-between"><div><p className="mb-2 text-[10px] font-bold uppercase tracking-[.18em] text-neutral-500">Your day</p><h2 className="font-serif text-2xl font-normal">Three things ahead</h2></div><CalendarDays size={18} className="text-neutral-500"/></div>
+  <div className="relative mt-7 before:absolute before:bottom-8 before:left-[50px] before:top-5 before:w-px before:bg-black/10 dark:before:bg-white/10">{agenda.map((item,index)=><button className="relative grid min-h-[82px] w-full grid-cols-[38px_10px_1fr] gap-3 bg-transparent py-3 text-left" key={item.time} onClick={()=>onPreview(item.title)}><time className="pt-0.5 text-[10px] text-neutral-500">{item.time}</time><i className={`z-10 mt-1 size-2 rounded-full ring-4 ring-[#f7f7f5] dark:ring-[#050505] ${item.color}`}/><span><strong className="block font-serif text-[15px] font-medium">{item.title}</strong><small className="mt-1.5 block text-[9px] leading-4 text-neutral-500">{item.meta}</small>{index===0?<b className="mt-2 block text-[8px] tracking-[.14em] text-[#ed111c] dark:text-emerald-300">NEXT</b>:null}</span></button>)}</div>
+  <button className="mt-3 flex h-10 w-full items-center justify-center gap-2 rounded-md border border-black/10 text-[10px] text-neutral-500 dark:border-white/10"><Plus size={15}/>Add from timetable</button>
+  <section className="mt-12 border-t border-black/10 pt-7 dark:border-white/10"><p className="mb-2 text-[10px] font-bold uppercase tracking-[.18em] text-neutral-500">Picked for you</p><img className="mt-4 h-36 w-full object-cover saturate-75" src="/images/campus.webp" alt="Campus photo walk"/><h3 className="mt-4 font-serif text-xl font-normal leading-tight">Golden-hour photo walk</h3><p className="mt-2 text-[10px] leading-5 text-neutral-500">No camera needed. Meet at the library lawns in 52 minutes.</p><button className={`mt-4 flex h-10 w-full items-center justify-center gap-2 rounded-md text-[11px] font-semibold ${joined?"bg-[#ed111c] text-white":"bg-[#171719] text-white dark:bg-white dark:text-[#171719]"}`} onClick={()=>onFollow("@faps.tiet")}>{joined?<Check size={15}/>:<Clock3 size={15}/>} {joined?"You’re going":"Join the walk"}</button></section>
+</aside>}

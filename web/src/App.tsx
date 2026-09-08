@@ -1,4 +1,4 @@
-﻿import {
+import {
   lazy,
   Suspense,
   useCallback,
@@ -16,6 +16,7 @@ import {
   useLocation,
   useNavigate,
 } from "react-router-dom";
+import { Sun } from "lucide-react";
 import { AuthScreen } from "./components/auth/AuthScreen";
 import { PasswordResetScreen } from "./components/auth/PasswordResetScreen";
 import { FeedHeader } from "./components/feed/FeedHeader";
@@ -87,15 +88,15 @@ const ArchivedPostsView = lazy(() =>
   })),
 );
 
-const SESSION_KEY = "thapar-talks-session-v1";
-const THEME_KEY = "thapar-talks-theme-v1";
+const SESSION_KEY = "titalks-session-v1";
+const THEME_KEY = "titalks-theme-v1";
 const routeMap: Record<string, string> = {
-  Home: "/",
-  Search: "/search",
-  Explore: "/explore",
-  Reels: "/reels",
-  Messages: "/messages",
-  Notifications: "/notifications",
+  Today: "/",
+  People: "/people",
+  Pulse: "/pulse",
+  Spaces: "/spaces",
+  Inbox: "/inbox",
+  Activity: "/activity",
   Profile: "/profile",
   Settings: "/settings",
   More: "/settings",
@@ -133,6 +134,15 @@ function App() {
   >(null);
   const [toast, setToast] = useState("");
   const toastTimer = useRef<number | undefined>(undefined);
+  const todayLabel = useMemo(
+    () =>
+      new Intl.DateTimeFormat("en-IN", {
+        weekday: "long",
+        day: "numeric",
+        month: "long",
+      }).format(new Date()),
+    [],
+  );
 
   useEffect(() => () => window.clearTimeout(toastTimer.current), []);
   useEffect(() => {
@@ -143,7 +153,7 @@ function App() {
     document.documentElement.style.colorScheme = theme;
     document
       .querySelector('meta[name="theme-color"]')
-      ?.setAttribute("content", theme === "dark" ? "#000000" : "#ffffff");
+      ?.setAttribute("content", theme === "dark" ? "#050505" : "#f7f7f5");
     window.localStorage.setItem(THEME_KEY, theme);
   }, [theme]);
   const flash = useCallback((message: string) => {
@@ -167,7 +177,7 @@ function App() {
       ? "Settings"
       : (Object.entries(routeMap).find(
           ([, path]) => path !== "/" && location.pathname.startsWith(path),
-        )?.[0] ?? "Home");
+        )?.[0] ?? "Today");
   const go = (label: string) => {
     navigate(routeMap[label] ?? "/");
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -270,7 +280,7 @@ function App() {
         ...current,
       ]);
     setComposerOpen(false);
-    navigate(input.kind === "reel" ? "/reels" : "/");
+    navigate(input.kind === "reel" ? "/spaces" : "/");
     flash(`${input.kind[0].toUpperCase()}${input.kind.slice(1)} shared`);
   };
 
@@ -352,8 +362,8 @@ function App() {
     );
 
   const home = (
-    <div className="mx-auto grid min-h-screen w-full max-w-[980px] lg:grid-cols-[minmax(470px,630px)] xl:grid-cols-[minmax(470px,630px)_320px] xl:gap-[30px]">
-      <main className="mx-auto w-full min-w-0 max-w-[630px] pb-[60px] pt-[60px] lg:pt-[30px]">
+    <div className="mx-auto grid min-h-screen w-full max-w-[1380px] xl:grid-cols-[minmax(0,1fr)_342px] xl:gap-10 xl:px-12">
+      <main className="min-w-0 pb-24 pt-16 lg:px-10 lg:pt-12 xl:px-0">
         <FeedHeader
           theme={theme}
           onToggleTheme={() =>
@@ -361,12 +371,37 @@ function App() {
           }
           onPreview={go}
         />
-        <Stories
-          stories={userStories}
-          onSelect={setStoryIndex}
-          onCreate={() => openComposer("story")}
-        />
-        <div className="mx-auto grid w-full max-w-[470px] gap-0 sm:gap-3">
+        <section className="px-4 pb-9 pt-8 sm:px-0 lg:pt-0">
+          <p className="mb-3 text-[10px] font-bold uppercase tracking-[.18em] text-neutral-500">
+            {todayLabel}
+          </p>
+          <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
+            <div>
+              <h1 className="font-serif text-[42px] font-normal leading-none tracking-[-.045em] text-[#171719] dark:text-[#f5f5f5] sm:text-[58px]">
+                Good afternoon, {user.name.split(" ")[0]}.
+              </h1>
+              <p className="mt-4 text-sm text-neutral-500">
+                Your campus feels unusually alive today.
+              </p>
+            </div>
+            <div className="flex items-center gap-3 text-[#ed111c]">
+              <Sun size={19} />
+              <span className="text-[10px] leading-4 text-neutral-500">
+                <b className="block text-sm text-[#171719] dark:text-white">29°</b>
+                Clear skies
+              </span>
+            </div>
+          </div>
+        </section>
+        <Stories stories={userStories} onSelect={setStoryIndex} onCreate={() => openComposer("story")} />
+        <div className="px-4 pt-10 sm:px-0">
+          <div className="mb-1 flex items-end justify-between">
+            <div>
+              <p className="mb-2 text-[10px] font-bold uppercase tracking-[.18em] text-neutral-500">Worth showing up for</p>
+              <h2 className="font-serif text-2xl font-normal tracking-[-.025em]">Around campus today</h2>
+            </div>
+            <span className="hidden text-[10px] text-neutral-500 sm:block">Selected for your interests</span>
+          </div>
           {visiblePosts.map((post) => (
             <PostCard
               key={post.id}
@@ -378,7 +413,7 @@ function App() {
               onLike={() => toggleSetItem(setLiked, post.id)}
               onSave={() => savePost(post.id)}
               onShare={() => void shareLink(post.id)}
-              onOpen={() => navigate(`/post/${post.id}`)}
+              onOpen={() => navigate(`/update/${post.id}`)}
               onOpenProfile={() =>
                 navigate(
                   post.handle === user.username
@@ -390,7 +425,7 @@ function App() {
               onArchive={() => {
                 archivePost(post.id);
                 flash(
-                  archived.has(post.id) ? "Post restored" : "Post archived",
+                  archived.has(post.id) ? "Update restored" : "Update archived",
                 );
               }}
               onDelete={() => deletePost(post.id)}
@@ -410,7 +445,7 @@ function App() {
   );
 
   return (
-    <div className="min-h-[100dvh] bg-white font-sans text-black dark:bg-black dark:text-white lg:pl-[74px] xl:pl-[245px]">
+    <div className="min-h-[100dvh] bg-[#f7f7f5] font-sans text-[#171719] selection:bg-[#ed111c] selection:text-white dark:bg-[#050505] dark:text-[#f5f5f5] lg:pl-[76px] xl:pl-[238px]">
       <Sidebar
         activeNav={activeNav}
         user={user}
@@ -427,14 +462,14 @@ function App() {
         <Routes>
           <Route path="/" element={home} />
           <Route
-            path="/search"
+            path="/people"
             element={
               <SearchView following={following} onFollow={toggleFollow} />
             }
           />
-          <Route path="/explore" element={<ExploreView />} />
+          <Route path="/pulse" element={<ExploreView />} />
           <Route
-            path="/reels"
+            path="/spaces"
             element={
               <ReelsView
                 username={user.username}
@@ -447,12 +482,12 @@ function App() {
             }
           />
           <Route
-            path="/messages"
+            path="/inbox"
             element={
               <MessagesView username={user.username} onPreview={flash} />
             }
           />
-          <Route path="/notifications" element={<NotificationsView />} />
+          <Route path="/activity" element={<NotificationsView />} />
           <Route
             path="/profile"
             element={
@@ -480,7 +515,7 @@ function App() {
             }
           />
           <Route
-            path="/post/:postId"
+            path="/update/:postId"
             element={
               <PostDetailView
                 user={user}
@@ -531,7 +566,7 @@ function App() {
               <StatePanel
                 type="error"
                 title="Page not found"
-                message="This page does not exist in Thapar Talks."
+                message="This page does not exist in titalks."
                 actionLabel="Return home"
                 onAction={() => navigate("/")}
               />

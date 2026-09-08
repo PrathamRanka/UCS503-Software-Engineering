@@ -44,7 +44,7 @@ export function StoryViewer({
       className="fixed inset-0 z-40 flex items-center justify-center bg-black/90 p-0 sm:p-5"
       role="dialog"
       aria-modal="true"
-      aria-label={`${story.name}'s story`}
+      aria-label={`${story.name} campus moment`}
     >
       <div className="relative h-full w-full max-w-[430px] overflow-hidden bg-neutral-950 text-white sm:rounded-lg">
         <div className="absolute inset-x-2.5 top-2 z-10 flex gap-1">
@@ -66,7 +66,7 @@ export function StoryViewer({
           <button
             className="ml-auto grid size-10 place-items-center bg-transparent"
             onClick={onClose}
-            aria-label="Close story"
+            aria-label="Close moment"
           >
             <X />
           </button>
@@ -74,22 +74,22 @@ export function StoryViewer({
         <img
           className="size-full object-cover"
           src={story.image}
-          alt={`${story.name}'s story`}
+          alt={`${story.name} campus moment`}
         />
         <div className="absolute inset-x-5 bottom-9 text-center font-semibold drop-shadow-lg">
-          A little moment from campus today ✨
+          Happening around campus now
         </div>
         <button
           className="absolute left-2 top-1/2 grid size-11 -translate-y-1/2 place-items-center rounded-full bg-black/25 transition hover:bg-black/40 active:scale-95 motion-reduce:transition-none"
           onClick={onPrevious}
-          aria-label="Previous story"
+          aria-label="Previous moment"
         >
           <ChevronLeft />
         </button>
         <button
           className="absolute right-2 top-1/2 grid size-11 -translate-y-1/2 place-items-center rounded-full bg-black/25 transition hover:bg-black/40 active:scale-95 motion-reduce:transition-none"
           onClick={onNext}
-          aria-label="Next story"
+          aria-label="Next moment"
         >
           <ChevronRight />
         </button>

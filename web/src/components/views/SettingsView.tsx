@@ -47,7 +47,7 @@ export function SettingsView({
   };
 
   const toggleClass = (enabled: boolean) =>
-    `relative h-6 w-11 rounded-full transition ${enabled ? "bg-blue-500" : "bg-neutral-300"} motion-reduce:transition-none after:absolute after:top-0.5 after:size-5 after:rounded-full after:bg-white after:shadow-sm after:transition after:content-[''] ${enabled ? "after:left-[22px]" : "after:left-0.5"}`;
+    `relative h-6 w-11 rounded-full transition ${enabled ? "bg-[#ed111c]" : "bg-neutral-300"} motion-reduce:transition-none after:absolute after:top-0.5 after:size-5 after:rounded-full after:bg-white after:shadow-sm after:transition after:content-[''] ${enabled ? "after:left-[22px]" : "after:left-0.5"}`;
   const changePhoto = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
@@ -57,18 +57,18 @@ export function SettingsView({
   };
 
   return (
-    <section className="mx-auto min-h-screen w-full max-w-3xl border-x border-neutral-100 dark:border-neutral-800">
-      <PageHeader title="Settings" />
+    <section className="mx-auto min-h-screen w-full max-w-4xl">
+      <PageHeader title="Settings" eyebrow="Your titalks" />
       <div className="p-4 sm:p-7">
         <form
-          className="rounded-xl border border-neutral-200 dark:border-neutral-800 p-5 sm:p-7"
+          className="rounded-2xl border border-black/10 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[.035] sm:p-7"
           onSubmit={submit}
         >
           <div className="flex items-center gap-4">
             <Avatar src={avatar} size="lg" />
             <div>
               <strong className="block">{user.username}</strong>
-              <label className="mt-1 block cursor-pointer text-xs font-semibold text-blue-500">
+              <label className="mt-1 block cursor-pointer text-xs font-semibold text-[#ed111c]">
                 Change profile photo
                 <input
                   className="sr-only"
@@ -110,7 +110,7 @@ export function SettingsView({
             </label>
           </div>
           <button
-            className="mt-6 rounded-lg bg-blue-500 px-5 py-2.5 text-sm font-semibold text-white"
+            className="mt-6 rounded-lg bg-[#ed111c] px-5 py-2.5 text-sm font-semibold text-white"
             type="submit"
           >
             Save changes
@@ -145,7 +145,7 @@ export function SettingsView({
             <div className="flex-1">
               <strong className="text-sm">Push notifications</strong>
               <p className="text-xs text-neutral-500 dark:text-neutral-400">
-                Likes, comments, follows and messages.
+                Invites, replies, connections and messages.
               </p>
             </div>
             <button
@@ -194,7 +194,7 @@ export function SettingsView({
           onClick={onLogout}
         >
           <LogOut size={19} />
-          Log out of Thapar Talks
+          Log out of titalks
         </button>
         <button
           className="mt-3 w-full py-3 text-xs font-semibold text-red-500"

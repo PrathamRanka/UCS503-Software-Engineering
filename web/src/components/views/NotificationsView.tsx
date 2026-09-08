@@ -8,14 +8,14 @@ export function NotificationsView() {
   const [following, setFollowing] = useState<Set<number>>(() => new Set());
 
   return (
-    <section className="mx-auto min-h-screen w-full max-w-2xl border-x border-neutral-100 dark:border-neutral-800">
-      <PageHeader title="Notifications" />
-      <div className="px-4 py-5 sm:px-6">
+    <section className="mx-auto min-h-screen w-full max-w-3xl">
+      <PageHeader title="Activity" eyebrow="What changed" />
+      <div className="px-4 py-7 sm:px-8">
         <h2 className="mb-2 text-base font-bold">Today</h2>
         <div className="grid gap-1">
           {notifications.map((item, index) => (
             <div
-              className="flex items-center gap-3 rounded-xl px-1 py-3 hover:bg-neutral-50 dark:hover:bg-neutral-800"
+              className="flex items-center gap-3 rounded-xl border border-transparent px-3 py-4 transition hover:border-black/10 hover:bg-white dark:hover:border-white/10 dark:hover:bg-white/5 motion-reduce:transition-none"
               key={item.id}
             >
               <Avatar src={item.avatar} />
@@ -29,12 +29,12 @@ export function NotificationsView() {
                 <img
                   className="size-11 rounded object-cover"
                   src={item.image}
-                  alt="Related post"
+                  alt="Related campus update"
                 />
               ) : null}
               {item.follow ? (
                 <button
-                  className={`rounded-lg px-4 py-2 text-xs font-semibold ${following.has(item.id) ? "bg-neutral-100 dark:bg-neutral-800" : "bg-blue-500 text-white"}`}
+                  className={`rounded-lg px-4 py-2 text-xs font-semibold ${following.has(item.id) ? "bg-neutral-100 dark:bg-neutral-800" : "bg-[#ed111c] text-white"}`}
                   onClick={() =>
                     setFollowing((current) => {
                       const next = new Set(current);
@@ -45,11 +45,11 @@ export function NotificationsView() {
                     })
                   }
                 >
-                  {following.has(item.id) ? "Following" : "Follow"}
+                  {following.has(item.id) ? "Connected" : "Connect"}
                 </button>
               ) : null}
               {index === 0 ? (
-                <i className="size-2 rounded-full bg-blue-500" />
+                <i className="size-2 rounded-full bg-[#ed111c]" />
               ) : null}
             </div>
           ))}

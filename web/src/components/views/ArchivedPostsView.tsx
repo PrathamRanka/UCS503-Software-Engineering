@@ -24,7 +24,7 @@ export function ArchivedPostsView({
         >
           <ArrowLeft />
         </button>
-        <h1 className="text-lg font-bold">Post archive</h1>
+        <h1 className="text-lg font-bold">Private archive</h1>
       </header>
       {posts.length ? (
         <div className="grid grid-cols-2 gap-3 p-4 sm:grid-cols-3">
@@ -60,8 +60,8 @@ export function ArchivedPostsView({
       ) : (
         <StatePanel
           type="empty"
-          title="No archived posts"
-          message="Posts you archive will remain private here until you restore or delete them."
+          title="Your archive is empty"
+          message="Updates you archive will remain private here until you restore or delete them."
           actionLabel="Back to profile"
           onAction={() => navigate("/profile")}
         />

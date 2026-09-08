@@ -1,21 +1,12 @@
-import { Camera } from "lucide-react";
-
 export function Brand({ compact = false }: { compact?: boolean }) {
   return (
-    <a
-      className="flex w-fit items-center text-black dark:text-white no-underline"
-      href="#top"
-      aria-label="Thapar Talks home"
-    >
-      <Camera
-        className={compact ? "hidden size-7 lg:block xl:hidden" : "hidden"}
-        strokeWidth={2.2}
+    <a className="group flex w-fit items-center no-underline" href="/" aria-label="titalks home">
+      <img
+        className={`${compact ? "h-10 w-10 rounded-xl object-cover xl:hidden" : "h-11 w-auto"} transition duration-200 ease-out group-hover:scale-[1.025] motion-reduce:transition-none`}
+        src={compact ? "/titalks-mark.webp" : "/titalks-wordmark.webp"}
+        alt="titalks"
       />
-      <span
-        className={`font-sans text-[25px] font-bold leading-none tracking-[-1.4px] ${compact ? "lg:hidden xl:block" : ""}`}
-      >
-        Thapar Talks
-      </span>
+      {compact ? <img className="hidden h-12 w-auto xl:block" src="/titalks-wordmark.webp" alt="titalks" /> : null}
     </a>
   );
 }

@@ -1,178 +1,22 @@
 import { ChangeEvent, useEffect, useState } from "react";
-import { Clapperboard, ImagePlus, PlusCircle, X } from "lucide-react";
+import { CalendarDays, ImagePlus, MapPin, Sparkles, Users, X } from "lucide-react";
 import type { ContentKind, NewContentInput } from "../../types/social";
 
-type ComposerModalProps = {
-  initialKind?: ContentKind;
-  onClose: () => void;
-  onShare: (content: NewContentInput) => void;
-};
+type Props={initialKind?:ContentKind;onClose:()=>void;onShare:(content:NewContentInput)=>void};
+const kinds:{id:ContentKind;label:string}[]=[{id:"post",label:"Update"},{id:"story",label:"Invite"},{id:"reel",label:"Clip"}];
 
-const kinds: { id: ContentKind; label: string }[] = [
-  { id: "post", label: "Post" },
-  { id: "story", label: "Story" },
-  { id: "reel", label: "Reel" },
-];
-
-export function ComposerModal({
-  initialKind = "post",
-  onClose,
-  onShare,
-}: ComposerModalProps) {
-  const [kind, setKind] = useState<ContentKind>(initialKind);
-  const [caption, setCaption] = useState("");
-  const [media, setMedia] = useState("");
-  const [mediaType, setMediaType] = useState<"image" | "video">("image");
-
-  useEffect(() => {
-    const closeOnEscape = (event: KeyboardEvent) =>
-      event.key === "Escape" && onClose();
-    window.addEventListener("keydown", closeOnEscape);
-    return () => window.removeEventListener("keydown", closeOnEscape);
-  }, [onClose]);
-  const readMedia = (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
-    setMediaType(file.type.startsWith("video/") ? "video" : "image");
-    const reader = new FileReader();
-    reader.onload = () => setMedia(String(reader.result));
-    reader.readAsDataURL(file);
-  };
-  const useDemo = () => {
-    if (kind === "reel") {
-      setMedia("/videos/campus-reel.mp4");
-      setMediaType("video");
-    } else {
-      setMedia(
-        kind === "story" ? "/images/campus.webp" : "/images/library.webp",
-      );
-      setMediaType("image");
-    }
-  };
-  const share = () =>
-    media &&
-    onShare({
-      kind,
-      image: media,
-      mediaType,
-      caption:
-        caption.trim() ||
-        (kind === "story" ? "A campus moment ✨" : "A new moment from campus."),
-    });
-
-  return (
-    <div
-      className="fixed inset-0 z-30 grid place-items-center bg-black/65 p-4"
-      role="presentation"
-      onMouseDown={onClose}
-    >
-      <section
-        className="w-full max-w-[590px] overflow-hidden rounded-xl bg-white dark:bg-neutral-950 shadow-2xl"
-        role="dialog"
-        aria-modal="true"
-        onMouseDown={(event) => event.stopPropagation()}
-      >
-        <header className="relative flex min-h-12 items-center justify-center border-b border-neutral-200 dark:border-neutral-800">
-          <h2 className="text-base font-semibold">Create new {kind}</h2>
-          <button
-            className="absolute right-2 grid size-9 place-items-center rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-800"
-            onClick={onClose}
-          >
-            <X />
-          </button>
-        </header>
-        <div className="flex border-b border-neutral-200 dark:border-neutral-800">
-          {kinds.map((item) => (
-            <button
-              className={`flex-1 py-3 text-sm font-semibold ${kind === item.id ? "border-b-2 border-black dark:border-white" : "text-neutral-400"}`}
-              onClick={() => {
-                setKind(item.id);
-                setMedia("");
-              }}
-              key={item.id}
-            >
-              {item.label}
-            </button>
-          ))}
-        </div>
-        {media ? (
-          <div
-            className={`relative m-4 overflow-hidden rounded-lg bg-neutral-950 ${kind === "story" || kind === "reel" ? "mx-auto aspect-[9/16] max-h-[390px] w-[220px]" : "aspect-square max-h-[340px]"}`}
-          >
-            {mediaType === "video" ? (
-              <video
-                className="size-full object-cover"
-                src={media}
-                controls
-                autoPlay
-                muted
-                loop
-              />
-            ) : (
-              <img
-                className="size-full object-cover"
-                src={media}
-                alt="Content preview"
-              />
-            )}
-            <button
-              className="absolute right-2 top-2 grid size-8 place-items-center rounded-full bg-black/65 text-white"
-              onClick={() => setMedia("")}
-            >
-              <X size={17} />
-            </button>
-          </div>
-        ) : (
-          <div className="m-4 flex h-[260px] flex-col items-center justify-center gap-2 rounded-lg border border-dashed border-neutral-400 bg-neutral-50 dark:bg-neutral-900">
-            {kind === "reel" ? (
-              <Clapperboard size={48} strokeWidth={1.4} />
-            ) : kind === "story" ? (
-              <PlusCircle size={48} strokeWidth={1.4} />
-            ) : (
-              <ImagePlus size={48} strokeWidth={1.4} />
-            )}
-            <strong className="font-normal">
-              Choose {kind === "reel" ? "a video or cover" : "a photo"} to share
-            </strong>
-            <label className="cursor-pointer rounded-lg bg-blue-500 px-4 py-2 text-sm font-semibold text-white">
-              Select from device
-              <input
-                className="sr-only"
-                type="file"
-                accept={kind === "reel" ? "image/*,video/*" : "image/*"}
-                onChange={readMedia}
-              />
-            </label>
-            <button
-              className="text-xs font-semibold text-blue-500"
-              onClick={useDemo}
-            >
-              Use demo {kind}
-            </button>
-          </div>
-        )}
-        <textarea
-          className="mx-4 min-h-20 w-[calc(100%_-_2rem)] resize-y rounded-lg border border-neutral-200 bg-transparent p-3 outline-none focus:border-neutral-400 dark:border-neutral-800"
-          value={caption}
-          onChange={(event) => setCaption(event.target.value)}
-          maxLength={2200}
-          placeholder={
-            kind === "story" ? "Add story text…" : "Write a caption…"
-          }
-        />
-        <div className="flex items-center justify-between px-4 py-3.5">
-          <span className="text-xs text-neutral-500 dark:text-neutral-400">
-            {caption.length}/2,200
-          </span>
-          <button
-            className="font-semibold text-blue-500 disabled:opacity-40"
-            disabled={!media}
-            onClick={share}
-          >
-            Share
-          </button>
-        </div>
-      </section>
-    </div>
-  );
+export function ComposerModal({initialKind="post",onClose,onShare}:Props){
+  const [kind,setKind]=useState<ContentKind>(initialKind); const [caption,setCaption]=useState(""); const [media,setMedia]=useState(""); const [mediaType,setMediaType]=useState<"image"|"video">("image");
+  useEffect(()=>{const close=(event:KeyboardEvent)=>event.key==="Escape"&&onClose();window.addEventListener("keydown",close);return()=>window.removeEventListener("keydown",close)},[onClose]);
+  const readMedia=(event:ChangeEvent<HTMLInputElement>)=>{const file=event.target.files?.[0];if(!file)return;setMediaType(file.type.startsWith("video/")?"video":"image");const reader=new FileReader();reader.onload=()=>setMedia(String(reader.result));reader.readAsDataURL(file)};
+  const useDemo=()=>{if(kind==="reel"){setMedia("/videos/campus-reel.mp4");setMediaType("video")}else{setMedia(kind==="story"?"/images/campus.webp":"/images/library.webp");setMediaType("image")}};
+  const publish=()=>media&&onShare({kind,image:media,mediaType,caption:caption.trim()||(kind==="story"?"Meet us on campus.":"A useful update from campus.")});
+  return <div className="fixed inset-0 z-40 grid place-items-center bg-black/75 p-4 backdrop-blur-md" role="presentation" onMouseDown={onClose}><section className="w-full max-w-[620px] overflow-hidden rounded-2xl bg-white text-[#171719] shadow-[0_30px_100px_rgba(0,0,0,.35)] dark:bg-[#111113] dark:text-white" role="dialog" aria-modal="true" onMouseDown={event=>event.stopPropagation()}>
+    <header className="flex min-h-20 items-center justify-between border-b border-black/10 px-6 dark:border-white/10"><div><p className="text-[9px] font-bold uppercase tracking-[.2em] text-[#ed111c]">Add to campus</p><h2 className="mt-1 text-xl font-semibold tracking-[-.025em]">What are you making happen?</h2></div><button className="grid size-10 place-items-center rounded-full border border-black/10 hover:bg-black/5 dark:border-white/10 dark:hover:bg-white/5" onClick={onClose}><X size={19}/></button></header>
+    <div className="flex gap-2 px-6 pt-5">{kinds.map(item=><button className={`rounded-full border px-4 py-2 text-xs font-semibold transition motion-reduce:transition-none ${kind===item.id?"border-[#ed111c] bg-[#ed111c] text-white":"border-black/10 text-neutral-500 hover:border-black/30 dark:border-white/10"}`} onClick={()=>{setKind(item.id);setMedia("")}} key={item.id}>{item.label}</button>)}</div>
+    {media?<div className={`relative mx-6 mt-5 overflow-hidden rounded-xl bg-black ${kind==="story"||kind==="reel"?"mx-auto aspect-[9/16] max-h-[360px] w-[220px]":"aspect-[16/9] max-h-[310px]"}`}>{mediaType==="video"?<video className="size-full object-cover" src={media} controls autoPlay muted loop/>:<img className="size-full object-cover" src={media} alt="Preview"/>}<button className="absolute right-2 top-2 grid size-8 place-items-center rounded-full bg-black/70 text-white" onClick={()=>setMedia("")}><X size={16}/></button></div>:<div className="mx-6 mt-5 flex h-[230px] flex-col items-center justify-center gap-3 rounded-xl border border-dashed border-black/20 bg-[#f8f8f6] dark:border-white/20 dark:bg-white/[.03]"><span className="grid size-14 place-items-center rounded-2xl bg-black text-white dark:bg-white dark:text-black"><ImagePlus size={25}/></span><strong className="font-medium">Add a photo or video</strong><label className="cursor-pointer rounded-lg bg-[#ed111c] px-4 py-2.5 text-xs font-semibold text-white shadow-lg shadow-red-600/15">Choose from device<input className="sr-only" type="file" accept={kind==="reel"?"image/*,video/*":"image/*"} onChange={readMedia}/></label><button className="text-xs font-semibold text-neutral-500 hover:text-[#ed111c]" onClick={useDemo}>Use demo media</button></div>}
+    <textarea className="mx-6 mt-5 min-h-24 w-[calc(100%_-_3rem)] resize-y border-y border-black/10 bg-transparent py-4 font-serif text-xl outline-none placeholder:text-neutral-400 dark:border-white/10" value={caption} onChange={event=>setCaption(event.target.value)} maxLength={1200} placeholder={kind==="story"?"What should people know before joining?":"Share something useful with campus…"}/>
+    <div className="mx-6 mt-4 flex gap-2 overflow-x-auto pb-1"><button className="flex shrink-0 items-center gap-2 rounded-lg border border-black/10 px-3 py-2 text-[10px] text-neutral-500 dark:border-white/10"><CalendarDays size={14}/>When</button><button className="flex shrink-0 items-center gap-2 rounded-lg border border-black/10 px-3 py-2 text-[10px] text-neutral-500 dark:border-white/10"><MapPin size={14}/>Where</button><button className="flex shrink-0 items-center gap-2 rounded-lg border border-black/10 px-3 py-2 text-[10px] text-neutral-500 dark:border-white/10"><Users size={14}/>Audience</button></div>
+    <div className="flex items-center justify-between px-6 py-5"><span className="text-[10px] text-neutral-500">{caption.length}/1,200</span><button className="flex items-center gap-2 rounded-lg bg-[#ed111c] px-5 py-2.5 text-xs font-semibold text-white shadow-lg shadow-red-600/15 disabled:opacity-40" disabled={!media} onClick={publish}><Sparkles size={15}/>Publish</button></div>
+  </section></div>;
 }

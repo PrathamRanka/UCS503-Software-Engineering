@@ -1,42 +1,11 @@
-import { Plus } from "lucide-react";
+import { ArrowUpRight, MapPin, Plus } from "lucide-react";
 import type { Story } from "../../types/social";
-import { Avatar } from "../ui/Avatar";
-
-type StoriesProps = {
-  stories: Story[];
-  onSelect: (index: number) => void;
-  onCreate: () => void;
-};
-
-export function Stories({ stories, onSelect, onCreate }: StoriesProps) {
-  return (
-    <section
-      className="flex w-full gap-[15px] overflow-x-auto border-b border-neutral-200 dark:border-neutral-800 px-2 py-4 [scrollbar-width:none] lg:border-0 lg:pb-6 [&::-webkit-scrollbar]:hidden"
-      aria-label="Stories"
-    >
-      {stories.map((story, index) => (
-        <button
-          className="flex w-[70px] min-w-[70px] flex-col items-center gap-1.5 bg-transparent text-xs"
-          key={story.name}
-          onClick={() => (story.mine ? onCreate() : onSelect(index))}
-        >
-          <span
-            className={`relative grid size-[66px] place-items-center rounded-full p-[3px] ${story.mine ? "bg-neutral-300" : "bg-[conic-gradient(from_220deg,#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5,#feda75)]"}`}
-          >
-            <span className="rounded-full bg-white dark:bg-neutral-950 p-0.5">
-              <Avatar src={story.image} size="lg" />
-            </span>
-            {story.mine ? (
-              <i className="absolute -bottom-0.5 -right-0.5 z-10 grid size-[21px] place-items-center rounded-full border-2 border-white bg-blue-500 text-white">
-                <Plus size={13} strokeWidth={3} />
-              </i>
-            ) : null}
-          </span>
-          <span className="w-full overflow-hidden text-ellipsis whitespace-nowrap">
-            {story.name}
-          </span>
-        </button>
-      ))}
-    </section>
-  );
-}
+type Props={stories:Story[];onSelect:(index:number)=>void;onCreate:()=>void};
+const places=["Library lawns","TAN building","Main field","F block","Jagadish hall"];
+export function Stories({stories,onSelect,onCreate}:Props){return <section className="border-y border-[#171719]/10 py-7 dark:border-white/10" aria-label="Live campus pulse">
+  <div className="mb-5 flex items-end justify-between px-1"><div><p className="mb-2 text-[10px] font-bold uppercase tracking-[.18em] text-neutral-500">Live campus</p><h2 className="font-serif text-2xl font-normal tracking-[-.025em]">What’s moving around you</h2></div><button className="hidden items-center gap-1 text-[11px] text-neutral-500 sm:flex">Open map <ArrowUpRight size={14}/></button></div>
+  <div className="flex gap-2 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+    <button className="flex min-h-28 min-w-36 flex-col justify-between rounded-sm border border-dashed border-[#171719]/20 bg-transparent p-4 text-left dark:border-white/20" onClick={onCreate}><span className="grid size-8 place-items-center rounded-full bg-[#171719] text-white dark:bg-white dark:text-[#171719]"><Plus size={16}/></span><span><strong className="block font-serif text-sm">Start something</strong><small className="mt-1 block text-[9px] text-neutral-500">Invite your campus</small></span></button>
+    {stories.filter(story=>!story.mine).map((story,index)=><button className="group relative min-h-28 min-w-[170px] overflow-hidden rounded-sm bg-neutral-900 text-left text-white" key={story.name} onClick={()=>onSelect(index+1)}><img className="absolute inset-0 size-full object-cover opacity-60 transition duration-500 ease-out group-hover:scale-[1.03] motion-reduce:transition-none" src={story.image} alt=""/><span className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/5 to-transparent"/><span className="absolute inset-x-3 bottom-3"><strong className="block font-serif text-[15px] font-medium">{story.name.replace(".tiet","")}</strong><small className="mt-1 flex items-center gap-1 text-[9px] text-white/65"><MapPin size={10}/>{places[index%places.length]}</small></span></button>)}
+  </div>
+</section>}
