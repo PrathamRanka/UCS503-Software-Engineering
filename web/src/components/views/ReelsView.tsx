@@ -19,7 +19,6 @@ import {
   MessageCircle,
   MoreHorizontal,
   Pencil,
-  Play,
   Trash2,
   Users,
   Volume2,
@@ -63,8 +62,10 @@ function LocalVideo({ src, active }: { src: string; active: boolean }) {
   useEffect(() => {
     const video = ref.current;
     if (!video) return;
-    if (active) void video.play().catch(() => undefined);
-    else video.pause();
+    if (active) {
+      const playRequest = video.play();
+      void playRequest?.catch(() => undefined);
+    } else video.pause();
   }, [active]);
 
   return (
@@ -134,13 +135,6 @@ function ReelCard({
             loading="lazy"
           />
           {reel.video ? <LocalVideo src={reel.video} active={active} /> : null}
-          {!reel.video ? (
-            <span className="absolute inset-0 grid place-items-center">
-              <span className="grid size-16 place-items-center rounded-full bg-white/90 text-black shadow-xl backdrop-blur">
-                <Play size={23} fill="currentColor" />
-              </span>
-            </span>
-          ) : null}
           <span className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-black/25" />
           <div className="absolute left-4 right-4 top-4 flex items-center justify-between">
             <span className="rounded-full bg-black/45 px-3 py-1.5 text-[9px] font-bold uppercase tracking-[.15em] backdrop-blur-md">
@@ -207,10 +201,22 @@ export function ReelsView({
   onDelete,
 }: Props) {
   const orderedReels = useMemo(() => {
-    const own = reels.filter((reel) => reel.creator === username);
-    const official = reels.filter((reel) => reel.creator !== username && reel.official);
-    const community = reels.filter((reel) => reel.creator !== username && !reel.official);
-    return [...own, ...official, ...community];
+    const ownPlayable = reels.filter(
+      (reel) => reel.creator === username && Boolean(reel.video),
+    );
+    const otherPlayable = reels.filter(
+      (reel) => reel.creator !== username && Boolean(reel.video),
+    );
+    const ownStatic = reels.filter(
+      (reel) => reel.creator === username && !reel.video,
+    );
+    const official = reels.filter(
+      (reel) => reel.creator !== username && !reel.video && reel.official,
+    );
+    const community = reels.filter(
+      (reel) => reel.creator !== username && !reel.video && !reel.official,
+    );
+    return [...ownPlayable, ...otherPlayable, ...ownStatic, ...official, ...community];
   }, [reels, username]);
   const [visibleCount, setVisibleCount] = useState(() => Math.min(5, orderedReels.length));
   const [activeId, setActiveId] = useState<number | null>(orderedReels[0]?.id ?? null);
@@ -227,6 +233,14 @@ export function ReelsView({
   useEffect(() => {
     setVisibleCount((current) => Math.min(Math.max(current, 5), orderedReels.length));
   }, [orderedReels.length]);
+
+  useEffect(() => {
+    setActiveId((current) =>
+      orderedReels.some((reel) => reel.id === current)
+        ? current
+        : orderedReels[0]?.id ?? null,
+    );
+  }, [orderedReels]);
 
   const loadMore = useCallback(async () => {
     setVisibleCount((current) => Math.min(current + 4, orderedReels.length));
@@ -257,6 +271,8 @@ export function ReelsView({
       await loadMore();
     }
     const targetIndex = Math.min(requestedIndex, orderedReels.length - 1);
+    const targetReel = orderedReels[targetIndex];
+    if (targetReel) setActiveId(targetReel.id);
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     window.requestAnimationFrame(() => {
       feed.scrollTo({
@@ -264,7 +280,18 @@ export function ReelsView({
         behavior: reduceMotion ? "auto" : "smooth",
       });
     });
-  }, [activeId, hasMore, loadMore, orderedReels.length, scrollRef, visibleReels]);
+  }, [activeId, hasMore, loadMore, orderedReels, scrollRef, visibleReels]);
+
+  const syncActiveReel = useCallback(() => {
+    const feed = scrollRef.current;
+    if (!feed || feed.clientHeight === 0) return;
+    const index = Math.min(
+      Math.round(feed.scrollTop / feed.clientHeight),
+      visibleReels.length - 1,
+    );
+    const reel = visibleReels[Math.max(0, index)];
+    if (reel) setActiveId((current) => current === reel.id ? current : reel.id);
+  }, [scrollRef, visibleReels]);
 
   return (
     <section className="mx-auto min-h-screen w-full max-w-6xl">
@@ -272,6 +299,7 @@ export function ReelsView({
       <div
         ref={scrollRef}
         data-testid="reels-feed"
+        onScroll={syncActiveReel}
         className="h-[calc(100dvh-76px)] snap-y snap-mandatory overflow-y-auto overscroll-contain bg-[#efefec] [scrollbar-width:none] dark:bg-[#080809] [&::-webkit-scrollbar]:hidden"
       >
         {visibleReels.map((reel) => (
@@ -326,9 +354,6 @@ export function ReelsView({
         >
           <ChevronUp size={20}/>
         </button>
-        <span className="rounded-full bg-black/70 px-2 py-1 text-center text-[9px] font-bold text-white backdrop-blur-md" aria-live="polite">
-          {Math.min(activeIndex + 1, orderedReels.length)} / {orderedReels.length}
-        </span>
         <button
           className="grid size-11 place-items-center rounded-full border border-black/10 bg-white/90 text-black shadow-lg backdrop-blur-md transition duration-150 ease-out hover:translate-y-0.5 active:scale-95 disabled:cursor-not-allowed disabled:opacity-35 motion-reduce:transform-none motion-reduce:transition-none dark:border-white/10 dark:bg-black/75 dark:text-white"
           onClick={() => void moveByReel(1)}
