@@ -1,4 +1,4 @@
-import { Bell, BookOpen, Compass, Home, Menu, MessageCircle, Moon, Search, SquarePlus, Sun, type LucideIcon } from "lucide-react";
+import { Bell, Clapperboard, Compass, Home, Menu, MessageCircle, Moon, Search, SquarePlus, Sun, type LucideIcon } from "lucide-react";
 import type { UserProfile } from "../../types/social";
 import { Avatar } from "../ui/Avatar";
 import { Brand } from "../ui/Brand";
@@ -6,7 +6,7 @@ import { Brand } from "../ui/Brand";
 const navItems = [
   { label: "Today", icon: Home },
   { label: "Pulse", icon: Compass },
-  { label: "Spaces", icon: BookOpen },
+  { label: "Reels", icon: Clapperboard },
   { label: "People", icon: Search },
   { label: "Inbox", icon: MessageCircle, badge: 4 },
   { label: "Activity", icon: Bell, dot: true },

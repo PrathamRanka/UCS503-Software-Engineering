@@ -96,6 +96,7 @@ try {
   await page.keyboard.press("Escape");
   const desktopShot = join(tmpdir(), "titalks-home.png");
   const mobileShot = join(tmpdir(), "titalks-mobile.png");
+  const reelsShot = join(tmpdir(), "titalks-reels.png");
   await page.screenshot({ path: desktopShot, fullPage: true });
 
   await page.getByRole("button", { name: "Pulse", exact: true }).first().click();
@@ -106,9 +107,21 @@ try {
   await page.getByRole("button", { name: "Added to your day", exact: true }).waitFor();
   await page.keyboard.press("Escape");
 
-  for (const [label, path] of [["Spaces", "/spaces"], ["People", "/people"], ["Inbox", "/inbox"], ["Activity", "/activity"]]) {
+  for (const [label, path] of [["Reels", "/reels"], ["People", "/people"], ["Inbox", "/inbox"], ["Activity", "/activity"]]) {
     await page.getByRole("button", { name: label, exact: true }).first().click();
     await page.waitForURL(`**${path}`);
+    if (label === "Reels") {
+      await page.getByRole("heading", { name: "Reels", exact: true }).waitFor();
+      const feed = page.getByTestId("reels-feed");
+      const cards = page.getByTestId("reel-card");
+      const initialCount = await cards.count();
+      if (initialCount !== 5) throw new Error(`Expected 5 initial reels, received ${initialCount}`);
+      await feed.evaluate((element) => element.scrollTo({ top: element.scrollHeight, behavior: "auto" }));
+      await page.waitForFunction(() => document.querySelectorAll('[data-testid="reel-card"]').length > 5);
+      await page.getByRole("button", { name: "Like reel" }).first().click();
+      await page.getByRole("button", { name: "Unlike reel" }).first().waitFor();
+      await page.screenshot({ path: reelsShot, fullPage: false });
+    }
   }
 
   await page.getByRole("button", { name: "Add to campus" }).click();
@@ -136,7 +149,7 @@ try {
   await mobile.screenshot({ path: mobileShot, fullPage: true });
   await browser.close();
   if (errors.length) throw new Error(`Browser errors: ${errors.join(" | ")}`);
-  console.log(`UI smoke test passed\n${desktopShot}\n${mobileShot}`);
+  console.log(`UI smoke test passed\n${desktopShot}\n${mobileShot}\n${reelsShot}`);
 } finally {
   server.close();
 }

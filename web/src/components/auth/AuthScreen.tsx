@@ -160,7 +160,7 @@ export function AuthScreen({
                   className={`${primaryButton} mt-7 bg-white dark:bg-neutral-950 text-neutral-900 dark:text-neutral-100 ring-1 ring-neutral-300 dark:ring-neutral-700 hover:bg-neutral-50 dark:hover:bg-neutral-800`}
                   onClick={() => setShowAccounts((current) => !current)}
                 >
-                  <span className="text-lg font-bold text-[#ed111c]">G</span>{" "}
+                  <span className="text-lg font-bold text-[#ed111c] color-black">G</span>{" "}
                   Continue with Google
                 </button>
                 {showAccounts ? (

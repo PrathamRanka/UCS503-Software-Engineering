@@ -530,6 +530,32 @@ export const reels: Reel[] = [
     comments: "204",
     audio: "CCS build session",
   },
+  ...[
+    [101, "JfYiF9Gs0Vg", "The line that stayed — a Teacher’s Day story from TIET."],
+    [102, "j6b8CUOK1Y8", "Colours of Thapar. Every corner has a story."],
+    [103, "MT8gwSET5U0", "Celebrating the women who shape TIET."],
+    [104, "F5gj2bK-EYU", "Open Day 2026 at Thapar Institute."],
+    [105, "5RV_kIs_POk", "Beyond reading: the literacy engineers need."],
+    [106, "ZZU0gbNS7q8", "Behind every great campus is a team that never stops."],
+    [107, "1QlWpOfv7oc", "The campus is not the same without Thaparians."],
+    [108, "iI1IAw5xi0U", "Everyone discovers something special at Thapar."],
+    [109, "S3gosOJ0vLk", "Open Day 2026 — day one on campus."],
+    [110, "ct8Hht_324Y", "Why students love TIET life, culture and campus."],
+    [111, "8fWU5M7Xyvo", "Building globally ready, student-centred campuses."],
+    [112, "6T0W8LsuBDk", "Shaping the future of student life at TIET."],
+  ].map(([id, youtubeId, caption]) => ({
+    id: Number(id),
+    creator: "tietofficial",
+    avatar: "/titalks-mark.webp",
+    image: `https://i.ytimg.com/vi/${youtubeId}/hqdefault.jpg`,
+    youtubeId: String(youtubeId),
+    sourceUrl: `https://www.youtube.com/watch?v=${youtubeId}`,
+    caption: String(caption),
+    likes: "Like",
+    comments: "Discuss",
+    audio: "Thapar Institute of Engineering & Technology",
+    official: true,
+  })),
 ];
 
 export const conversations: Conversation[] = [

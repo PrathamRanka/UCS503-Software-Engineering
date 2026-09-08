@@ -97,7 +97,7 @@ const routeMap: Record<string, string> = {
   Today: "/",
   People: "/people",
   Pulse: "/pulse",
-  Spaces: "/spaces",
+  Reels: "/reels",
   Inbox: "/inbox",
   Activity: "/activity",
   Profile: "/profile",
@@ -292,7 +292,7 @@ function App() {
         ...current,
       ]);
     setComposerOpen(false);
-    navigate(input.kind === "reel" ? "/spaces" : "/");
+    navigate(input.kind === "reel" ? "/reels" : "/");
     flash(`${input.kind[0].toUpperCase()}${input.kind.slice(1)} shared`);
   };
 
@@ -477,7 +477,7 @@ function App() {
           />
           <Route path="/pulse" element={<ExploreView />} />
           <Route
-            path="/spaces"
+            path="/reels"
             element={
               <ReelsView
                 username={user.username}
@@ -489,6 +489,7 @@ function App() {
               />
             }
           />
+          <Route path="/spaces" element={<Navigate to="/reels" replace />} />
           <Route
             path="/inbox"
             element={

@@ -72,6 +72,9 @@ export type Reel = {
   comments: string;
   audio: string;
   video?: string;
+  youtubeId?: string;
+  sourceUrl?: string;
+  official?: boolean;
 };
 
 export type Message = {
