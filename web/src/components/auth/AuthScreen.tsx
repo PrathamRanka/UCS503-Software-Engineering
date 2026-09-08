@@ -42,7 +42,7 @@ export function AuthScreen({
 
   const validateThaparEmail = () => {
     if (!isTietEmail(email)) {
-      setError("Use your official TIET email address (@thapar.edu).");
+      setError("Enter a valid Thapar ID ending exactly in @thapar.edu.");
       return false;
     }
     setError("");
@@ -215,8 +215,11 @@ export function AuthScreen({
                     <input
                       className={`${inputClass} pl-10`}
                       type="email"
+                      required
+                      autoComplete="email"
                       value={email}
                       onChange={(event) => setEmail(event.target.value)}
+                      onBlur={() => email.trim() && validateThaparEmail()}
                       placeholder="TIET email"
                     />
                   </label>
@@ -286,8 +289,11 @@ export function AuthScreen({
                   <input
                     className={inputClass}
                     type="email"
+                    required
+                    autoComplete="email"
                     value={email}
                     onChange={(event) => setEmail(event.target.value)}
+                    onBlur={() => email.trim() && validateThaparEmail()}
                     placeholder="name@thapar.edu"
                   />
                   <input

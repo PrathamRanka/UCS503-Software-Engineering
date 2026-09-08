@@ -27,7 +27,21 @@ describe("AuthScreen integration", () => {
     await user.click(screen.getByRole("button", { name: /^Sign in$/ }));
 
     expect(
-      screen.getByText("Use your official TIET email address (@thapar.edu)."),
+      screen.getByText("Enter a valid Thapar ID ending exactly in @thapar.edu."),
+    ).toBeInTheDocument();
+    expect(onAuthenticated).not.toHaveBeenCalled();
+  });
+
+  it("blocks a Thapar subdomain during sign-in", async () => {
+    const user = userEvent.setup();
+    const onAuthenticated = renderAuth();
+
+    await user.type(screen.getByPlaceholderText("TIET email"), "student@cs.thapar.edu");
+    await user.type(screen.getByPlaceholderText("Password"), "password123");
+    await user.click(screen.getByRole("button", { name: /^Sign in$/ }));
+
+    expect(
+      screen.getByText("Enter a valid Thapar ID ending exactly in @thapar.edu."),
     ).toBeInTheDocument();
     expect(onAuthenticated).not.toHaveBeenCalled();
   });
