@@ -9,6 +9,8 @@
 \usepackage{fancyhdr}
 \usepackage{hyperref}
 \usepackage{setspace}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning}
 
 \definecolor{tietred}{HTML}{A6192E}
 \hypersetup{
@@ -263,6 +265,46 @@ The planned connected architecture will retain the React frontend and replace
 mock state with HTTP/JSON calls to a Node.js and Express application backed by
 PostgreSQL. Business rules, authorization, persistence, and media ownership
 will move to the server at that stage.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+  node distance=0.75cm,
+  box/.style={
+    draw=tietred,
+    rounded corners,
+    fill=tietred!7,
+    minimum width=0.72\textwidth,
+    minimum height=0.85cm,
+    align=center,
+    font=\small
+  },
+  current/.style={-{Latex[length=2.5mm]}, thick, draw=tietred},
+  planned/.style={-{Latex[length=2.5mm]}, thick, dashed, draw=gray!75}
+]
+  \node[box] (user) {TIET Student / Club User};
+  \node[box, below=of user] (ui) {React Interface and React Router\\Feed, Profiles, Reels, Messages, Events and Settings};
+  \node[box, below=of ui] (state) {Client-Side Application State\\Likes, Comments, Follows, Posts and Interface Feedback};
+  \node[box, below=of state] (local) {Current Data Layer\\Typed Mock Data, Local Media and Browser Storage};
+  \node[box, below=of local, draw=gray!75, fill=gray!8] (backend) {Planned Connected Backend\\Node.js / Express API and PostgreSQL Database};
+
+  \draw[current] (user) -- node[right, font=\scriptsize] {interacts} (ui);
+  \draw[current] (ui) -- node[right, font=\scriptsize] {updates and reads} (state);
+  \draw[current] (state) -- node[right, font=\scriptsize] {stores and retrieves} (local);
+  \draw[planned] (ui.east) to[out=10,in=10]
+    node[right, font=\scriptsize, align=left] {future HTTP/JSON\\requests} (backend.east);
+\end{tikzpicture}
+\caption{High-level architecture of the current TiTalks prototype and its
+planned backend extension. Solid arrows represent the implemented flow; the
+dashed arrow represents future integration.}
+\label{fig:architecture}
+\end{figure}
+
+Figure~\ref{fig:architecture} summarizes the project in a simple flow. The
+user interacts with React screens, the screens update client-side state, and
+that state reads or writes mock data and browser storage. In the next phase,
+the frontend will also communicate with the planned API and database through
+the dashed path.
 
 \subsection{Technical Stack}
 
