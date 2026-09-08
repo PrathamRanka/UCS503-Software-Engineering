@@ -1,4 +1,5 @@
 import { X } from "lucide-react";
+import { MotionBackdrop, MotionReveal } from "../ui/Motion";
 
 type ContentMenuModalProps = {
   own: boolean;
@@ -19,11 +20,11 @@ export function ContentMenuModal(props: ContentMenuModalProps) {
     props.onClose();
   };
   return (
-    <div
+    <MotionBackdrop
       className="fixed inset-0 z-50 grid place-items-center bg-black/60 p-4"
       onMouseDown={props.onClose}
     >
-      <section
+      <MotionReveal
         className="w-full max-w-sm overflow-hidden rounded-sm bg-white dark:bg-neutral-950 text-center"
         onMouseDown={(event) => event.stopPropagation()}
       >
@@ -83,7 +84,7 @@ export function ContentMenuModal(props: ContentMenuModalProps) {
           <X size={17} />
           Cancel
         </button>
-      </section>
-    </div>
+      </MotionReveal>
+    </MotionBackdrop>
   );
 }

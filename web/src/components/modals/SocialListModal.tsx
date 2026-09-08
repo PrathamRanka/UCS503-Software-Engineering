@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Search, X } from "lucide-react";
 import { people } from "../../data/mockData";
 import { Avatar } from "../ui/Avatar";
+import { MotionBackdrop, MotionReveal } from "../ui/Motion";
 
 type SocialListModalProps = {
   title: "Followers" | "Following";
@@ -27,11 +28,11 @@ export function SocialListModal({
         .includes(query.toLowerCase()),
     );
   return (
-    <div
+    <MotionBackdrop
       className="fixed inset-0 z-50 grid place-items-center bg-black/60 p-4"
       onMouseDown={onClose}
     >
-      <section
+      <MotionReveal
         className="w-full max-w-md overflow-hidden rounded-sm bg-white dark:bg-neutral-950"
         onMouseDown={(event) => event.stopPropagation()}
       >
@@ -58,7 +59,7 @@ export function SocialListModal({
             const handle = `@${person.username}`;
             return (
               <div
-                className="flex items-center gap-3 rounded-sm p-2 hover:bg-neutral-50 dark:hover:bg-neutral-800"
+                className="flex items-center gap-3 rounded-sm p-2 transition-colors duration-150 hover:bg-neutral-50 dark:hover:bg-neutral-800 motion-reduce:transition-none"
                 key={person.id}
               >
                 <button onClick={() => onOpenProfile(person.username)}>
@@ -76,7 +77,7 @@ export function SocialListModal({
                   </span>
                 </button>
                 <button
-                  className={`rounded-sm px-3 py-2 text-xs font-semibold ${following.has(handle) ? "bg-neutral-100 dark:bg-neutral-800" : "bg-[#ed111c] text-white"}`}
+                  className={`rounded-sm px-3 py-2 text-xs font-semibold transition duration-150 active:scale-[.96] motion-reduce:transform-none motion-reduce:transition-none ${following.has(handle) ? "bg-neutral-100 dark:bg-neutral-800" : "bg-[#ed111c] text-white"}`}
                   onClick={() => onToggleFollow(handle)}
                 >
                   {following.has(handle) ? "Connected" : "Connect"}
@@ -85,7 +86,7 @@ export function SocialListModal({
             );
           })}
         </div>
-      </section>
-    </div>
+      </MotionReveal>
+    </MotionBackdrop>
   );
 }

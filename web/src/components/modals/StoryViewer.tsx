@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import type { Story } from "../../types/social";
 import { Avatar } from "../ui/Avatar";
+import { MotionBackdrop, MotionReveal } from "../ui/Motion";
 
 type StoryViewerProps = {
   story: Story;
@@ -40,13 +41,13 @@ export function StoryViewer({
   }, [story, onClose, onNext, onPrevious]);
 
   return (
-    <div
+    <MotionBackdrop
       className="fixed inset-0 z-40 flex items-center justify-center bg-black/90 p-0 sm:p-5"
       role="dialog"
       aria-modal="true"
       aria-label={`${story.name} campus moment`}
     >
-      <div className="relative h-full w-full max-w-[430px] overflow-hidden bg-neutral-950 text-white sm:rounded-sm">
+      <MotionReveal className="relative h-full w-full max-w-[430px] overflow-hidden bg-neutral-950 text-white sm:rounded-sm" distance={10} scale={0.985}>
         <div className="absolute inset-x-2.5 top-2 z-10 flex gap-1">
           {Array.from({ length: total }, (_, itemIndex) => (
             <span
@@ -93,7 +94,7 @@ export function StoryViewer({
         >
           <ChevronRight />
         </button>
-      </div>
-    </div>
+      </MotionReveal>
+    </MotionBackdrop>
   );
 }

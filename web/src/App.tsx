@@ -37,6 +37,7 @@ import {
 import type { ContentKind, NewContentInput, UserProfile } from "./types/social";
 import { StatePanel } from "./components/ui/StatePanel";
 import { LiveWeather } from "./components/ui/LiveWeather";
+import { MotionReveal } from "./components/ui/Motion";
 
 const ExploreView = lazy(() =>
   import("./components/views/ExploreView").then((module) => ({
@@ -462,10 +463,9 @@ function App() {
         onNavigate={go}
         onCreate={() => openComposer("post")}
       />
-      <Suspense
-        fallback={<StatePanel type="loading" title="Loading page..." />}
-      >
-        <Routes>
+      <Suspense fallback={<StatePanel type="loading" title="Loading page..." />}>
+        <MotionReveal key={location.pathname} className="min-h-[100dvh]" distance={6} scale={1}>
+        <Routes location={location}>
           <Route path="/" element={home} />
           <Route
             path="/people"
@@ -579,6 +579,7 @@ function App() {
             }
           />
         </Routes>
+        </MotionReveal>
       </Suspense>
       <MobileNavigation
         activeNav={activeNav}

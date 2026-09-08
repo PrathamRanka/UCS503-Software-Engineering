@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import type { Post } from "../../types/social";
 import { ContentMenuModal } from "../modals/ContentMenuModal";
+import { MotionBackdrop, MotionReveal } from "../ui/Motion";
 
 type Props = {
   post: Post;
@@ -55,7 +56,7 @@ export function PostCard({
   return (
     <article className="group grid overflow-hidden border-b border-[#171719]/10 py-8 dark:border-white/10 sm:grid-cols-[minmax(210px,.8fr)_minmax(0,1.2fr)] sm:gap-8">
       <button
-        className="relative min-h-56 overflow-hidden rounded-sm bg-neutral-200 sm:min-h-64"
+        className="relative min-h-56 overflow-hidden rounded-sm bg-neutral-200 transition duration-150 ease-out active:scale-[.99] sm:min-h-64 motion-reduce:transform-none motion-reduce:transition-none"
         onClick={onOpen}
       >
         <img
@@ -102,7 +103,7 @@ export function PostCard({
             </span>
           </button>
           <button
-            className="grid size-9 shrink-0 place-items-center rounded-full hover:bg-black/5 dark:hover:bg-white/5"
+            className="grid size-9 shrink-0 place-items-center rounded-full transition duration-150 hover:bg-black/5 active:scale-90 dark:hover:bg-white/5 motion-reduce:transform-none motion-reduce:transition-none"
             onClick={() => setMenuOpen(true)}
             aria-label="More options"
           >
@@ -126,21 +127,21 @@ export function PostCard({
         </div>
         <div className="mt-auto flex items-center gap-2 pt-6">
           <button
-            className={`flex h-10 items-center gap-2 rounded-md px-4 text-[11px] font-semibold ${isLiked ? "bg-[#ed111c] text-white" : "bg-[#171719] text-white dark:bg-white dark:text-[#171719]"}`}
+            className={`flex h-10 items-center gap-2 rounded-md px-4 text-[11px] font-semibold transition duration-150 active:scale-[.96] motion-reduce:transform-none motion-reduce:transition-none ${isLiked ? "bg-[#ed111c] text-white shadow-[0_8px_24px_rgba(237,17,28,.18)]" : "bg-[#171719] text-white dark:bg-white dark:text-[#171719]"}`}
             onClick={onLike}
           >
             {isLiked ? <Check size={15} /> : <Users size={15} />}
             {isLiked ? "Interested" : "I’m interested"}
           </button>
           <button
-            className={`grid size-10 place-items-center rounded-md border border-black/10 dark:border-white/10 ${isSaved ? "text-[#ed111c]" : "text-neutral-500"}`}
+            className={`grid size-10 place-items-center rounded-md border border-black/10 transition duration-150 active:scale-90 dark:border-white/10 motion-reduce:transform-none motion-reduce:transition-none ${isSaved ? "border-[#ed111c]/30 bg-[#ed111c]/5 text-[#ed111c]" : "text-neutral-500 hover:border-black/25 dark:hover:border-white/25"}`}
             onClick={onSave}
             aria-label="Save"
           >
             <Bookmark size={17} fill={isSaved ? "currentColor" : "none"} />
           </button>
           <button
-            className="ml-auto flex items-center gap-1 text-[10px] text-neutral-500"
+            className="ml-auto flex items-center gap-1 text-[10px] text-neutral-500 transition duration-150 hover:text-[#ed111c] active:scale-[.96] motion-reduce:transform-none motion-reduce:transition-none"
             onClick={onShare}
           >
             Share <ArrowUpRight size={14} />
@@ -149,8 +150,8 @@ export function PostCard({
       </div>
 
       {editing ? (
-        <div className="fixed inset-0 z-50 grid place-items-center bg-black/60 p-4 backdrop-blur-sm">
-          <section className="w-full max-w-md rounded-sm bg-white p-6 text-[#171719] dark:bg-[#111113] dark:text-white">
+        <MotionBackdrop className="fixed inset-0 z-50 grid place-items-center bg-black/60 p-4 backdrop-blur-sm">
+          <MotionReveal className="w-full max-w-md rounded-sm bg-white p-6 text-[#171719] shadow-[0_30px_100px_rgba(0,0,0,.3)] dark:bg-[#111113] dark:text-white" role="dialog" aria-modal="true">
             <p className="text-[10px] font-bold uppercase tracking-[.16em] text-neutral-500">
               Edit update
             </p>
@@ -173,8 +174,8 @@ export function PostCard({
                 Save
               </button>
             </div>
-          </section>
-        </div>
+          </MotionReveal>
+        </MotionBackdrop>
       ) : null}
       {menuOpen ? (
         <ContentMenuModal

@@ -1,6 +1,7 @@
 import { ChangeEvent } from "react";
 import { Pencil, Plus, Star, Trash2, X } from "lucide-react";
 import type { Story } from "../../types/social";
+import { MotionBackdrop, MotionReveal } from "../ui/Motion";
 
 type StoryManagerModalProps = {
   stories: Story[];
@@ -30,11 +31,11 @@ export function StoryManagerModal({
     reader.readAsDataURL(file);
   };
   return (
-    <div
+    <MotionBackdrop
       className="fixed inset-0 z-50 grid place-items-center bg-black/60 p-4"
       onMouseDown={onClose}
     >
-      <section
+      <MotionReveal
         className="w-full max-w-lg rounded-sm bg-white dark:bg-neutral-950 p-5"
         onMouseDown={(event) => event.stopPropagation()}
       >
@@ -58,10 +59,13 @@ export function StoryManagerModal({
         </button>
         {owned.length ? (
           <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3">
-            {owned.map(({ story, index }) => (
-              <div
+            {owned.map(({ story, index }, itemIndex) => (
+              <MotionReveal
                 className="overflow-hidden rounded-sm border border-black/10 dark:border-white/10"
                 key={`${story.image}-${index}`}
+                delay={itemIndex * 35}
+                distance={6}
+                scale={0.985}
               >
                 <img
                   className="aspect-[9/16] w-full object-cover"
@@ -101,7 +105,7 @@ export function StoryManagerModal({
                     <Trash2 size={20} />
                   </button>
                 </div>
-              </div>
+              </MotionReveal>
             ))}
           </div>
         ) : (
@@ -109,7 +113,7 @@ export function StoryManagerModal({
             No active moments. Share an invitation or update to begin.
           </div>
         )}
-      </section>
-    </div>
+      </MotionReveal>
+    </MotionBackdrop>
   );
 }

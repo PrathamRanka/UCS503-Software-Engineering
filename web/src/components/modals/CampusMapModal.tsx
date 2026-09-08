@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { MapPin, Minus, Plus, RotateCcw, X } from "lucide-react";
+import { MotionBackdrop, MotionReveal } from "../ui/Motion";
 
 export function CampusMapModal({ onClose }: { onClose: () => void }) {
   const [zoom, setZoom] = useState(1);
@@ -22,14 +23,14 @@ export function CampusMapModal({ onClose }: { onClose: () => void }) {
   }, [onClose]);
 
   return (
-    <div
+    <MotionBackdrop
       className="fixed inset-0 z-[80] flex flex-col bg-black/90 p-3 text-white backdrop-blur-md sm:p-5"
       role="dialog"
       aria-modal="true"
       aria-labelledby="campus-map-title"
       onMouseDown={onClose}
     >
-      <header className="mx-auto flex w-full max-w-7xl items-center justify-between gap-4 pb-3">
+      <MotionReveal className="mx-auto flex w-full max-w-7xl items-center justify-between gap-4 pb-3" distance={-6} scale={1}>
         <div className="flex min-w-0 items-center gap-3">
           <span className="grid size-10 shrink-0 place-items-center rounded-sm bg-[#ed111c]">
             <MapPin size={19} />
@@ -84,8 +85,8 @@ export function CampusMapModal({ onClose }: { onClose: () => void }) {
             <X size={19} />
           </button>
         </div>
-      </header>
-      <div
+      </MotionReveal>
+      <MotionReveal
         className="mx-auto min-h-0 w-full max-w-7xl flex-1 overflow-auto rounded-md bg-[#abc2dc] shadow-lg"
         onMouseDown={(event) => event.stopPropagation()}
       >
@@ -95,10 +96,10 @@ export function CampusMapModal({ onClose }: { onClose: () => void }) {
           src="/tiet-campus-map.webp"
           alt="Illustrated map of the TIET campus showing academic blocks, hostels, sports facilities, gates, library, food court and central park"
         />
-      </div>
+      </MotionReveal>
       <p className="pt-3 text-center text-[10px] text-white/45">
         Approximate campus guide · Use + and − to zoom
       </p>
-    </div>
+    </MotionBackdrop>
   );
 }
