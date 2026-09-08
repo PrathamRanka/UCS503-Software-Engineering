@@ -15,6 +15,7 @@ import type { UserProfile } from "../../types/social";
 import { Brand } from "../ui/Brand";
 import { ThemeToggle } from "../ui/ThemeToggle";
 import { isTietEmail } from "../../utils/institutionalEmail";
+import { MotionReveal, SpotlightSurface } from "../ui/Motion";
 
 type AuthScreenProps = {
   theme: "light" | "dark";
@@ -109,7 +110,7 @@ export function AuthScreen({
         <ThemeToggle theme={theme} onToggle={onToggleTheme} compact />
       </div>
       <div className="mx-auto grid w-full max-w-[1080px] overflow-hidden rounded-md border border-black/10 bg-white shadow-[0_40px_120px_rgba(0,0,0,.14)] dark:border-white/10 dark:bg-[#0b0b0c] md:grid-cols-[1.08fr_.92fr]">
-        <section className="relative hidden min-h-[700px] overflow-hidden bg-black p-10 text-white md:block">
+        <SpotlightSurface className="hidden min-h-[700px] bg-black p-10 text-white md:block" glow="rgba(237,17,28,.2)">
           <div className="absolute -right-32 -top-32 size-96 rounded-full bg-[#ed111c]/25 blur-3xl" />
           <div className="absolute -bottom-28 -left-20 size-80 rounded-full bg-[#ed111c]/15 blur-3xl" />
           <div className="relative z-10">
@@ -139,7 +140,7 @@ export function AuthScreen({
               />
             ))}
           </div>
-        </section>
+        </SpotlightSurface>
 
         <section className="flex min-h-[620px] flex-col justify-center px-6 py-10 sm:px-12">
           <div className="mx-auto w-full max-w-[340px]">
@@ -148,7 +149,7 @@ export function AuthScreen({
             </div>
 
             {step === "signin" ? (
-              <>
+              <MotionReveal key="signin" distance={7} scale={0.995}>
                 <h2 className="text-center text-xl font-semibold">
                   Welcome back to titalks
                 </h2>
@@ -257,11 +258,11 @@ export function AuthScreen({
                     Create an account
                   </button>
                 </p>
-              </>
+              </MotionReveal>
             ) : null}
 
             {step === "signup" ? (
-              <>
+              <MotionReveal key="signup" distance={7} scale={0.995}>
                 <button
                   className="mb-5 flex items-center gap-1 text-sm text-neutral-500 dark:text-neutral-400"
                   onClick={() => {
@@ -307,11 +308,11 @@ export function AuthScreen({
                   By continuing, you agree to the campus community guidelines
                   and privacy policy.
                 </p>
-              </>
+              </MotionReveal>
             ) : null}
 
             {step === "onboarding" ? (
-              <>
+              <MotionReveal key="onboarding" distance={7} scale={0.995}>
                 <div className="mb-5 grid size-11 place-items-center rounded-full bg-red-50 text-[#ed111c]">
                   <GraduationCap />
                 </div>
@@ -363,7 +364,7 @@ export function AuthScreen({
                     Create account
                   </button>
                 </form>
-              </>
+              </MotionReveal>
             ) : null}
 
             <p className="mt-8 text-center text-[11px] text-neutral-400">

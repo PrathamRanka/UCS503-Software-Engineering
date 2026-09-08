@@ -38,6 +38,7 @@ import type { ContentKind, NewContentInput, UserProfile } from "./types/social";
 import { StatePanel } from "./components/ui/StatePanel";
 import { LiveWeather } from "./components/ui/LiveWeather";
 import { MotionReveal } from "./components/ui/Motion";
+import { ScrollProgress } from "./components/ui/ScrollProgress";
 
 const ExploreView = lazy(() =>
   import("./components/views/ExploreView").then((module) => ({
@@ -453,6 +454,7 @@ function App() {
 
   return (
     <div className="min-h-[100dvh] bg-[#f7f7f5] font-sans text-[#171719] selection:bg-[#ed111c] selection:text-white dark:bg-[#050505] dark:text-[#f5f5f5] lg:pl-[76px]">
+      <ScrollProgress />
       <Sidebar
         activeNav={activeNav}
         user={user}

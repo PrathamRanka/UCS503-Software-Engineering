@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 import type { Post } from "../../types/social";
 import { ContentMenuModal } from "../modals/ContentMenuModal";
-import { MotionBackdrop, MotionReveal } from "../ui/Motion";
+import { MotionBackdrop, MotionReveal, useInViewMotion } from "../ui/Motion";
 
 type Props = {
   post: Post;
@@ -52,9 +52,10 @@ export function PostCard({
   const [caption, setCaption] = useState(post.caption);
   const category = post.tags[0]?.replace("#", "") || "Campus";
   const isStudent = post.authorType === "student";
+  const cardRef = useInViewMotion<HTMLElement>(10);
 
   return (
-    <article className="group grid overflow-hidden border-b border-[#171719]/10 py-8 dark:border-white/10 sm:grid-cols-[minmax(210px,.8fr)_minmax(0,1.2fr)] sm:gap-8">
+    <article ref={cardRef} className="group grid overflow-hidden border-b border-[#171719]/10 py-8 dark:border-white/10 sm:grid-cols-[minmax(210px,.8fr)_minmax(0,1.2fr)] sm:gap-8">
       <button
         className="relative min-h-56 overflow-hidden rounded-sm bg-neutral-200 transition duration-150 ease-out active:scale-[.99] sm:min-h-64 motion-reduce:transform-none motion-reduce:transition-none"
         onClick={onOpen}
@@ -65,6 +66,7 @@ export function PostCard({
           alt={`${post.place} campus update`}
           loading={post.id <= 2 ? "eager" : "lazy"}
         />
+        <span className="pointer-events-none absolute inset-y-0 -left-1/2 w-1/3 -skew-x-12 bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-700 ease-out group-hover:translate-x-[520%] motion-reduce:hidden" />
         <span
           className={`absolute left-4 top-4 px-3 py-2 text-[9px] font-bold tracking-[.12em] backdrop-blur-md ${isStudent ? "bg-[#ed111c] text-white" : "bg-[#f5f5ef]/90 text-[#171719]"}`}
         >
@@ -130,7 +132,9 @@ export function PostCard({
             className={`flex h-10 items-center gap-2 rounded-md px-4 text-[11px] font-semibold transition duration-150 active:scale-[.96] motion-reduce:transform-none motion-reduce:transition-none ${isLiked ? "bg-[#ed111c] text-white shadow-[0_8px_24px_rgba(237,17,28,.18)]" : "bg-[#171719] text-white dark:bg-white dark:text-[#171719]"}`}
             onClick={onLike}
           >
-            {isLiked ? <Check size={15} /> : <Users size={15} />}
+            <MotionReveal key={isLiked ? "liked" : "idle"} className="grid place-items-center" distance={0} scale={0.72}>
+              {isLiked ? <Check size={15} /> : <Users size={15} />}
+            </MotionReveal>
             {isLiked ? "Interested" : "I’m interested"}
           </button>
           <button
