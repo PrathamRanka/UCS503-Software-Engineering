@@ -22,10 +22,10 @@ const server = createServer(async (request, response) => {
 });
 
 const demoUser = {
-  id: "user-pratham",
-  name: "Pratham Ranka",
-  username: "prathamranka",
-  email: "pratham.ranka@thapar.edu",
+  id: "user-john",
+  name: "John Doe",
+  username: "johndoe",
+  email: "john.doe@thapar.edu",
   avatar: "/pratham-ranka.webp",
   bio: "Computer Engineering · campus builder",
   branch: "Computer Engineering",
@@ -67,9 +67,9 @@ try {
   await page.goto(baseURL);
   await page.evaluate((user) => localStorage.setItem("titalks-session-v1", JSON.stringify(user)), demoUser);
   await page.reload();
-  await page.getByText("Good afternoon, Pratham.").waitFor();
+  await page.getByText("Good afternoon, John.").waitFor();
   await page.getByText("STUDENT UPDATE").first().waitFor();
-  await page.getByRole("heading", { name: "Pratham Ranka" }).first().waitFor();
+  await page.getByRole("heading", { name: "John Doe" }).first().waitFor();
   await page.getByText("Mainly clear · Patiala").waitFor();
   const sidebar = page.locator("aside").first();
   const collapsedWidth = await sidebar.evaluate((element) => element.getBoundingClientRect().width);
@@ -150,7 +150,7 @@ try {
   await mobile.goto(baseURL);
   await mobile.evaluate((user) => localStorage.setItem("titalks-session-v1", JSON.stringify(user)), demoUser);
   await mobile.reload();
-  await mobile.getByText("Good afternoon, Pratham.").waitFor();
+  await mobile.getByText("Good afternoon, John.").waitFor();
   await mobile.screenshot({ path: mobileShot, fullPage: true });
   await browser.close();
   if (errors.length) throw new Error(`Browser errors: ${errors.join(" | ")}`);

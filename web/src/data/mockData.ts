@@ -12,10 +12,10 @@ import type {
 
 // Individual student profiles are fictional. Society and event names follow TIET's published directories.
 export const demoUser: UserProfile = {
-  id: "user-pratham",
-  name: "Pratham Ranka",
-  username: "prathamranka",
-  email: "pratham.ranka@thapar.edu",
+  id: "user-john",
+  name: "John Doe",
+  username: "johndoe",
+  email: "john.doe@thapar.edu",
   avatar: "/pratham-ranka.webp",
   bio: "Computer Engineering ’27 · FAPS volunteer · campus sunsets ✨",
   branch: "Computer Engineering",
@@ -232,8 +232,8 @@ export const stories: Story[] = [
 export const posts: Post[] = [
   {
     id: 6,
-    author: "Pratham Ranka",
-    handle: "prathamranka",
+    author: "John Doe",
+    handle: "johndoe",
     avatar: "/pratham-ranka.webp",
     image: "/images/workspace.webp",
     place: "Nehru Hall common room",

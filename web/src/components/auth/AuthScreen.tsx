@@ -175,9 +175,9 @@ export function AuthScreen({
                         alt=""
                       />
                       <span className="flex-1">
-                        <b className="block text-sm">Pratham Ranka</b>
+                        <b className="block text-sm">{demoUser.name}</b>
                         <small className="text-neutral-500 dark:text-neutral-400">
-                          pratham.ranka@thapar.edu
+                          {demoUser.email}
                         </small>
                       </span>
                       <CheckCircle2 className="text-green-500" size={18} />
