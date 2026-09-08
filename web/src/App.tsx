@@ -16,7 +16,6 @@ import {
   useLocation,
   useNavigate,
 } from "react-router-dom";
-import { Sun } from "lucide-react";
 import { AuthScreen } from "./components/auth/AuthScreen";
 import { PasswordResetScreen } from "./components/auth/PasswordResetScreen";
 import { FeedHeader } from "./components/feed/FeedHeader";
@@ -37,6 +36,7 @@ import {
 } from "./data/mockData";
 import type { ContentKind, NewContentInput, UserProfile } from "./types/social";
 import { StatePanel } from "./components/ui/StatePanel";
+import { LiveWeather } from "./components/ui/LiveWeather";
 
 const ExploreView = lazy(() =>
   import("./components/views/ExploreView").then((module) => ({
@@ -392,13 +392,7 @@ function App() {
                 Your campus feels unusually alive today.
               </p>
             </div>
-            <div className="flex items-center gap-3 text-[#ed111c]">
-              <Sun size={19} />
-              <span className="text-[10px] leading-4 text-neutral-500">
-                <b className="block text-sm text-[#171719] dark:text-white">29°</b>
-                Clear skies
-              </span>
-            </div>
+            <LiveWeather />
           </div>
         </section>
         <Stories stories={userStories} onSelect={setStoryIndex} onCreate={() => openComposer("story")} />
@@ -651,7 +645,7 @@ function App() {
         />
       ) : null}
       <div
-        className={`fixed bottom-16 left-1/2 z-[60] -translate-x-1/2 rounded-md bg-neutral-800 px-[18px] py-3 text-[13px] text-white shadow-xl transition duration-200 ease-out motion-reduce:transition-none lg:bottom-6 ${toast ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-2 opacity-0"}`}
+        className={`fixed bottom-16 left-1/2 z-[60] -translate-x-1/2 rounded-md bg-neutral-800 px-[18px] py-3 text-[13px] text-white shadow-md transition duration-200 ease-out motion-reduce:transition-none lg:bottom-6 ${toast ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-2 opacity-0"}`}
         role="status"
         aria-live="polite"
       >

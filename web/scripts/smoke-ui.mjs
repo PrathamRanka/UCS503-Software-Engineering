@@ -43,10 +43,24 @@ try {
   const page = await browser.newPage({ viewport: { width: 1440, height: 1000 }, deviceScaleFactor: 1 });
   const errors = [];
   page.on("pageerror", (error) => errors.push(error.message));
+  await page.route("https://api.open-meteo.com/**", (route) =>
+    route.fulfill({
+      contentType: "application/json",
+      body: JSON.stringify({
+        current: {
+          temperature_2m: 31.6,
+          apparent_temperature: 34.1,
+          weather_code: 1,
+          is_day: 1,
+        },
+      }),
+    }),
+  );
   await page.goto(baseURL);
   await page.evaluate((user) => localStorage.setItem("titalks-session-v1", JSON.stringify(user)), demoUser);
   await page.reload();
   await page.getByText("Good afternoon, Pratham.").waitFor();
+  await page.getByText("Mainly clear · Patiala").waitFor();
   const sidebar = page.locator("aside").first();
   const collapsedWidth = await sidebar.evaluate((element) => element.getBoundingClientRect().width);
   const sidebarBounds = await sidebar.boundingBox();
@@ -84,6 +98,19 @@ try {
   await page.keyboard.press("Escape");
 
   const mobile = await browser.newPage({ viewport: { width: 390, height: 844 }, deviceScaleFactor: 1 });
+  await mobile.route("https://api.open-meteo.com/**", (route) =>
+    route.fulfill({
+      contentType: "application/json",
+      body: JSON.stringify({
+        current: {
+          temperature_2m: 31.6,
+          apparent_temperature: 34.1,
+          weather_code: 1,
+          is_day: 1,
+        },
+      }),
+    }),
+  );
   await mobile.goto(baseURL);
   await mobile.evaluate((user) => localStorage.setItem("titalks-session-v1", JSON.stringify(user)), demoUser);
   await mobile.reload();

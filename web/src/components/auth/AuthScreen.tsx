@@ -98,16 +98,16 @@ export function AuthScreen({
   };
 
   const inputClass =
-    "h-11 w-full rounded-md border border-neutral-300 dark:border-neutral-700 bg-neutral-50 dark:bg-neutral-900 px-3 text-sm outline-none transition focus:border-neutral-500 focus:bg-white motion-reduce:transition-none";
+    "h-11 w-full rounded-md border border-neutral-300 dark:border-white/15 bg-neutral-50 dark:bg-neutral-900 px-3 text-sm outline-none transition focus:border-neutral-500 focus:bg-white motion-reduce:transition-none";
   const primaryButton =
-    "flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-[#ed111c] px-4 text-sm font-semibold text-white shadow-lg shadow-red-600/15 transition duration-150 ease-out hover:-translate-y-0.5 hover:bg-[#c70d16] active:scale-[.98] disabled:opacity-40 motion-reduce:transition-none";
+    "flex h-12 w-full items-center justify-center gap-2 rounded-sm bg-[#ed111c] px-4 text-sm font-semibold text-white shadow-lg shadow-red-600/15 transition duration-150 ease-out hover:-translate-y-0.5 hover:bg-[#c70d16] active:scale-[.98] disabled:opacity-40 motion-reduce:transition-none";
 
   return (
     <main className="relative min-h-screen overflow-hidden bg-[#f7f7f5] px-5 py-8 font-sans text-[#171719] dark:bg-[#050505] dark:text-white sm:grid sm:place-items-center">
       <div className="absolute right-5 top-4">
         <ThemeToggle theme={theme} onToggle={onToggleTheme} compact />
       </div>
-      <div className="mx-auto grid w-full max-w-[1080px] overflow-hidden rounded-[28px] border border-black/10 bg-white shadow-[0_40px_120px_rgba(0,0,0,.14)] dark:border-white/10 dark:bg-[#0b0b0c] md:grid-cols-[1.08fr_.92fr]">
+      <div className="mx-auto grid w-full max-w-[1080px] overflow-hidden rounded-md border border-black/10 bg-white shadow-[0_40px_120px_rgba(0,0,0,.14)] dark:border-white/10 dark:bg-[#0b0b0c] md:grid-cols-[1.08fr_.92fr]">
         <section className="relative hidden min-h-[700px] overflow-hidden bg-black p-10 text-white md:block">
           <div className="absolute -right-32 -top-32 size-96 rounded-full bg-[#ed111c]/25 blur-3xl" />
           <div className="absolute -bottom-28 -left-20 size-80 rounded-full bg-[#ed111c]/15 blur-3xl" />
@@ -131,7 +131,7 @@ export function AuthScreen({
               "/images/event.webp",
             ].map((image, index) => (
               <img
-                className={`h-44 w-full rounded-xl object-cover ${index === 1 ? "-translate-y-7" : ""}`}
+                className={`h-44 w-full rounded-sm object-cover ${index === 1 ? "-translate-y-7" : ""}`}
                 src={image}
                 alt="TIET community preview"
                 key={image}
@@ -162,7 +162,7 @@ export function AuthScreen({
                   Continue with Google
                 </button>
                 {showAccounts ? (
-                  <div className="mt-2 overflow-hidden rounded-lg border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 shadow-lg">
+                  <div className="mt-2 overflow-hidden rounded-sm border border-black/10 dark:border-white/10 bg-white dark:bg-neutral-950 shadow-lg">
                     <button
                       className="flex w-full items-center gap-3 p-3 text-left hover:bg-neutral-50 dark:hover:bg-neutral-800"
                       onClick={() => onAuthenticated(demoUser)}
@@ -181,7 +181,7 @@ export function AuthScreen({
                       <CheckCircle2 className="text-green-500" size={18} />
                     </button>
                     <button
-                      className="flex w-full items-center gap-3 border-t border-neutral-100 dark:border-neutral-800 p-3 text-left hover:bg-neutral-50 dark:hover:bg-neutral-800"
+                      className="flex w-full items-center gap-3 border-t border-black/10 dark:border-white/10 p-3 text-left hover:bg-neutral-50 dark:hover:bg-neutral-800"
                       onClick={() => {
                         setShowAccounts(false);
                         setError("This account is not linked to a Thapar ID.");

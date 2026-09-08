@@ -17,7 +17,7 @@ export function ArchivedPostsView({
   const navigate = useNavigate();
   return (
     <section className="mx-auto min-h-screen w-full max-w-3xl">
-      <header className="flex h-[60px] items-center gap-3 border-b border-neutral-200 dark:border-neutral-800 px-4">
+      <header className="flex h-[60px] items-center gap-3 border-b border-black/10 dark:border-white/10 px-4">
         <button
           className="grid size-10 place-items-center"
           onClick={() => navigate(-1)}
@@ -30,7 +30,7 @@ export function ArchivedPostsView({
         <div className="grid grid-cols-2 gap-3 p-4 sm:grid-cols-3">
           {posts.map((post) => (
             <article
-              className="overflow-hidden rounded-lg border border-neutral-200 dark:border-neutral-800"
+              className="overflow-hidden rounded-sm border border-black/10 dark:border-white/10"
               key={post.id}
             >
               <img

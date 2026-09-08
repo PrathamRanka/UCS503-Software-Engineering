@@ -46,7 +46,7 @@ export function StoryViewer({
       aria-modal="true"
       aria-label={`${story.name} campus moment`}
     >
-      <div className="relative h-full w-full max-w-[430px] overflow-hidden bg-neutral-950 text-white sm:rounded-lg">
+      <div className="relative h-full w-full max-w-[430px] overflow-hidden bg-neutral-950 text-white sm:rounded-sm">
         <div className="absolute inset-x-2.5 top-2 z-10 flex gap-1">
           {Array.from({ length: total }, (_, itemIndex) => (
             <span

@@ -61,7 +61,7 @@ export function SettingsView({
       <PageHeader title="Settings" eyebrow="Your titalks" />
       <div className="p-4 sm:p-7">
         <form
-          className="rounded-2xl border border-black/10 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[.035] sm:p-7"
+          className="rounded-md border border-black/10 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-white/[.035] sm:p-7"
           onSubmit={submit}
         >
           <div className="flex items-center gap-4">
@@ -83,7 +83,7 @@ export function SettingsView({
             <label className="grid gap-1.5 text-sm font-semibold">
               Name
               <input
-                className="h-11 rounded-lg border border-neutral-300 bg-transparent px-3 font-normal outline-none focus:border-neutral-500 dark:border-neutral-700"
+                className="h-11 rounded-sm border border-neutral-300 bg-transparent px-3 font-normal outline-none focus:border-neutral-500 dark:border-white/15"
                 value={name}
                 onChange={(event) => setName(event.target.value)}
               />
@@ -91,7 +91,7 @@ export function SettingsView({
             <label className="grid gap-1.5 text-sm font-semibold">
               Username
               <input
-                className="h-11 rounded-lg border border-neutral-300 bg-transparent px-3 font-normal outline-none focus:border-neutral-500 dark:border-neutral-700"
+                className="h-11 rounded-sm border border-neutral-300 bg-transparent px-3 font-normal outline-none focus:border-neutral-500 dark:border-white/15"
                 value={username}
                 onChange={(event) => setUsername(event.target.value)}
               />
@@ -99,7 +99,7 @@ export function SettingsView({
             <label className="grid gap-1.5 text-sm font-semibold">
               Bio
               <textarea
-                className="min-h-24 rounded-lg border border-neutral-300 bg-transparent p-3 font-normal outline-none focus:border-neutral-500 dark:border-neutral-700"
+                className="min-h-24 rounded-sm border border-neutral-300 bg-transparent p-3 font-normal outline-none focus:border-neutral-500 dark:border-white/15"
                 maxLength={150}
                 value={bio}
                 onChange={(event) => setBio(event.target.value)}
@@ -110,7 +110,7 @@ export function SettingsView({
             </label>
           </div>
           <button
-            className="mt-6 rounded-lg bg-[#ed111c] px-5 py-2.5 text-sm font-semibold text-white"
+            className="mt-6 rounded-sm bg-[#ed111c] px-5 py-2.5 text-sm font-semibold text-white"
             type="submit"
           >
             Save changes
@@ -122,11 +122,11 @@ export function SettingsView({
           ) : null}
         </form>
 
-        <div className="mt-5 overflow-hidden rounded-xl border border-neutral-200 dark:border-neutral-800">
-          <div className="border-b border-neutral-100 dark:border-neutral-800 p-2">
+        <div className="mt-5 overflow-hidden rounded-sm border border-black/10 dark:border-white/10">
+          <div className="border-b border-black/10 dark:border-white/10 p-2">
             <ThemeToggle theme={theme} onToggle={onToggleTheme} />
           </div>
-          <div className="flex items-center gap-3 border-b border-neutral-100 dark:border-neutral-800 p-4">
+          <div className="flex items-center gap-3 border-b border-black/10 dark:border-white/10 p-4">
             <Shield size={20} />
             <div className="flex-1">
               <strong className="text-sm">Private account</strong>
@@ -140,7 +140,7 @@ export function SettingsView({
               aria-label="Toggle private account"
             />
           </div>
-          <div className="flex items-center gap-3 border-b border-neutral-100 dark:border-neutral-800 p-4">
+          <div className="flex items-center gap-3 border-b border-black/10 dark:border-white/10 p-4">
             <Bell size={20} />
             <div className="flex-1">
               <strong className="text-sm">Push notifications</strong>
@@ -154,7 +154,7 @@ export function SettingsView({
               aria-label="Toggle notifications"
             />
           </div>
-          <div className="flex items-center gap-3 border-b border-neutral-100 dark:border-neutral-800 p-4">
+          <div className="flex items-center gap-3 border-b border-black/10 dark:border-white/10 p-4">
             <Lock size={20} />
             <div className="flex-1">
               <strong className="text-sm">Account privacy</strong>
@@ -178,7 +178,7 @@ export function SettingsView({
           </div>
         </div>
         <button
-          className="mt-5 flex w-full items-center justify-between rounded-xl border border-neutral-200 dark:border-neutral-800 p-4 text-left"
+          className="mt-5 flex w-full items-center justify-between rounded-sm border border-black/10 dark:border-white/10 p-4 text-left"
           onClick={onPasswordReset}
         >
           <span>
@@ -190,7 +190,7 @@ export function SettingsView({
           <Lock size={19} />
         </button>
         <button
-          className="mt-5 flex w-full items-center justify-center gap-2 rounded-xl border border-red-200 p-4 text-sm font-semibold text-red-500 hover:bg-red-50"
+          className="mt-5 flex w-full items-center justify-center gap-2 rounded-sm border border-red-200 p-4 text-sm font-semibold text-red-500 hover:bg-red-50"
           onClick={onLogout}
         >
           <LogOut size={19} />
@@ -205,7 +205,7 @@ export function SettingsView({
       </div>
       {confirmDelete ? (
         <div className="fixed inset-0 z-50 grid place-items-center bg-black/60 p-4">
-          <section className="w-full max-w-sm rounded-xl bg-white dark:bg-neutral-950 p-6 text-center">
+          <section className="w-full max-w-sm rounded-sm bg-white dark:bg-neutral-950 p-6 text-center">
             <h2 className="text-lg font-semibold">Delete account?</h2>
             <p className="mt-2 text-sm leading-5 text-neutral-500 dark:text-neutral-400">
               This mock removes your local session and returns to sign in. A
@@ -213,13 +213,13 @@ export function SettingsView({
             </p>
             <div className="mt-6 grid gap-2">
               <button
-                className="rounded-lg bg-red-500 py-3 text-sm font-semibold text-white"
+                className="rounded-sm bg-red-500 py-3 text-sm font-semibold text-white"
                 onClick={onDeleteAccount}
               >
                 Delete account
               </button>
               <button
-                className="rounded-lg bg-neutral-100 dark:bg-neutral-800 py-3 text-sm font-semibold"
+                className="rounded-sm bg-neutral-100 dark:bg-neutral-800 py-3 text-sm font-semibold"
                 onClick={() => setConfirmDelete(false)}
               >
                 Cancel

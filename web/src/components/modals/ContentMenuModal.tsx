@@ -24,25 +24,25 @@ export function ContentMenuModal(props: ContentMenuModalProps) {
       onMouseDown={props.onClose}
     >
       <section
-        className="w-full max-w-sm overflow-hidden rounded-xl bg-white dark:bg-neutral-950 text-center"
+        className="w-full max-w-sm overflow-hidden rounded-sm bg-white dark:bg-neutral-950 text-center"
         onMouseDown={(event) => event.stopPropagation()}
       >
         {props.own ? (
           <>
             <button
-              className="w-full border-b border-neutral-100 dark:border-neutral-800 p-4 text-sm font-semibold"
+              className="w-full border-b border-black/10 dark:border-white/10 p-4 text-sm font-semibold"
               onClick={() => action(props.onEdit)}
             >
               Edit update
             </button>
             <button
-              className="w-full border-b border-neutral-100 dark:border-neutral-800 p-4 text-sm font-semibold"
+              className="w-full border-b border-black/10 dark:border-white/10 p-4 text-sm font-semibold"
               onClick={() => action(props.onArchive)}
             >
               {props.archived ? "Show on profile" : "Archive"}
             </button>
             <button
-              className="w-full border-b border-neutral-100 dark:border-neutral-800 p-4 text-sm font-bold text-red-500"
+              className="w-full border-b border-black/10 dark:border-white/10 p-4 text-sm font-bold text-red-500"
               onClick={() => action(props.onDelete)}
             >
               Delete
@@ -51,25 +51,25 @@ export function ContentMenuModal(props: ContentMenuModalProps) {
         ) : (
           <>
             <button
-              className="w-full border-b border-neutral-100 dark:border-neutral-800 p-4 text-sm font-bold text-red-500"
+              className="w-full border-b border-black/10 dark:border-white/10 p-4 text-sm font-bold text-red-500"
               onClick={() => action(props.onReport)}
             >
               Report
             </button>
             <button
-              className="w-full border-b border-neutral-100 dark:border-neutral-800 p-4 text-sm font-bold text-red-500"
+              className="w-full border-b border-black/10 dark:border-white/10 p-4 text-sm font-bold text-red-500"
               onClick={() => action(props.onUnfollow)}
             >
               Unfollow
             </button>
             <button
-              className="w-full border-b border-neutral-100 dark:border-neutral-800 p-4 text-sm"
+              className="w-full border-b border-black/10 dark:border-white/10 p-4 text-sm"
               onClick={() => action(props.onMute)}
             >
               Mute
             </button>
             <button
-              className="w-full border-b border-neutral-100 dark:border-neutral-800 p-4 text-sm font-bold text-red-500"
+              className="w-full border-b border-black/10 dark:border-white/10 p-4 text-sm font-bold text-red-500"
               onClick={() => action(props.onBlock)}
             >
               Block

@@ -2,7 +2,7 @@ export function Brand({ compact = false }: { compact?: boolean }) {
   if (compact)
     return (
       <a
-        className="relative block h-11 w-12 shrink-0 overflow-hidden rounded-xl bg-white shadow-sm ring-1 ring-black/5 transition-[width] duration-200 ease-out group-hover/sidebar:w-[196px] motion-reduce:transition-none no-underline"
+        className="relative block h-11 w-12 shrink-0 overflow-hidden rounded-sm bg-white shadow-sm ring-1 ring-black/5 transition-[width] duration-200 ease-out group-hover/sidebar:w-[196px] motion-reduce:transition-none no-underline"
         href="/"
         aria-label="titalks home"
       >

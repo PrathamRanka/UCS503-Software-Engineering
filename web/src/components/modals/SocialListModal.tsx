@@ -32,10 +32,10 @@ export function SocialListModal({
       onMouseDown={onClose}
     >
       <section
-        className="w-full max-w-md overflow-hidden rounded-xl bg-white dark:bg-neutral-950"
+        className="w-full max-w-md overflow-hidden rounded-sm bg-white dark:bg-neutral-950"
         onMouseDown={(event) => event.stopPropagation()}
       >
-        <header className="relative flex h-12 items-center justify-center border-b border-neutral-200 dark:border-neutral-800">
+        <header className="relative flex h-12 items-center justify-center border-b border-black/10 dark:border-white/10">
           <strong>{title === "Followers" ? "Connections" : "People you know"}</strong>
           <button
             className="absolute right-2 grid size-9 place-items-center"
@@ -44,7 +44,7 @@ export function SocialListModal({
             <X />
           </button>
         </header>
-        <label className="m-3 flex h-10 items-center gap-2 rounded-lg bg-neutral-100 dark:bg-neutral-800 px-3">
+        <label className="m-3 flex h-10 items-center gap-2 rounded-sm bg-neutral-100 dark:bg-neutral-800 px-3">
           <Search size={17} className="text-neutral-400" />
           <input
             className="min-w-0 flex-1 bg-transparent text-sm outline-none"
@@ -58,7 +58,7 @@ export function SocialListModal({
             const handle = `@${person.username}`;
             return (
               <div
-                className="flex items-center gap-3 rounded-lg p-2 hover:bg-neutral-50 dark:hover:bg-neutral-800"
+                className="flex items-center gap-3 rounded-sm p-2 hover:bg-neutral-50 dark:hover:bg-neutral-800"
                 key={person.id}
               >
                 <button onClick={() => onOpenProfile(person.username)}>
@@ -76,7 +76,7 @@ export function SocialListModal({
                   </span>
                 </button>
                 <button
-                  className={`rounded-lg px-3 py-2 text-xs font-semibold ${following.has(handle) ? "bg-neutral-100 dark:bg-neutral-800" : "bg-[#ed111c] text-white"}`}
+                  className={`rounded-sm px-3 py-2 text-xs font-semibold ${following.has(handle) ? "bg-neutral-100 dark:bg-neutral-800" : "bg-[#ed111c] text-white"}`}
                   onClick={() => onToggleFollow(handle)}
                 >
                   {following.has(handle) ? "Connected" : "Connect"}

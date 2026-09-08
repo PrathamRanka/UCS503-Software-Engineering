@@ -35,7 +35,7 @@ export function StoryManagerModal({
       onMouseDown={onClose}
     >
       <section
-        className="w-full max-w-lg rounded-xl bg-white dark:bg-neutral-950 p-5"
+        className="w-full max-w-lg rounded-sm bg-white dark:bg-neutral-950 p-5"
         onMouseDown={(event) => event.stopPropagation()}
       >
         <header className="flex items-center justify-between">
@@ -50,7 +50,7 @@ export function StoryManagerModal({
           </button>
         </header>
         <button
-          className="mt-5 flex w-full items-center justify-center gap-2 rounded-lg bg-[#ed111c] py-3 text-sm font-semibold text-white"
+          className="mt-5 flex w-full items-center justify-center gap-2 rounded-sm bg-[#ed111c] py-3 text-sm font-semibold text-white"
           onClick={onCreate}
         >
           <Plus size={18} />
@@ -60,7 +60,7 @@ export function StoryManagerModal({
           <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3">
             {owned.map(({ story, index }) => (
               <div
-                className="overflow-hidden rounded-lg border border-neutral-200 dark:border-neutral-800"
+                className="overflow-hidden rounded-sm border border-black/10 dark:border-white/10"
                 key={`${story.image}-${index}`}
               >
                 <img

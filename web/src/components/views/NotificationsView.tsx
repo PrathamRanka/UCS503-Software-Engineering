@@ -15,7 +15,7 @@ export function NotificationsView() {
         <div className="grid gap-1">
           {notifications.map((item, index) => (
             <div
-              className="flex items-center gap-3 rounded-xl border border-transparent px-3 py-4 transition hover:border-black/10 hover:bg-white dark:hover:border-white/10 dark:hover:bg-white/5 motion-reduce:transition-none"
+              className="flex items-center gap-3 rounded-sm border border-transparent px-3 py-4 transition hover:border-black/10 hover:bg-white dark:hover:border-white/10 dark:hover:bg-white/5 motion-reduce:transition-none"
               key={item.id}
             >
               <Avatar src={item.avatar} />
@@ -34,7 +34,7 @@ export function NotificationsView() {
               ) : null}
               {item.follow ? (
                 <button
-                  className={`rounded-lg px-4 py-2 text-xs font-semibold ${following.has(item.id) ? "bg-neutral-100 dark:bg-neutral-800" : "bg-[#ed111c] text-white"}`}
+                  className={`rounded-sm px-4 py-2 text-xs font-semibold ${following.has(item.id) ? "bg-neutral-100 dark:bg-neutral-800" : "bg-[#ed111c] text-white"}`}
                   onClick={() =>
                     setFollowing((current) => {
                       const next = new Set(current);
@@ -54,7 +54,7 @@ export function NotificationsView() {
             </div>
           ))}
         </div>
-        <div className="mt-10 border-t border-neutral-200 dark:border-neutral-800 py-12 text-center text-neutral-400">
+        <div className="mt-10 border-t border-black/10 dark:border-white/10 py-12 text-center text-neutral-400">
           <Bell className="mx-auto" size={32} />
           <p className="mt-3 text-sm">You’re all caught up</p>
         </div>

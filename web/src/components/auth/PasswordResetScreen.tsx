@@ -28,7 +28,7 @@ export function PasswordResetScreen({
       <div className="absolute right-5 top-4">
         <ThemeToggle theme={theme} onToggle={onToggleTheme} compact />
       </div>
-      <section className="w-full max-w-md rounded-2xl border border-black/10 bg-white p-8 text-center shadow-[0_30px_100px_rgba(0,0,0,.12)] dark:border-white/10 dark:bg-[#111113]">
+      <section className="w-full max-w-md rounded-md border border-black/10 bg-white p-8 text-center shadow-[0_30px_100px_rgba(0,0,0,.12)] dark:border-white/10 dark:bg-[#111113]">
         <div className="flex justify-center">
           <Brand />
         </div>
@@ -51,7 +51,7 @@ export function PasswordResetScreen({
             </p>
             <form className="mt-6" onSubmit={submit}>
               <input
-                className="h-11 w-full rounded-lg border border-neutral-300 bg-transparent px-3 text-sm outline-none focus:border-neutral-500 dark:border-neutral-700"
+                className="h-11 w-full rounded-sm border border-neutral-300 bg-transparent px-3 text-sm outline-none focus:border-neutral-500 dark:border-white/15"
                 value={email}
                 onChange={(event) => setEmail(event.target.value)}
                 placeholder="name@thapar.edu"
@@ -59,7 +59,7 @@ export function PasswordResetScreen({
               {error ? (
                 <p className="mt-2 text-left text-xs text-red-500">{error}</p>
               ) : null}
-              <button className="mt-3 h-12 w-full rounded-xl bg-[#ed111c] text-sm font-semibold text-white shadow-lg shadow-red-600/15">
+              <button className="mt-3 h-12 w-full rounded-sm bg-[#ed111c] text-sm font-semibold text-white shadow-lg shadow-red-600/15">
                 Send reset link
               </button>
             </form>

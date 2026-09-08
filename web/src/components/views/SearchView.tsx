@@ -29,7 +29,7 @@ export function SearchView({ following, onFollow }: SearchViewProps) {
       <PageHeader title="People" eyebrow="Campus directory" />
       <div className="p-4 sm:p-8">
         <div className="mb-8"><h2 className="text-4xl font-semibold tracking-[-.045em] sm:text-5xl">Find the person, not a following.</h2><p className="mt-3 max-w-xl text-sm leading-6 text-neutral-500">Search by name, course, society, or the kind of help you need.</p></div>
-        <label className="flex h-14 items-center gap-3 rounded-xl border border-black/10 bg-white px-4 shadow-sm dark:border-white/10 dark:bg-white/5">
+        <label className="flex h-14 items-center gap-3 rounded-sm border border-black/10 bg-white px-4 shadow-sm dark:border-white/10 dark:bg-white/5">
           <Search
             size={19}
             className="text-neutral-500 dark:text-neutral-400"
@@ -55,7 +55,7 @@ export function SearchView({ following, onFollow }: SearchViewProps) {
             const handle = `@${person.username}`;
             return (
               <div
-                className="flex items-center gap-3 rounded-xl border border-black/10 bg-white p-4 transition hover:-translate-y-0.5 hover:shadow-lg dark:border-white/10 dark:bg-white/[.035] motion-reduce:transition-none"
+                className="flex items-center gap-3 rounded-sm border border-black/10 bg-white p-4 transition hover:-translate-y-0.5 hover:shadow-lg dark:border-white/10 dark:bg-white/[.035] motion-reduce:transition-none"
                 key={person.id}
               >
                 <button
@@ -88,7 +88,7 @@ export function SearchView({ following, onFollow }: SearchViewProps) {
                 </button>
                 {person.id !== "user-pratham" ? (
                   <button
-                    className={`rounded-lg px-4 py-2 text-xs font-semibold ${following.has(handle) ? "bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-200" : "bg-[#ed111c] text-white"}`}
+                    className={`rounded-sm px-4 py-2 text-xs font-semibold ${following.has(handle) ? "bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-200" : "bg-[#ed111c] text-white"}`}
                     onClick={() => onFollow(handle)}
                   >
                     {following.has(handle) ? "Connected" : "Connect"}

@@ -31,7 +31,7 @@ export function CampusMapModal({ onClose }: { onClose: () => void }) {
     >
       <header className="mx-auto flex w-full max-w-7xl items-center justify-between gap-4 pb-3">
         <div className="flex min-w-0 items-center gap-3">
-          <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-[#ed111c]">
+          <span className="grid size-10 shrink-0 place-items-center rounded-sm bg-[#ed111c]">
             <MapPin size={19} />
           </span>
           <div className="min-w-0">
@@ -86,7 +86,7 @@ export function CampusMapModal({ onClose }: { onClose: () => void }) {
         </div>
       </header>
       <div
-        className="mx-auto min-h-0 w-full max-w-7xl flex-1 overflow-auto rounded-2xl bg-[#abc2dc] shadow-2xl"
+        className="mx-auto min-h-0 w-full max-w-7xl flex-1 overflow-auto rounded-md bg-[#abc2dc] shadow-lg"
         onMouseDown={(event) => event.stopPropagation()}
       >
         <img

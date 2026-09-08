@@ -49,7 +49,7 @@ function NewConversationModal({
       onMouseDown={onClose}
     >
       <section
-        className="w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl dark:bg-[#111113]"
+        className="w-full max-w-md rounded-md bg-white p-6 shadow-lg dark:bg-[#111113]"
         onMouseDown={(event) => event.stopPropagation()}
       >
         <header className="flex items-center justify-between">
@@ -60,7 +60,7 @@ function NewConversationModal({
         </header>
         {selected.size > 1 ? (
           <input
-            className="mt-4 h-10 w-full rounded-lg border border-neutral-300 bg-transparent px-3 text-sm outline-none dark:border-neutral-700"
+            className="mt-4 h-10 w-full rounded-sm border border-neutral-300 bg-transparent px-3 text-sm outline-none dark:border-white/15"
             value={groupName}
             onChange={(event) => setGroupName(event.target.value)}
             placeholder="Group name"
@@ -69,7 +69,7 @@ function NewConversationModal({
         <div className="mt-4 max-h-80 overflow-y-auto">
           {people.slice(1).map((person) => (
             <label
-              className="flex cursor-pointer items-center gap-3 rounded-lg p-2 hover:bg-neutral-50 dark:hover:bg-neutral-800"
+              className="flex cursor-pointer items-center gap-3 rounded-sm p-2 hover:bg-neutral-50 dark:hover:bg-neutral-800"
               key={person.id}
             >
               <Avatar src={person.avatar} />
@@ -97,7 +97,7 @@ function NewConversationModal({
           ))}
         </div>
         <button
-          className="mt-4 h-11 w-full rounded-lg bg-[#ed111c] text-sm font-semibold text-white disabled:opacity-40"
+          className="mt-4 h-11 w-full rounded-sm bg-[#ed111c] text-sm font-semibold text-white disabled:opacity-40"
           disabled={!selected.size}
           onClick={create}
         >
@@ -171,19 +171,19 @@ export function MessagesView({
   };
 
   return (
-    <section className="mx-auto h-[calc(100dvh-76px)] w-full max-w-6xl overflow-hidden bg-[#f7f7f5] dark:bg-[#050505] lg:h-[calc(100dvh-48px)] lg:translate-y-6 lg:rounded-2xl lg:border lg:border-black/10 lg:bg-white lg:shadow-xl dark:lg:border-white/10 dark:lg:bg-[#0b0b0c]">
+    <section className="mx-auto h-[calc(100dvh-76px)] w-full max-w-6xl overflow-hidden bg-[#f7f7f5] dark:bg-[#050505] lg:h-[calc(100dvh-48px)] lg:translate-y-6 lg:rounded-md lg:border lg:border-black/10 lg:bg-white lg:shadow-md dark:lg:border-white/10 dark:lg:bg-[#0b0b0c]">
       <div className="grid h-full min-h-0 md:grid-cols-[350px_1fr]">
         <aside
-          className={`${selectedId ? "hidden md:flex" : "flex"} min-h-0 flex-col border-r border-neutral-200 dark:border-neutral-800`}
+          className={`${selectedId ? "hidden md:flex" : "flex"} min-h-0 flex-col border-r border-black/10 dark:border-white/10`}
         >
-          <header className="flex h-[60px] items-center justify-between border-b border-neutral-200 dark:border-neutral-800 px-5">
+          <header className="flex h-[60px] items-center justify-between border-b border-black/10 dark:border-white/10 px-5">
             <div><p className="text-[9px] font-bold uppercase tracking-[.18em] text-[#ed111c]">titalks</p><strong>Inbox</strong></div>
             <button onClick={() => setNewOpen(true)} aria-label="New message">
               <Edit size={22} />
             </button>
           </header>
           <div className="p-3">
-            <label className="flex h-10 items-center gap-2 rounded-lg bg-neutral-100 dark:bg-neutral-800 px-3">
+            <label className="flex h-10 items-center gap-2 rounded-sm bg-neutral-100 dark:bg-neutral-800 px-3">
               <Search
                 size={17}
                 className="text-neutral-500 dark:text-neutral-400"
@@ -223,7 +223,7 @@ export function MessagesView({
         </aside>
         {selected ? (
           <div className="flex h-full min-h-0 flex-col">
-            <header className="flex h-[60px] shrink-0 items-center gap-3 border-b border-neutral-200 dark:border-neutral-800 px-3 sm:px-5">
+            <header className="flex h-[60px] shrink-0 items-center gap-3 border-b border-black/10 dark:border-white/10 px-3 sm:px-5">
               <button className="md:hidden" onClick={() => setSelectedId(null)}>
                 <ChevronLeft />
               </button>
@@ -261,7 +261,7 @@ export function MessagesView({
                     key={item.id}
                   >
                     <div
-                      className={`max-w-[72%] overflow-hidden rounded-2xl text-sm ${item.image ? "" : "px-4 py-2.5"} ${item.mine ? "bg-[#ed111c] text-white shadow-md shadow-red-600/10" : "bg-neutral-100 dark:bg-white/10"}`}
+                      className={`max-w-[72%] overflow-hidden rounded-md text-sm ${item.image ? "" : "px-4 py-2.5"} ${item.mine ? "bg-[#ed111c] text-white shadow-md shadow-red-600/10" : "bg-neutral-100 dark:bg-white/10"}`}
                     >
                       {item.image ? (
                         <img
@@ -283,7 +283,7 @@ export function MessagesView({
               </div>
             </div>
             <form
-              className="m-4 flex min-h-11 shrink-0 items-center gap-2 rounded-full border border-neutral-300 dark:border-neutral-700 px-3"
+              className="m-4 flex min-h-11 shrink-0 items-center gap-2 rounded-full border border-neutral-300 dark:border-white/15 px-3"
               onSubmit={sendMessage}
             >
               <Smile size={21} />
@@ -323,7 +323,7 @@ export function MessagesView({
                 Talk privately with people and spaces across campus.
               </p>
               <button
-                className="mt-5 rounded-lg bg-[#ed111c] px-4 py-2 text-sm font-semibold text-white"
+                className="mt-5 rounded-sm bg-[#ed111c] px-4 py-2 text-sm font-semibold text-white"
                 onClick={() => setNewOpen(true)}
               >
                 Send message
