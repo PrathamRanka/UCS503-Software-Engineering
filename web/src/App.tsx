@@ -133,6 +133,7 @@ function App() {
     "Followers" | "Following" | null
   >(null);
   const [toast, setToast] = useState("");
+  const [rightRailOpen, setRightRailOpen] = useState(true);
   const toastTimer = useRef<number | undefined>(undefined);
   const todayLabel = useMemo(
     () =>
@@ -362,7 +363,7 @@ function App() {
     );
 
   const home = (
-    <div className="mx-auto grid min-h-screen w-full max-w-[1380px] xl:grid-cols-[minmax(0,1fr)_342px] xl:gap-10 xl:px-12">
+    <div className={`mx-auto grid min-h-screen w-full max-w-[1380px] transition-[grid-template-columns,gap] duration-200 ease-in-out motion-reduce:transition-none xl:px-12 ${rightRailOpen?"xl:grid-cols-[minmax(0,1fr)_342px] xl:gap-10":"xl:grid-cols-[minmax(0,1fr)_48px] xl:gap-4"}`}>
       <main className="min-w-0 pb-24 pt-16 lg:px-10 lg:pt-12 xl:px-0">
         <FeedHeader
           theme={theme}
@@ -438,6 +439,8 @@ function App() {
       <RightRail
         user={user}
         following={following}
+        expanded={rightRailOpen}
+        onToggle={() => setRightRailOpen((current) => !current)}
         onFollow={toggleFollow}
         onPreview={(label) => flash(`${label} preview opened`)}
       />
@@ -445,7 +448,7 @@ function App() {
   );
 
   return (
-    <div className="min-h-[100dvh] bg-[#f7f7f5] font-sans text-[#171719] selection:bg-[#ed111c] selection:text-white dark:bg-[#050505] dark:text-[#f5f5f5] lg:pl-[76px] xl:pl-[238px]">
+    <div className="min-h-[100dvh] bg-[#f7f7f5] font-sans text-[#171719] selection:bg-[#ed111c] selection:text-white dark:bg-[#050505] dark:text-[#f5f5f5] lg:pl-[76px]">
       <Sidebar
         activeNav={activeNav}
         user={user}

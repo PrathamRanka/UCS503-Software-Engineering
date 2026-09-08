@@ -47,6 +47,15 @@ try {
   await page.evaluate((user) => localStorage.setItem("titalks-session-v1", JSON.stringify(user)), demoUser);
   await page.reload();
   await page.getByText("Good afternoon, Riya.").waitFor();
+  const sidebar = page.locator("aside").first();
+  const collapsedWidth = await sidebar.evaluate((element) => element.getBoundingClientRect().width);
+  await sidebar.hover();
+  await page.waitForTimeout(250);
+  const expandedWidth = await sidebar.evaluate((element) => element.getBoundingClientRect().width);
+  if (expandedWidth <= collapsedWidth) throw new Error("Sidebar did not expand on hover");
+  await page.getByRole("button", { name: "Collapse right panel" }).click();
+  await page.getByRole("button", { name: "Expand right panel" }).waitFor();
+  await page.getByRole("button", { name: "Expand right panel" }).click();
   await page.getByRole("button", { name: /Open map/i }).click();
   await page.getByRole("heading", { name: "Find your way around" }).waitFor();
   await page.getByAltText(/Illustrated map of the TIET campus/i).waitFor();
