@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { people } from "../../data/mockData";
 import { Avatar } from "../ui/Avatar";
 import { PageHeader } from "../ui/PageHeader";
+import { MotionReveal } from "../ui/Motion";
 
 type SearchViewProps = {
   following: Set<string>;
@@ -51,12 +52,15 @@ export function SearchView({ following, onFollow }: SearchViewProps) {
           {query ? "Results" : "People you may know"}
         </h2>
         <div className="grid gap-2 sm:grid-cols-2">
-          {results.map((person) => {
+          {results.map((person, index) => {
             const handle = `@${person.username}`;
             return (
-              <div
-                className="flex items-center gap-3 rounded-sm border border-black/10 bg-white p-4 transition hover:-translate-y-0.5 hover:shadow-lg dark:border-white/10 dark:bg-white/[.035] motion-reduce:transition-none"
+              <MotionReveal
+                className="flex items-center gap-3 rounded-sm border border-black/10 bg-white p-4 transition duration-150 ease-out hover:-translate-y-0.5 hover:shadow-lg dark:border-white/10 dark:bg-white/[.035] motion-reduce:transform-none motion-reduce:transition-none"
                 key={person.id}
+                delay={Math.min(index * 30, 150)}
+                distance={6}
+                scale={0.995}
               >
                 <button
                   onClick={() =>
@@ -88,13 +92,13 @@ export function SearchView({ following, onFollow }: SearchViewProps) {
                 </button>
                 {person.id !== "user-pratham" ? (
                   <button
-                    className={`rounded-sm px-4 py-2 text-xs font-semibold ${following.has(handle) ? "bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-200" : "bg-[#ed111c] text-white"}`}
+                    className={`rounded-sm px-4 py-2 text-xs font-semibold transition duration-150 active:scale-[.96] motion-reduce:transform-none motion-reduce:transition-none ${following.has(handle) ? "bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-200" : "bg-[#ed111c] text-white"}`}
                     onClick={() => onFollow(handle)}
                   >
                     {following.has(handle) ? "Connected" : "Connect"}
                   </button>
                 ) : null}
-              </div>
+              </MotionReveal>
             );
           })}
           {!results.length ? (

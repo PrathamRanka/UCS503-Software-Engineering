@@ -43,6 +43,7 @@ export function MotionReveal({
         fill: "both",
       },
     );
+    animation.onfinish = () => animation.cancel();
     return () => animation.cancel();
   }, [delay, distance, scale]);
 
@@ -70,6 +71,7 @@ export function MotionBackdrop({
       easing: "ease-out",
       fill: "both",
     });
+    animation.onfinish = () => animation.cancel();
     return () => animation.cancel();
   }, []);
 

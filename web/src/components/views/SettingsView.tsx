@@ -4,6 +4,7 @@ import type { UserProfile } from "../../types/social";
 import { Avatar } from "../ui/Avatar";
 import { PageHeader } from "../ui/PageHeader";
 import { ThemeToggle } from "../ui/ThemeToggle";
+import { MotionBackdrop, MotionReveal } from "../ui/Motion";
 
 type SettingsViewProps = {
   user: UserProfile;
@@ -47,7 +48,7 @@ export function SettingsView({
   };
 
   const toggleClass = (enabled: boolean) =>
-    `relative h-6 w-11 rounded-full transition ${enabled ? "bg-[#ed111c]" : "bg-neutral-300"} motion-reduce:transition-none after:absolute after:top-0.5 after:size-5 after:rounded-full after:bg-white after:shadow-sm after:transition after:content-[''] ${enabled ? "after:left-[22px]" : "after:left-0.5"}`;
+    `relative h-6 w-11 rounded-full transition duration-200 ease-in-out active:scale-95 ${enabled ? "bg-[#ed111c]" : "bg-neutral-300"} motion-reduce:transform-none motion-reduce:transition-none after:absolute after:left-0.5 after:top-0.5 after:size-5 after:rounded-full after:bg-white after:shadow-sm after:transition-transform after:duration-200 after:ease-in-out after:content-[''] motion-reduce:after:transition-none ${enabled ? "after:translate-x-5" : "after:translate-x-0"}`;
   const changePhoto = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
@@ -110,7 +111,7 @@ export function SettingsView({
             </label>
           </div>
           <button
-            className="mt-6 rounded-sm bg-[#ed111c] px-5 py-2.5 text-sm font-semibold text-white"
+            className="mt-6 rounded-sm bg-[#ed111c] px-5 py-2.5 text-sm font-semibold text-white transition duration-150 hover:-translate-y-0.5 active:translate-y-0 active:scale-[.97] motion-reduce:transform-none motion-reduce:transition-none"
             type="submit"
           >
             Save changes
@@ -178,7 +179,7 @@ export function SettingsView({
           </div>
         </div>
         <button
-          className="mt-5 flex w-full items-center justify-between rounded-sm border border-black/10 dark:border-white/10 p-4 text-left"
+          className="mt-5 flex w-full items-center justify-between rounded-sm border border-black/10 p-4 text-left transition duration-150 hover:border-black/25 hover:bg-white active:scale-[.995] dark:border-white/10 dark:hover:border-white/25 dark:hover:bg-white/5 motion-reduce:transform-none motion-reduce:transition-none"
           onClick={onPasswordReset}
         >
           <span>
@@ -204,8 +205,8 @@ export function SettingsView({
         </button>
       </div>
       {confirmDelete ? (
-        <div className="fixed inset-0 z-50 grid place-items-center bg-black/60 p-4">
-          <section className="w-full max-w-sm rounded-sm bg-white dark:bg-neutral-950 p-6 text-center">
+        <MotionBackdrop className="fixed inset-0 z-50 grid place-items-center bg-black/60 p-4">
+          <MotionReveal className="w-full max-w-sm rounded-sm bg-white p-6 text-center shadow-[0_30px_100px_rgba(0,0,0,.3)] dark:bg-neutral-950" role="dialog" aria-modal="true">
             <h2 className="text-lg font-semibold">Delete account?</h2>
             <p className="mt-2 text-sm leading-5 text-neutral-500 dark:text-neutral-400">
               This mock removes your local session and returns to sign in. A
@@ -225,8 +226,8 @@ export function SettingsView({
                 Cancel
               </button>
             </div>
-          </section>
-        </div>
+          </MotionReveal>
+        </MotionBackdrop>
       ) : null}
     </section>
   );

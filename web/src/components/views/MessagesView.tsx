@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useMemo, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useMemo, useRef, useState } from "react";
 import {
   ChevronLeft,
   Edit,
@@ -18,6 +18,7 @@ import {
 } from "../../data/mockData";
 import type { Conversation } from "../../types/social";
 import { Avatar } from "../ui/Avatar";
+import { MotionBackdrop, MotionReveal } from "../ui/Motion";
 
 function NewConversationModal({
   onCreate,
@@ -44,11 +45,11 @@ function NewConversationModal({
     });
   };
   return (
-    <div
+    <MotionBackdrop
       className="fixed inset-0 z-50 grid place-items-center bg-black/60 p-4"
       onMouseDown={onClose}
     >
-      <section
+      <MotionReveal
         className="w-full max-w-md rounded-md bg-white p-6 shadow-lg dark:bg-[#111113]"
         onMouseDown={(event) => event.stopPropagation()}
       >
@@ -69,7 +70,7 @@ function NewConversationModal({
         <div className="mt-4 max-h-80 overflow-y-auto">
           {people.slice(1).map((person) => (
             <label
-              className="flex cursor-pointer items-center gap-3 rounded-sm p-2 hover:bg-neutral-50 dark:hover:bg-neutral-800"
+              className="flex cursor-pointer items-center gap-3 rounded-sm p-2 transition-colors duration-150 hover:bg-neutral-50 dark:hover:bg-neutral-800 motion-reduce:transition-none"
               key={person.id}
             >
               <Avatar src={person.avatar} />
@@ -97,14 +98,14 @@ function NewConversationModal({
           ))}
         </div>
         <button
-          className="mt-4 h-11 w-full rounded-sm bg-[#ed111c] text-sm font-semibold text-white disabled:opacity-40"
+          className="mt-4 h-11 w-full rounded-sm bg-[#ed111c] text-sm font-semibold text-white transition duration-150 active:scale-[.98] disabled:opacity-40 motion-reduce:transform-none motion-reduce:transition-none"
           disabled={!selected.size}
           onClick={create}
         >
           {selected.size > 1 ? "Create group chat" : "Start chat"}
         </button>
-      </section>
-    </div>
+      </MotionReveal>
+    </MotionBackdrop>
   );
 }
 
@@ -121,6 +122,7 @@ export function MessagesView({
   const [query, setQuery] = useState("");
   const [message, setMessage] = useState("");
   const [newOpen, setNewOpen] = useState(false);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
   const selected = conversations.find((item) => item.id === selectedId);
   const filtered = useMemo(
     () =>
@@ -131,6 +133,15 @@ export function MessagesView({
       ),
     [conversations, query],
   );
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+        ? "auto"
+        : "smooth",
+      block: "end",
+    });
+  }, [selectedId, selected?.messages.length]);
 
   const appendMessage = (text: string, image?: string) => {
     if (!selectedId) return;
@@ -178,7 +189,7 @@ export function MessagesView({
         >
           <header className="flex h-[60px] items-center justify-between border-b border-black/10 dark:border-white/10 px-5">
             <div><p className="text-[9px] font-bold uppercase tracking-[.18em] text-[#ed111c]">titalks</p><strong>Inbox</strong></div>
-            <button onClick={() => setNewOpen(true)} aria-label="New message">
+            <button className="grid size-9 place-items-center rounded-full transition duration-150 hover:bg-black/5 active:scale-90 dark:hover:bg-white/5 motion-reduce:transform-none motion-reduce:transition-none" onClick={() => setNewOpen(true)} aria-label="New message">
               <Edit size={22} />
             </button>
           </header>
@@ -199,7 +210,7 @@ export function MessagesView({
           <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain">
             {filtered.map((conversation) => (
               <button
-                className={`flex w-full items-center gap-3 px-5 py-3 text-left hover:bg-neutral-50 dark:hover:bg-neutral-800 ${selectedId === conversation.id ? "bg-neutral-100 dark:bg-neutral-800" : ""}`}
+                className={`flex w-full items-center gap-3 border-l-2 px-5 py-3 text-left transition-colors duration-150 hover:bg-neutral-50 dark:hover:bg-neutral-800 motion-reduce:transition-none ${selectedId === conversation.id ? "border-[#ed111c] bg-neutral-100 dark:bg-neutral-800" : "border-transparent"}`}
                 onClick={() => setSelectedId(conversation.id)}
                 key={conversation.id}
               >
@@ -256,9 +267,11 @@ export function MessagesView({
               </div>
               <div className="grid gap-2">
                 {selected.messages.map((item) => (
-                  <div
+                  <MotionReveal
                     className={`flex ${item.mine ? "justify-end" : "justify-start"}`}
                     key={item.id}
+                    distance={5}
+                    scale={0.995}
                   >
                     <div
                       className={`max-w-[72%] overflow-hidden rounded-md text-sm ${item.image ? "" : "px-4 py-2.5"} ${item.mine ? "bg-[#ed111c] text-white shadow-md shadow-red-600/10" : "bg-neutral-100 dark:bg-white/10"}`}
@@ -278,8 +291,9 @@ export function MessagesView({
                         {item.time}
                       </span>
                     </div>
-                  </div>
+                  </MotionReveal>
                 ))}
+                <div ref={messagesEndRef} />
               </div>
             </div>
             <form
@@ -304,7 +318,7 @@ export function MessagesView({
               </label>
               {message.trim() ? (
                 <button
-                  className="font-semibold text-[#ed111c]"
+                  className="grid size-8 place-items-center rounded-full font-semibold text-[#ed111c] transition duration-150 hover:bg-[#ed111c]/10 active:scale-90 motion-reduce:transform-none motion-reduce:transition-none"
                   aria-label="Send"
                 >
                   <Send size={20} />
@@ -323,7 +337,7 @@ export function MessagesView({
                 Talk privately with people and spaces across campus.
               </p>
               <button
-                className="mt-5 rounded-sm bg-[#ed111c] px-4 py-2 text-sm font-semibold text-white"
+                className="mt-5 rounded-sm bg-[#ed111c] px-4 py-2 text-sm font-semibold text-white transition duration-150 hover:-translate-y-0.5 active:translate-y-0 active:scale-[.97] motion-reduce:transform-none motion-reduce:transition-none"
                 onClick={() => setNewOpen(true)}
               >
                 Send message

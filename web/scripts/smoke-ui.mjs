@@ -98,7 +98,15 @@ try {
   const mobileShot = join(tmpdir(), "titalks-mobile.png");
   await page.screenshot({ path: desktopShot, fullPage: true });
 
-  for (const [label, path] of [["Pulse", "/pulse"], ["Spaces", "/spaces"], ["People", "/people"], ["Inbox", "/inbox"], ["Activity", "/activity"]]) {
+  await page.getByRole("button", { name: "Pulse", exact: true }).first().click();
+  await page.waitForURL("**/pulse");
+  await page.getByRole("button", { name: "Sport", exact: true }).click();
+  await page.getByRole("button", { name: /URJA/ }).click();
+  await page.getByRole("button", { name: "Add to my day", exact: true }).click();
+  await page.getByRole("button", { name: "Added to your day", exact: true }).waitFor();
+  await page.keyboard.press("Escape");
+
+  for (const [label, path] of [["Spaces", "/spaces"], ["People", "/people"], ["Inbox", "/inbox"], ["Activity", "/activity"]]) {
     await page.getByRole("button", { name: label, exact: true }).first().click();
     await page.waitForURL(`**${path}`);
   }
