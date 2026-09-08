@@ -24,8 +24,33 @@ const { data: trimmedLogo, info } = await sharp(fileURLToPath(source))
   .png()
   .toBuffer({ resolveWithObject: true });
 const markWidth = Math.round(info.width * 0.275);
-const mark = await sharp(trimmedLogo)
+const croppedMark = await sharp(trimmedLogo)
   .extract({ left: 0, top: 0, width: markWidth, height: info.height })
+  .ensureAlpha()
+  .raw()
+  .toBuffer({ resolveWithObject: true });
+
+// The source wordmark begins immediately after the red "ti" mark. Remove
+// neutral/black pixels from that crop while preserving red antialiased edges.
+for (let index = 0; index < croppedMark.data.length; index += 4) {
+  const red = croppedMark.data[index];
+  const green = croppedMark.data[index + 1];
+  const blue = croppedMark.data[index + 2];
+  const alpha = croppedMark.data[index + 3];
+  const saturation = red - Math.max(green, blue);
+  if (alpha === 0 || red < 35 || saturation < 18) {
+    croppedMark.data[index + 3] = 0;
+  }
+}
+
+const mark = await sharp(croppedMark.data, {
+  raw: {
+    width: croppedMark.info.width,
+    height: croppedMark.info.height,
+    channels: 4,
+  },
+})
+  .trim({ background: { r: 0, g: 0, b: 0, alpha: 0 } })
   .png()
   .toBuffer();
 
@@ -35,13 +60,13 @@ await sharp(trimmedLogo)
   .toFile(fileURLToPath(new URL("titalks-wordmark.webp", publicDir)));
 
 await sharp(mark)
-  .resize(512, 512, { fit: "contain", background: "#050505" })
+  .resize(512, 512, { fit: "contain", background: { r: 0, g: 0, b: 0, alpha: 0 } })
   .webp({ quality: 94 })
   .toFile(fileURLToPath(new URL("titalks-mark.webp", publicDir)));
 
 for (const size of [32, 180, 192, 512]) {
   await sharp(mark)
-    .resize(size, size, { fit: "contain", background: "#050505" })
+    .resize(size, size, { fit: "contain", background: { r: 0, g: 0, b: 0, alpha: 0 } })
     .png()
     .toFile(fileURLToPath(new URL(`titalks-icon-${size}.png`, publicDir)));
 }

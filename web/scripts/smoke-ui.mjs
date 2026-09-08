@@ -53,6 +53,7 @@ try {
   await page.waitForTimeout(250);
   const expandedWidth = await sidebar.evaluate((element) => element.getBoundingClientRect().width);
   if (expandedWidth <= collapsedWidth) throw new Error("Sidebar did not expand on hover");
+  await page.screenshot({ path: join(tmpdir(), "titalks-sidebar-hover.png"), fullPage: false });
   await page.getByRole("button", { name: "Collapse right panel" }).click();
   await page.getByRole("button", { name: "Expand right panel" }).waitFor();
   await page.getByRole("button", { name: "Expand right panel" }).click();

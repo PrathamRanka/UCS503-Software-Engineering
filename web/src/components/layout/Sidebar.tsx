@@ -1,8 +1,7 @@
-import { Bell, BookOpen, Compass, Home, Menu, MessageCircle, Search, SquarePlus, type LucideIcon } from "lucide-react";
+import { Bell, BookOpen, Compass, Home, Menu, MessageCircle, Moon, Search, SquarePlus, Sun, type LucideIcon } from "lucide-react";
 import type { UserProfile } from "../../types/social";
 import { Avatar } from "../ui/Avatar";
 import { Brand } from "../ui/Brand";
-import { ThemeToggle } from "../ui/ThemeToggle";
 
 const navItems = [
   { label: "Today", icon: Home },
@@ -23,7 +22,7 @@ function NavButton({ label,title,icon:Icon,active,badge,dot,avatar,avatarSrc,onC
   </button>;
 }
 
-export function Sidebar({activeNav,user,theme,onToggleTheme,onNavigate,onCreate}:SidebarProps){return <aside className="group/sidebar fixed inset-y-0 left-0 z-40 hidden w-[76px] flex-col overflow-hidden border-r border-[#171719]/10 bg-[#f7f7f5]/95 px-[14px] py-7 shadow-none backdrop-blur-xl transition-[width,box-shadow] duration-200 ease-out hover:w-[238px] hover:shadow-[18px_0_50px_rgba(20,20,20,.1)] dark:border-white/10 dark:bg-[#050505]/95 motion-reduce:transition-none lg:flex">
+export function Sidebar({activeNav,user,theme,onToggleTheme,onNavigate,onCreate}:SidebarProps){const ThemeIcon=theme==="light"?Moon:Sun;return <aside className="group/sidebar fixed inset-y-0 left-0 z-40 hidden w-[76px] flex-col overflow-hidden border-r border-[#171719]/10 bg-[#f7f7f5]/95 px-[14px] py-7 shadow-none backdrop-blur-xl transition-[width,box-shadow] duration-200 ease-out hover:w-[238px] hover:shadow-[18px_0_50px_rgba(20,20,20,.1)] dark:border-white/10 dark:bg-[#050505]/95 motion-reduce:transition-none lg:flex">
   <Brand compact/><nav className="mt-16 grid gap-1.5" aria-label="Main navigation">{navItems.map(item=><NavButton key={item.label} {...item} active={activeNav===item.label} onClick={()=>onNavigate(item.label)}/>)}<NavButton label="Create" title="Add to campus" icon={SquarePlus} onClick={onCreate}/></nav>
-  <div className="mt-auto grid gap-2"><div className="xl:hidden"><ThemeToggle theme={theme} onToggle={onToggleTheme} compact/></div><div className="hidden xl:block"><ThemeToggle theme={theme} onToggle={onToggleTheme}/></div><NavButton label="Profile" title={user.name} avatar avatarSrc={user.avatar} active={activeNav==="Profile"} onClick={()=>onNavigate("Profile")}/><NavButton label="More" title="Settings" icon={Menu} active={activeNav==="Settings"} onClick={()=>onNavigate("More")}/></div>
+  <div className="mt-auto grid gap-2"><NavButton label="Theme" title={theme==="light"?"Dark mode":"Light mode"} icon={ThemeIcon} onClick={onToggleTheme}/><NavButton label="Profile" title={user.name} avatar avatarSrc={user.avatar} active={activeNav==="Profile"} onClick={()=>onNavigate("Profile")}/><NavButton label="More" title="Settings" icon={Menu} active={activeNav==="Settings"} onClick={()=>onNavigate("More")}/></div>
 </aside>}
