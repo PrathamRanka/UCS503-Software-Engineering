@@ -12,6 +12,8 @@ import {
   ArrowUpRight,
   Bookmark,
   Check,
+  ChevronDown,
+  ChevronUp,
   Heart,
   LoaderCircle,
   MessageCircle,
@@ -113,10 +115,6 @@ function ReelCard({
     return () => observer.disconnect();
   }, [onActive, reel.id]);
 
-  const embedUrl = reel.youtubeId
-    ? `https://www.youtube-nocookie.com/embed/${reel.youtubeId}?autoplay=1&mute=1&loop=1&playlist=${reel.youtubeId}&controls=0&modestbranding=1&playsinline=1&rel=0`
-    : "";
-
   return (
     <article
       ref={ref}
@@ -135,17 +133,8 @@ function ReelCard({
             alt=""
             loading="lazy"
           />
-          {active && reel.youtubeId ? (
-            <iframe
-              className="pointer-events-none absolute inset-0 size-full border-0"
-              src={embedUrl}
-              title={reel.caption}
-              allow="autoplay; encrypted-media; picture-in-picture"
-              loading="lazy"
-            />
-          ) : null}
           {reel.video ? <LocalVideo src={reel.video} active={active} /> : null}
-          {!reel.video && !reel.youtubeId ? (
+          {!reel.video ? (
             <span className="absolute inset-0 grid place-items-center">
               <span className="grid size-16 place-items-center rounded-full bg-white/90 text-black shadow-xl backdrop-blur">
                 <Play size={23} fill="currentColor" />
@@ -185,12 +174,10 @@ function ReelCard({
               {!own ? <span className={`rounded-full px-2.5 py-1 text-[9px] font-bold ${joined ? "bg-white text-black" : "bg-[#ed111c] text-white"}`}>{joined ? "Following" : "Follow"}</span> : null}
             </button>
             <p className="mt-3 text-sm leading-5 text-white/90">{reel.caption}</p>
-            <p className="mt-2 truncate text-[10px] text-white/60">{reel.audio}</p>
-            {reel.sourceUrl ? (
-              <a className="mt-3 inline-flex items-center gap-1.5 text-[10px] font-semibold text-white/80 hover:text-white" href={reel.sourceUrl} target="_blank" rel="noreferrer">
-                <Volume2 size={13}/> Watch with sound <ArrowUpRight size={12}/>
-              </a>
-            ) : null}
+            <div className="mt-3 flex max-w-full items-center gap-2 rounded-sm bg-black/45 px-3 py-2 text-white/90 backdrop-blur-md" aria-label={`Sound: ${reel.audio}`}>
+              <Volume2 className="shrink-0" size={14}/>
+              <span className="min-w-0"><small className="block text-[8px] font-bold uppercase tracking-[.16em] text-white/55">Sound</small><strong className="block truncate text-[10px] font-medium">{reel.audio || "Original campus audio"}</strong></span>
+            </div>
           </div>
           <div className="absolute bottom-5 right-3 grid gap-3">
             <button className="grid justify-items-center gap-1 text-[9px]" onClick={onLike} aria-label={liked ? "Unlike reel" : "Like reel"}><span className={`grid size-11 place-items-center rounded-full backdrop-blur-md transition duration-150 active:scale-90 motion-reduce:transform-none motion-reduce:transition-none ${liked ? "bg-[#ed111c]" : "bg-black/45"}`}><Heart size={20} fill={liked ? "currentColor" : "none"}/></span>{reel.likes}</button>
@@ -235,6 +222,7 @@ export function ReelsView({
   const [caption, setCaption] = useState("");
   const visibleReels = useMemo(() => orderedReels.slice(0, visibleCount), [orderedReels, visibleCount]);
   const hasMore = visibleCount < orderedReels.length;
+  const activeIndex = Math.max(0, visibleReels.findIndex((reel) => reel.id === activeId));
 
   useEffect(() => {
     setVisibleCount((current) => Math.min(Math.max(current, 5), orderedReels.length));
@@ -257,6 +245,26 @@ export function ReelsView({
       next.has(id) ? next.delete(id) : next.add(id);
       return next;
     });
+
+  const moveByReel = useCallback(async (direction: -1 | 1) => {
+    const feed = scrollRef.current;
+    if (!feed) return;
+    const currentIndex = Math.max(0, visibleReels.findIndex((reel) => reel.id === activeId));
+    const requestedIndex = currentIndex + direction;
+    if (requestedIndex < 0) return;
+    if (requestedIndex >= visibleReels.length) {
+      if (!hasMore) return;
+      await loadMore();
+    }
+    const targetIndex = Math.min(requestedIndex, orderedReels.length - 1);
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    window.requestAnimationFrame(() => {
+      feed.scrollTo({
+        top: targetIndex * feed.clientHeight,
+        behavior: reduceMotion ? "auto" : "smooth",
+      });
+    });
+  }, [activeId, hasMore, loadMore, orderedReels.length, scrollRef, visibleReels]);
 
   return (
     <section className="mx-auto min-h-screen w-full max-w-6xl">
@@ -309,6 +317,27 @@ export function ReelsView({
           <div className="flex h-24 items-center justify-center text-xs text-neutral-500">You’re caught up with TIET.</div>
         )}
       </div>
+      <nav className="fixed right-3 top-1/2 z-30 grid -translate-y-1/2 gap-2 sm:right-6 lg:right-8" aria-label="Reel navigation">
+        <button
+          className="grid size-11 place-items-center rounded-full border border-black/10 bg-white/90 text-black shadow-lg backdrop-blur-md transition duration-150 ease-out hover:-translate-y-0.5 active:scale-95 disabled:cursor-not-allowed disabled:opacity-35 motion-reduce:transform-none motion-reduce:transition-none dark:border-white/10 dark:bg-black/75 dark:text-white"
+          onClick={() => void moveByReel(-1)}
+          disabled={activeIndex === 0}
+          aria-label="Previous reel"
+        >
+          <ChevronUp size={20}/>
+        </button>
+        <span className="rounded-full bg-black/70 px-2 py-1 text-center text-[9px] font-bold text-white backdrop-blur-md" aria-live="polite">
+          {Math.min(activeIndex + 1, orderedReels.length)} / {orderedReels.length}
+        </span>
+        <button
+          className="grid size-11 place-items-center rounded-full border border-black/10 bg-white/90 text-black shadow-lg backdrop-blur-md transition duration-150 ease-out hover:translate-y-0.5 active:scale-95 disabled:cursor-not-allowed disabled:opacity-35 motion-reduce:transform-none motion-reduce:transition-none dark:border-white/10 dark:bg-black/75 dark:text-white"
+          onClick={() => void moveByReel(1)}
+          disabled={!hasMore && activeIndex >= visibleReels.length - 1}
+          aria-label="Next reel"
+        >
+          <ChevronDown size={20}/>
+        </button>
+      </nav>
       {editing ? (
         <MotionBackdrop className="fixed inset-0 z-50 grid place-items-center bg-black/70 p-4 backdrop-blur-md" onMouseDown={() => setEditing(null)}>
           <MotionReveal className="w-full max-w-md rounded-md bg-white p-6 shadow-[0_30px_100px_rgba(0,0,0,.35)] dark:bg-[#111113]" role="dialog" aria-modal="true" onMouseDown={(event) => event.stopPropagation()}>

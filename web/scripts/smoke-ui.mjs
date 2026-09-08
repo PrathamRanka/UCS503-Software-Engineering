@@ -114,6 +114,11 @@ try {
       await page.getByRole("heading", { name: "Reels", exact: true }).waitFor();
       const feed = page.getByTestId("reels-feed");
       const cards = page.getByTestId("reel-card");
+      await page.getByRole("button", { name: "Previous reel" }).waitFor();
+      await page.getByRole("button", { name: "Next reel" }).waitFor();
+      await page.getByLabel(/Sound:/).first().waitFor();
+      if (await feed.locator('a[href^="http"], iframe').count())
+        throw new Error("Reels must not contain external links or embeds");
       const initialCount = await cards.count();
       if (initialCount !== 5) throw new Error(`Expected 5 initial reels, received ${initialCount}`);
       await feed.evaluate((element) => element.scrollTo({ top: element.scrollHeight, behavior: "auto" }));
