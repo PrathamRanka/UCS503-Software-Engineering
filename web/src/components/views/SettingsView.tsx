@@ -184,7 +184,7 @@ export function SettingsView({
           <span>
             <b className="block text-sm">Change password</b>
             <small className="text-neutral-500 dark:text-neutral-400">
-              Send a reset link to your Thapar email
+              Send a reset link to your TIET email
             </small>
           </span>
           <Lock size={19} />

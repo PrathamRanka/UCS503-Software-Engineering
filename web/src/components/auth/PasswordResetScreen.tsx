@@ -3,6 +3,7 @@ import { ArrowLeft, CheckCircle2, LockKeyhole } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Brand } from "../ui/Brand";
 import { ThemeToggle } from "../ui/ThemeToggle";
+import { isTietEmail } from "../../utils/institutionalEmail";
 
 export function PasswordResetScreen({
   theme,
@@ -16,8 +17,8 @@ export function PasswordResetScreen({
   const [error, setError] = useState("");
   const submit = (event: FormEvent) => {
     event.preventDefault();
-    if (!email.toLowerCase().endsWith("@thapar.edu")) {
-      setError("Enter your verified @thapar.edu email.");
+    if (!isTietEmail(email)) {
+      setError("Enter your official TIET email (@thapar.edu).");
       return;
     }
     setError("");
@@ -47,7 +48,7 @@ export function PasswordResetScreen({
             </span>
             <h1 className="mt-4 text-xl font-semibold">Reset your password</h1>
             <p className="mt-2 text-sm leading-5 text-neutral-500 dark:text-neutral-400">
-              Enter your Thapar email and we’ll send a recovery link.
+              Enter your official TIET email and we’ll send a recovery link.
             </p>
             <form className="mt-6" onSubmit={submit}>
               <input

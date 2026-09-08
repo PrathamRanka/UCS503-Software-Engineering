@@ -14,6 +14,7 @@ import { demoUser } from "../../data/mockData";
 import type { UserProfile } from "../../types/social";
 import { Brand } from "../ui/Brand";
 import { ThemeToggle } from "../ui/ThemeToggle";
+import { isTietEmail } from "../../utils/institutionalEmail";
 
 type AuthScreenProps = {
   theme: "light" | "dark";
@@ -39,8 +40,8 @@ export function AuthScreen({
   const [year, setYear] = useState("First year");
 
   const validateThaparEmail = () => {
-    if (!email.trim().toLowerCase().endsWith("@thapar.edu")) {
-      setError("Use your @thapar.edu email address.");
+    if (!isTietEmail(email)) {
+      setError("Use your official TIET email address (@thapar.edu).");
       return false;
     }
     setError("");
@@ -152,7 +153,7 @@ export function AuthScreen({
                   Welcome back to titalks
                 </h2>
                 <p className="mt-2 text-center text-sm text-neutral-500 dark:text-neutral-400">
-                  Only verified Thapar accounts can join.
+                  Only verified TIET institutional accounts can join.
                 </p>
                 <button
                   className={`${primaryButton} mt-7 bg-white dark:bg-neutral-950 text-neutral-900 dark:text-neutral-100 ring-1 ring-neutral-300 dark:ring-neutral-700 hover:bg-neutral-50 dark:hover:bg-neutral-800`}
@@ -215,7 +216,7 @@ export function AuthScreen({
                       type="email"
                       value={email}
                       onChange={(event) => setEmail(event.target.value)}
-                      placeholder="Thapar email"
+                      placeholder="TIET email"
                     />
                   </label>
                   <label className="relative">

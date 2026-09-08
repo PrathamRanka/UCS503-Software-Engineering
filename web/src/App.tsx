@@ -262,6 +262,8 @@ function App() {
           likes: 0,
           comments: 0,
           tags: ["#ThaparTalks"],
+          authorType: "student",
+          context: `${user.branch} · ${user.year}`,
         },
         ...current,
       ]);

@@ -31,6 +31,8 @@ export type Post = {
   likes: number;
   comments: number;
   tags: string[];
+  authorType?: "student" | "society";
+  context?: string;
   featured?: boolean;
 };
 

@@ -40,6 +40,14 @@ try {
     executablePath: "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
     headless: true,
   });
+  const authPage = await browser.newPage({ viewport: { width: 1280, height: 900 } });
+  await authPage.goto(baseURL);
+  await authPage.getByPlaceholder("TIET email").fill("student@gmail.com");
+  await authPage.getByPlaceholder("Password").fill("password123");
+  await authPage.getByRole("button", { name: "Sign in", exact: true }).click();
+  await authPage.getByText("Use your official TIET email address (@thapar.edu).").waitFor();
+  await authPage.close();
+
   const page = await browser.newPage({ viewport: { width: 1440, height: 1000 }, deviceScaleFactor: 1 });
   const errors = [];
   page.on("pageerror", (error) => errors.push(error.message));
@@ -60,6 +68,8 @@ try {
   await page.evaluate((user) => localStorage.setItem("titalks-session-v1", JSON.stringify(user)), demoUser);
   await page.reload();
   await page.getByText("Good afternoon, Pratham.").waitFor();
+  await page.getByText("STUDENT UPDATE").first().waitFor();
+  await page.getByRole("heading", { name: "Pratham Ranka" }).first().waitFor();
   await page.getByText("Mainly clear · Patiala").waitFor();
   const sidebar = page.locator("aside").first();
   const collapsedWidth = await sidebar.evaluate((element) => element.getBoundingClientRect().width);
