@@ -22,6 +22,7 @@ npm run build     # Type-check and create a production build
 npm run preview   # Preview the production build locally
 npm run test:unit        # Utility and reusable component tests
 npm run test:integration # Authentication and onboarding flow tests
+npm run test:matrix      # Ensure every production source file has test coverage
 npm run test:smoke       # Headless browser smoke and responsive checks
 npm run test:staging     # Production assets and SPA deep-route checks
 npm run test:all         # Run every test layer and the production build

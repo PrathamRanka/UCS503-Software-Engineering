@@ -9,9 +9,10 @@
     "test": "vitest run",
     "test:unit": "vitest run src/utils src/components/ui",
     "test:integration": "vitest run src/components/auth",
+    "test:matrix": "node scripts/source-test-matrix.mjs",
     "test:smoke": "node scripts/smoke-ui.mjs",
     "test:staging": "node scripts/staging-check.mjs",
-    "test:all": "npm run test && npm run build && npm run test:smoke && npm run test:staging",
+    "test:all": "npm run test:matrix && npm run test && npm run build && npm run test:smoke && npm run test:staging",
     "test:ui": "node scripts/smoke-ui.mjs",
     "preview": "vite preview",
     "images:webp": "node scripts/convert-images.mjs"

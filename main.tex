@@ -392,6 +392,12 @@ different class of failure, and the complete pipeline is available through
     production bundle. Automated checks confirm the root page, generated
     JavaScript and CSS assets, and SPA fallback behavior for seven deep routes:
     People, Pulse, Reels, Inbox, Activity, Profile, and Settings.
+  \item \textbf{Source-file coverage matrix:} An automated inventory checks
+    every production TypeScript, TSX, and CSS source file and fails when a file
+    is not assigned to at least one unit, integration, build, browser-smoke, or
+    staging verification layer. Module-loading cases additionally import every
+    application component, data module, and utility to detect module-level
+    failures.
   \item \textbf{Regression gate:} The combined command runs all automated
     tests, the production build, browser smoke checks, and staging checks in a
     fixed order. A failure at any stage prevents the pipeline from reporting
@@ -410,9 +416,11 @@ not a claim of 100\% source-code coverage.
   \hline
   \textbf{Metric} & \textbf{Target} & \textbf{Achieved} \\
   \hline
-  Automated test cases & All pass & 15 of 15 passed (100\% pass rate) \\
+  Automated test cases & All pass & 51 of 51 passed (100\% pass rate) \\
   \hline
-  Test files & All pass & 4 of 4 passed \\
+  Test files & All pass & 5 of 5 passed \\
+  \hline
+  Production source mapping & Every file covered & 39 of 39 files mapped \\
   \hline
   TypeScript check & Zero errors & Passed with zero type errors \\
   \hline
@@ -484,7 +492,8 @@ empty/error states. The codebase is organized into typed components, views,
 modals, layouts, data models, and utilities.
 
 The project also includes a repeatable quality gate. At the time of this
-report, all 15 automated tests passed, the TypeScript production build
+report, all 51 automated tests passed, all 39 production source files were
+mapped to verification layers, and the TypeScript production build
 succeeded, the browser smoke flow passed, and the staging-style route and asset
 checks passed. This establishes a reliable baseline for the backend phase.
 
