@@ -1,0 +1,491 @@
+\documentclass{tietreport}
+
+% Import images
+\usepackage{graphicx}
+
+% Bibliography configuration
+\usepackage[
+  date=year,
+  style=alphabetic,
+  backend=biber,
+  sorting=nty,
+  maxnames=5,
+  minnames=3,
+  maxalphanames=4,
+  minalphanames=3,
+  backref=true,
+  doi=false,
+  isbn=false,
+  url=false,
+  eprint=false
+]{biblatex}
+\addbibresource{references.bib}
+
+%% ==================================================
+%% CUSTOMIZE THESE FIELDS FOR YOUR PROJECT
+%% ==================================================
+
+% Course/Lab header
+\TitlePageHeader{%
+  UCS503 - Software Engineering%
+}
+
+% Main project title
+\ProjectTitle{%
+  TiTalks%
+}
+
+% Subtitle or project description
+\ProjectSubTitle{%
+  A Verified, Campus-Centred Social Networking Platform for TIET Students%
+}
+
+% Student information (up to 4 students)
+\author{%
+  \texttt{1024030304} Bhavya Agarwal \\
+  \texttt{1024030301} Pratham Ranka \\
+  \texttt{102403030298} Hitesh Arora \\
+  \texttt{1024030299} Ananya Yadav%
+}
+
+% Group number, degree, year, program
+\TitlePageSubText{%
+  BE Third Year, Computer Science and Engineering%
+}
+
+% Faculty advisor/guide name
+\AdvisorName{%
+  Ms. Anuskha%
+}
+
+% Evaluation period and department info
+\TitlePageFooterText{{%
+    \large Project Progress Report \\[0.2cm]
+    \bfseries Computer Science and Engineering
+    Department%
+  } \\[0.15cm]
+  Thapar Institute of Engineering and Technology,
+  Patiala%
+}
+
+%% ==================================================
+
+\begin{document}
+
+% Generate title page
+\maketitle
+
+% Table of contents (auto-generated from chapters)
+\tableofcontents
+
+% ===== CHAPTER 1: INTRODUCTION =====
+
+\chapter{Introduction}
+
+\section{Background and Context}
+
+TiTalks is a campus-centred social networking application designed for the
+students of Thapar Institute of Engineering and Technology (TIET). General
+social media platforms contain a large amount of unrelated content and do not
+provide a focused space for campus announcements, student activities,
+societies, collaboration, and peer interaction. TiTalks addresses this gap by
+providing a familiar visual social experience restricted conceptually to the
+TIET community.
+
+The current project is a feature-rich client-side prototype. It demonstrates
+the complete intended user experience through responsive React screens,
+typed mock data, local state, browser storage, local media, and direct URL
+routing. The implemented prototype supports sign-in and onboarding, feeds,
+stories, posts, reels, search, event discovery, messages, notifications,
+profiles, settings, content management, and responsive navigation. A real
+server, database, OAuth authentication, permanent media storage, and realtime
+communication are intentionally reserved for the next development phase.
+
+\subsection{Problem Statement}
+
+TIET students currently depend on several unrelated channels to discover
+campus events, follow societies, find peers, exchange updates, and maintain
+professional or social connections. Information is fragmented, important
+announcements compete with general-purpose content, and identity is not
+necessarily tied to the institute. The project therefore aims to design and
+prototype a single, accessible, and responsive campus network in which users
+can discover relevant people and activities through an institute-focused
+interface.
+
+The immediate engineering problem is to validate the product flow before
+investing in backend infrastructure. The prototype must behave like a
+connected application during a demonstration while clearly separating mock
+client-side behavior from features that require secure server-side support.
+
+\section{Project Objectives}
+
+\begin{enumerate}
+  \item \textbf{Build the complete frontend experience:} Implement responsive
+    desktop and mobile interfaces for authentication, feed browsing, content
+    creation, discovery, messaging, notifications, profiles, reels, and
+    settings.
+  \item \textbf{Restrict the prototype to the TIET context:} Validate
+    institutional email addresses under the \texttt{thapar.edu} domain and use
+    campus-relevant societies, events, locations, and sample content.
+  \item \textbf{Support realistic interaction flows:} Allow users to like,
+    save, comment, share, follow, create, edit, archive, restore, delete,
+    report, block, and mute content or accounts through local state.
+  \item \textbf{Provide a maintainable architecture:} Use reusable typed
+    components, route-level code splitting, feature-oriented folders, and a
+    clear frontend-to-backend handoff plan.
+  \item \textbf{Verify software quality:} Maintain a production build and an
+    automated test pipeline containing unit, component, integration, browser
+    smoke, responsive, and staging-style checks.
+\end{enumerate}
+
+\section{Scope and Current Status}
+
+The present deliverable is a working frontend prototype rather than a fully
+connected production system. Table~\ref{tab:status} distinguishes implemented
+work from future backend work.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|p{0.30\textwidth}|p{0.20\textwidth}|p{0.38\textwidth}|}
+  \hline
+  \textbf{Area} & \textbf{Status} & \textbf{Current Evidence} \\
+  \hline
+  Responsive frontend and navigation & Implemented & Desktop sidebar,
+  collapsible right rail, mobile bottom navigation, and routed views \\
+  \hline
+  Social interactions & Implemented locally & Posts, comments, likes, saves,
+  follows, stories, reels, messages, notifications, and content controls \\
+  \hline
+  Identity and preferences & Prototype complete & Institutional-email checks,
+  onboarding, local session, profile settings, and persistent theme \\
+  \hline
+  Backend API and database & Planned & Node.js, Express, and PostgreSQL are
+  documented for the connected MVP \\
+  \hline
+  Production authentication and uploads & Planned & Google OAuth, server
+  sessions, authorization, and durable media storage are not yet connected \\
+  \hline
+\end{tabular}
+\caption{Current TiTalks implementation status}
+\label{tab:status}
+\end{table}
+
+% ===== CHAPTER 2: METHODOLOGY & DESIGN =====
+
+\chapter{Methodology and Design}
+
+\section{System Architecture}
+
+The project follows an incremental prototype-first methodology. The team first
+defined user flows and built a complete client experience using local data.
+This approach makes navigation, interaction design, responsiveness, and
+feature scope testable before introducing deployment and data-management
+complexity. The current architecture is a single-page application executed in
+the browser.
+
+\subsection{High-Level Design}
+
+The application is divided into four logical layers:
+
+\begin{enumerate}
+  \item \textbf{Presentation layer:} React views and reusable UI components
+    render the feed, profiles, discovery pages, inbox, activity, reels, and
+    modal workflows.
+  \item \textbf{Navigation layer:} React Router maps direct browser URLs to
+    screens and supports browser history and deployment rewrites.
+  \item \textbf{Client state layer:} React state stores temporary posts,
+    stories, reels, reactions, follows, archive state, and interface feedback.
+    Browser local storage preserves the mock session, profile settings, and
+    selected appearance theme.
+  \item \textbf{Data and media layer:} Typed mock records and bundled WebP/MP4
+    assets provide deterministic demonstration data without requiring a
+    backend connection.
+\end{enumerate}
+
+The planned connected architecture will retain the React frontend and replace
+mock state with HTTP/JSON calls to a Node.js and Express application backed by
+PostgreSQL. Business rules, authorization, persistence, and media ownership
+will move to the server at that stage.
+
+\subsection{Technical Stack}
+
+\begin{itemize}
+  \item \textbf{Framework and language:} React 18 with TypeScript provides a
+    component model and compile-time checking for shared data contracts
+    \cite{react,typescript}.
+  \item \textbf{Build tool:} Vite provides the development server, production
+    bundling, and route-level chunk generation \cite{vite}.
+  \item \textbf{Styling:} Tailwind CSS v4 is used through component-local
+    utility classes, with a persistent light/dark design system
+    \cite{tailwind}.
+  \item \textbf{Routing and icons:} React Router manages application URLs and
+    Lucide React supplies consistent interface icons.
+  \item \textbf{Motion and scrolling:} Browser animation APIs and Lenis are
+    used with reduced-motion safeguards.
+  \item \textbf{Testing:} Vitest, Testing Library, jsdom, Playwright Core, and
+    custom Node.js deployment checks form the automated quality pipeline
+    \cite{playwright}.
+  \item \textbf{External data:} The weather widget requests current Patiala
+    conditions from Open-Meteo and includes loading and error states
+    \cite{openmeteo}.
+  \item \textbf{Planned backend:} Node.js, Express, PostgreSQL, Google OAuth,
+    and durable media storage.
+\end{itemize}
+
+\section{Implementation Details}
+
+\subsection{Module 1: Authentication and User Onboarding}
+
+The authentication interface supports mock Google account selection, direct
+sign-in, registration, password recovery navigation, and profile onboarding.
+The reusable \texttt{isTietEmail} utility normalizes an address and accepts the
+\texttt{thapar.edu} domain and its subdomains while rejecting personal or
+misleading domains. Password length and required profile fields are validated
+before the local authentication callback is executed. The current session is
+stored under a versioned local-storage key so that the browser demo remains
+usable after refresh.
+
+This module demonstrates the intended product flow but does not claim to be a
+secure authentication system. Password verification, Google OAuth tokens,
+server sessions, rate limiting, and authorization checks require the planned
+backend.
+
+\subsection{Module 2: Feed, Posts, Stories, and Reels}
+
+The central feed presents campus updates with author information, location,
+caption, tags, engagement counts, and media. Users can like, save, share,
+comment, open routed details, and access context-sensitive content controls.
+The composer supports local image selection and immediate insertion of posts,
+stories, or reels into client state. Story navigation supports keyboard input,
+while story management includes creation, replacement, deletion, and highlight
+selection. The reels view provides real local video playback, interaction
+controls, creation, editing, deletion, and incremental feed loading.
+
+\subsection{Module 3: Discovery, Profiles, and Campus Context}
+
+The People and Pulse views support profile discovery and event exploration.
+Search filters local typed records, follow actions update local relationship
+state, and other-user profile routes display dedicated profile experiences.
+The Pulse area supports category filtering, event details, adding an event to
+the user's day, and a responsive TIET campus map viewer. The home page also
+contains a live Patiala weather component with explicit loading, success, and
+failure behavior.
+
+The profile module contains post, saved, and tagged grids; follower and
+following lists; highlights; archived posts; profile editing; privacy and
+notification controls; password recovery; logout; and account-deletion UI.
+
+\subsection{Module 4: Messaging, Notifications, and Safety Flows}
+
+The inbox supports direct and group conversation creation, text messages,
+image messages, selection state, and automatic scrolling to recent messages.
+The activity view represents notifications and follow requests. Content menus
+provide edit, archive, restore, delete, report, block, mute, and unfollow
+flows. These operations currently modify local interface state; enforceable
+privacy and moderation rules will require server-side identity and ownership
+checks.
+
+\subsection{Module 5: Responsive Design and Accessibility}
+
+The interface adapts between desktop and mobile layouts. Desktop users receive
+an expandable sidebar and collapsible agenda rail, while mobile users receive
+bottom navigation and touch-friendly controls. Loading, empty, error, and
+not-found states are represented explicitly. Buttons use accessible labels,
+status feedback uses live regions, keyboard dismissal is provided for relevant
+dialogs, and animations respect the user's reduced-motion preference in line
+with accessibility guidance \cite{wcag}.
+
+\subsection{Development Process}
+
+Work was organized incrementally by feature. Reusable primitives and shared
+types were established first, followed by core feed and navigation behavior,
+then authentication, profiles, discovery, messaging, safety controls, reels,
+responsive refinements, and automated regression checks. Route-level views are
+loaded lazily, which keeps optional screen code outside the initial application
+bundle until required.
+
+% ===== CHAPTER 3: RESULTS & EVALUATION =====
+
+\chapter{Results and Evaluation}
+
+\section{Testing Methodology}
+
+The project now uses a layered automated testing strategy. Each layer checks a
+different class of failure, and the complete pipeline is available through
+\texttt{npm run test:all}.
+
+\begin{itemize}
+  \item \textbf{Unit testing:} Vitest verifies the institutional-email utility
+    against valid, mixed-case, subdomain, personal-domain, malformed, and empty
+    inputs. Component-level unit tests verify the theme toggle and reusable
+    loading/error state panel.
+  \item \textbf{Integration testing:} Testing Library renders the
+    authentication screen inside a memory router. Tests verify rejected
+    personal-email sign-in, successful normalized institutional sign-in, and
+    the complete registration-to-profile-onboarding flow.
+  \item \textbf{Build and static verification:} TypeScript strict checking is
+    executed without emitting files, followed by a Vite production build. This
+    catches type incompatibilities, missing imports, and bundling failures.
+  \item \textbf{Browser smoke and system testing:} A headless Chromium test
+    exercises a realistic production build. It verifies email rejection,
+    authentication state, home content, weather rendering, sidebar geometry,
+    right-rail controls, campus map behavior, Pulse filters, event planning,
+    Reels loading and interaction, creation modal access, and mobile rendering.
+  \item \textbf{Staging-style testing:} A temporary static server hosts the
+    production bundle. Automated checks confirm the root page, generated
+    JavaScript and CSS assets, and SPA fallback behavior for seven deep routes:
+    People, Pulse, Reels, Inbox, Activity, Profile, and Settings.
+  \item \textbf{Regression gate:} The combined command runs all automated
+    tests, the production build, browser smoke checks, and staging checks in a
+    fixed order. A failure at any stage prevents the pipeline from reporting
+    success.
+\end{itemize}
+
+\section{Performance Metrics}
+
+The latest verified execution completed successfully. The pass percentage
+below is the test pass rate for the currently defined automated cases; it is
+not a claim of 100\% source-code coverage.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|p{0.30\textwidth}|p{0.22\textwidth}|p{0.34\textwidth}|}
+  \hline
+  \textbf{Metric} & \textbf{Target} & \textbf{Achieved} \\
+  \hline
+  Automated test cases & All pass & 15 of 15 passed (100\% pass rate) \\
+  \hline
+  Test files & All pass & 4 of 4 passed \\
+  \hline
+  TypeScript check & Zero errors & Passed with zero type errors \\
+  \hline
+  Production build & Successful bundle & Passed; 1,628 modules transformed \\
+  \hline
+  Browser smoke test & Critical flows pass & Passed on desktop and mobile
+  viewports \\
+  \hline
+  Staging deep routes & Seven routes available & 7 of 7 routes passed \\
+  \hline
+  Built entry assets & JavaScript and CSS available & 2 of 2 referenced entry
+  assets passed \\
+  \hline
+  Browser page errors & Zero during smoke flow & Zero detected \\
+  \hline
+\end{tabular}
+\caption{Verified quality-gate results}
+\label{tab:performance}
+\end{table}
+
+The production output uses route-level chunks for major screens. The generated
+entry JavaScript bundle is approximately 301.54~kB before compression and
+91.25~kB after gzip compression. The generated stylesheet is approximately
+71.52~kB before compression and 11.59~kB after gzip compression. These figures
+provide a reproducible baseline for later optimization; they are build sizes,
+not network latency measurements.
+
+\section{Analysis}
+
+The current implementation meets its primary frontend-prototype objectives.
+The application is demonstrable without a server, offers broad feature
+coverage, and behaves consistently across desktop and mobile layouts. Typed
+models and reusable component groups provide a practical foundation for
+replacing mock data with APIs. Automated testing now covers isolated logic,
+component behavior, cross-component authentication flows, production-browser
+behavior, and deployment routing.
+
+The strongest result is the completeness of the user experience at the
+prototype stage. A presenter can move from authentication to feed interaction,
+discovery, content creation, messaging, profile management, reels, safety
+actions, and responsive layouts without unfinished screens. Local media also
+makes the main demo independent of network availability, except for the live
+weather enhancement, which has a visible error state and is mocked during
+browser testing.
+
+The principal limitation is that client-side behavior cannot provide durable
+or secure multi-user functionality. Refreshing the page resets many social
+interactions, mock identities do not prove real ownership, and local report or
+block actions cannot be enforced across accounts. Performance under concurrent
+users, database correctness, API authorization, and realtime messaging have
+not yet been measured because those layers do not exist in the current phase.
+
+The testing result is therefore interpreted carefully: all implemented
+automated tests pass, but additional backend, security, load, and end-to-end
+tests must be added when the connected system is developed.
+
+% ===== CHAPTER 4: CONCLUSION =====
+
+\chapter{Conclusion}
+
+\section{Summary of Work}
+
+TiTalks has progressed from a campus-network concept to a complete interactive
+frontend prototype. The team implemented institutional-email validation,
+authentication and onboarding screens, a responsive feed, stories, reels,
+content creation and management, discovery, profiles, messaging,
+notifications, campus event features, settings, theming, motion, and robust
+empty/error states. The codebase is organized into typed components, views,
+modals, layouts, data models, and utilities.
+
+The project also includes a repeatable quality gate. At the time of this
+report, all 15 automated tests passed, the TypeScript production build
+succeeded, the browser smoke flow passed, and the staging-style route and asset
+checks passed. This establishes a reliable baseline for the backend phase.
+
+\section{Key Findings}
+
+\begin{itemize}
+  \item \textbf{Finding 1:} A prototype-first process allowed the team to
+    validate a large number of campus social workflows before committing to a
+    server and database design.
+  \item \textbf{Finding 2:} Shared TypeScript models, feature-based components,
+    and route-level lazy loading support maintainability despite the breadth of
+    the interface.
+  \item \textbf{Finding 3:} Layered tests reveal different defects: unit tests
+    protect validation rules, integration tests protect user flows, the build
+    protects type and bundle correctness, browser smoke tests protect real UI
+    behavior, and staging checks protect deployment routing.
+  \item \textbf{Finding 4:} The frontend is ready for API integration, but it
+    must not be described as production-ready until identity, authorization,
+    persistence, moderation, and upload security are implemented server-side.
+\end{itemize}
+
+\section{Future Work and Recommendations}
+
+\begin{enumerate}
+  \item Implement Google OAuth restricted to TIET accounts and maintain secure
+    server-side sessions.
+  \item Build a Node.js and Express REST API for users, profiles, posts,
+    comments, reactions, saves, follows, search, and discovery.
+  \item Add PostgreSQL persistence with migrations, constraints, indexes, and
+    transactional tests.
+  \item Introduce validated media uploads, object storage, ownership checks,
+    file-size limits, and content-type restrictions.
+  \item Add realtime direct and group messaging, notification delivery, and
+    read-state synchronization.
+  \item Enforce privacy, block, mute, report, archive, and deletion rules on the
+    server rather than only in interface state.
+  \item Extend the automated suite with API unit tests, database integration
+    tests, authorization tests, security checks, accessibility scans, load
+    tests, and full user-acceptance scenarios.
+  \item Add continuous integration so every proposed change runs
+    \texttt{npm run test:all} before merging or deployment.
+  \item Measure real-user performance and accessibility after deployment, then
+    optimize the largest route chunks and media delivery where evidence shows
+    a need.
+\end{enumerate}
+
+\section{Final Remarks}
+
+The present TiTalks prototype successfully demonstrates the intended campus
+experience and provides enough interaction depth for evaluation and user
+feedback. The next milestone is not to redesign the interface, but to connect
+the validated flows to secure, persistent backend services. The project's
+current separation between UI behavior and planned server responsibilities
+gives the team a clear and manageable path toward a deployable campus platform.
+
+% ===== BIBLIOGRAPHY =====
+
+% Print bibliography with heading in TOC
+\printbibliography[heading=bibintoc]
+
+\end{document}

@@ -53,6 +53,16 @@ cd web
 npm run build
 ```
 
+Run the complete automated quality gate:
+
+```bash
+cd web
+npm run test:all
+```
+
+The gate includes unit, component, integration, production-build, browser
+smoke, responsive, and staging-style route/asset checks.
+
 ## Repository structure
 
 ```text
