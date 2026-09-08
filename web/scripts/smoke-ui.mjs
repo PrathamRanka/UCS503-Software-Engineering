@@ -22,11 +22,11 @@ const server = createServer(async (request, response) => {
 });
 
 const demoUser = {
-  id: "user-riya",
-  name: "Riya Sharma",
-  username: "riyasharma",
-  email: "riya.sharma@thapar.edu",
-  avatar: "/images/riya.webp",
+  id: "user-pratham",
+  name: "Pratham Ranka",
+  username: "prathamranka",
+  email: "pratham.ranka@thapar.edu",
+  avatar: "/pratham-ranka.webp",
   bio: "Computer Engineering · campus builder",
   branch: "Computer Engineering",
   year: "Third year",
@@ -46,9 +46,18 @@ try {
   await page.goto(baseURL);
   await page.evaluate((user) => localStorage.setItem("titalks-session-v1", JSON.stringify(user)), demoUser);
   await page.reload();
-  await page.getByText("Good afternoon, Riya.").waitFor();
+  await page.getByText("Good afternoon, Pratham.").waitFor();
   const sidebar = page.locator("aside").first();
   const collapsedWidth = await sidebar.evaluate((element) => element.getBoundingClientRect().width);
+  const sidebarBounds = await sidebar.boundingBox();
+  const inboxButton = page.getByRole("button", { name: "Inbox", exact: true });
+  const inboxBounds = await inboxButton.boundingBox();
+  const badgeBounds = await inboxButton.locator("b").boundingBox();
+  if (!sidebarBounds || !inboxBounds || !badgeBounds) throw new Error("Sidebar geometry unavailable");
+  if (inboxBounds.x < sidebarBounds.x || inboxBounds.x + inboxBounds.width > sidebarBounds.x + sidebarBounds.width)
+    throw new Error("Inbox button escapes collapsed sidebar");
+  if (badgeBounds.x < sidebarBounds.x || badgeBounds.x + badgeBounds.width > sidebarBounds.x + sidebarBounds.width)
+    throw new Error("Inbox badge is clipped in collapsed sidebar");
   await sidebar.hover();
   await page.waitForTimeout(250);
   const expandedWidth = await sidebar.evaluate((element) => element.getBoundingClientRect().width);
@@ -78,7 +87,7 @@ try {
   await mobile.goto(baseURL);
   await mobile.evaluate((user) => localStorage.setItem("titalks-session-v1", JSON.stringify(user)), demoUser);
   await mobile.reload();
-  await mobile.getByText("Good afternoon, Riya.").waitFor();
+  await mobile.getByText("Good afternoon, Pratham.").waitFor();
   await mobile.screenshot({ path: mobileShot, fullPage: true });
   await browser.close();
   if (errors.length) throw new Error(`Browser errors: ${errors.join(" | ")}`);

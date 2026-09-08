@@ -30,6 +30,7 @@ import { SocialListModal } from "./components/modals/SocialListModal";
 import { StoryManagerModal } from "./components/modals/StoryManagerModal";
 import { StoryViewer } from "./components/modals/StoryViewer";
 import {
+  demoUser,
   posts as initialPosts,
   reels as initialReels,
   stories as initialStories,
@@ -105,7 +106,13 @@ const routeMap: Record<string, string> = {
 function loadSession(): UserProfile | null {
   try {
     const stored = window.localStorage.getItem(SESSION_KEY);
-    return stored ? (JSON.parse(stored) as UserProfile) : null;
+    if (!stored) return null;
+    const profile = JSON.parse(stored) as UserProfile;
+    if (profile.id === "user-riya" || profile.username === "riyasharma") {
+      window.localStorage.setItem(SESSION_KEY, JSON.stringify(demoUser));
+      return demoUser;
+    }
+    return profile;
   } catch {
     return null;
   }

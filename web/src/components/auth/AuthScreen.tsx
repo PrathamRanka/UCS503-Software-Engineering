@@ -88,7 +88,7 @@ export function AuthScreen({
       name: name.trim(),
       username: username.trim().replace(/^@/, "").toLowerCase(),
       email: email.trim().toLowerCase(),
-      avatar: "/images/riya.webp",
+      avatar: "/pratham-ranka.webp",
       bio: `${branch} · ${year}`,
       branch,
       year,
@@ -173,9 +173,9 @@ export function AuthScreen({
                         alt=""
                       />
                       <span className="flex-1">
-                        <b className="block text-sm">Riya Sharma</b>
+                        <b className="block text-sm">Pratham Ranka</b>
                         <small className="text-neutral-500 dark:text-neutral-400">
-                          riya.sharma@thapar.edu
+                          pratham.ranka@thapar.edu
                         </small>
                       </span>
                       <CheckCircle2 className="text-green-500" size={18} />

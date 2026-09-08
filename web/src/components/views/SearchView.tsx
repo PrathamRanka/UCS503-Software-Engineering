@@ -61,7 +61,7 @@ export function SearchView({ following, onFollow }: SearchViewProps) {
                 <button
                   onClick={() =>
                     navigate(
-                      person.id === "user-riya"
+                      person.id === "user-pratham"
                         ? "/profile"
                         : `/profile/${person.username}`,
                     )
@@ -73,7 +73,7 @@ export function SearchView({ following, onFollow }: SearchViewProps) {
                   className="min-w-0 flex-1 text-left"
                   onClick={() =>
                     navigate(
-                      person.id === "user-riya"
+                      person.id === "user-pratham"
                         ? "/profile"
                         : `/profile/${person.username}`,
                     )
@@ -86,7 +86,7 @@ export function SearchView({ following, onFollow }: SearchViewProps) {
                     {person.name} · {person.branch}
                   </span>
                 </button>
-                {person.id !== "user-riya" ? (
+                {person.id !== "user-pratham" ? (
                   <button
                     className={`rounded-lg px-4 py-2 text-xs font-semibold ${following.has(handle) ? "bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-200" : "bg-[#ed111c] text-white"}`}
                     onClick={() => onFollow(handle)}
