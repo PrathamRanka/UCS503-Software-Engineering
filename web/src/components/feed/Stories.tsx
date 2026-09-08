@@ -1,11 +1,13 @@
+import { useState } from "react";
 import { ArrowUpRight, MapPin, Plus } from "lucide-react";
 import type { Story } from "../../types/social";
+import { CampusMapModal } from "../modals/CampusMapModal";
 type Props={stories:Story[];onSelect:(index:number)=>void;onCreate:()=>void};
 const places=["Library lawns","TAN building","Main field","F block","Jagadish hall"];
-export function Stories({stories,onSelect,onCreate}:Props){return <section className="border-y border-[#171719]/10 py-7 dark:border-white/10" aria-label="Live campus pulse">
-  <div className="mb-5 flex items-end justify-between px-1"><div><p className="mb-2 text-[10px] font-bold uppercase tracking-[.18em] text-neutral-500">Live campus</p><h2 className="font-serif text-2xl font-normal tracking-[-.025em]">What’s moving around you</h2></div><button className="hidden items-center gap-1 text-[11px] text-neutral-500 sm:flex">Open map <ArrowUpRight size={14}/></button></div>
+export function Stories({stories,onSelect,onCreate}:Props){const [mapOpen,setMapOpen]=useState(false);return <><section className="border-y border-[#171719]/10 py-7 dark:border-white/10" aria-label="Live campus pulse">
+  <div className="mb-5 flex items-end justify-between gap-4 px-1"><div><p className="mb-2 text-[10px] font-bold uppercase tracking-[.18em] text-neutral-500">Live campus</p><h2 className="font-serif text-2xl font-normal tracking-[-.025em]">What’s moving around you</h2></div><button className="flex shrink-0 items-center gap-1 rounded-full border border-black/10 px-3 py-2 text-[10px] font-semibold text-neutral-500 transition hover:border-[#ed111c]/40 hover:text-[#ed111c] dark:border-white/10 motion-reduce:transition-none" onClick={()=>setMapOpen(true)}>Open map <ArrowUpRight size={14}/></button></div>
   <div className="flex gap-2 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
     <button className="flex min-h-28 min-w-36 flex-col justify-between rounded-sm border border-dashed border-[#171719]/20 bg-transparent p-4 text-left dark:border-white/20" onClick={onCreate}><span className="grid size-8 place-items-center rounded-full bg-[#171719] text-white dark:bg-white dark:text-[#171719]"><Plus size={16}/></span><span><strong className="block font-serif text-sm">Start something</strong><small className="mt-1 block text-[9px] text-neutral-500">Invite your campus</small></span></button>
     {stories.filter(story=>!story.mine).map((story,index)=><button className="group relative min-h-28 min-w-[170px] overflow-hidden rounded-sm bg-neutral-900 text-left text-white" key={story.name} onClick={()=>onSelect(index+1)}><img className="absolute inset-0 size-full object-cover opacity-60 transition duration-500 ease-out group-hover:scale-[1.03] motion-reduce:transition-none" src={story.image} alt=""/><span className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/5 to-transparent"/><span className="absolute inset-x-3 bottom-3"><strong className="block font-serif text-[15px] font-medium">{story.name.replace(".tiet","")}</strong><small className="mt-1 flex items-center gap-1 text-[9px] text-white/65"><MapPin size={10}/>{places[index%places.length]}</small></span></button>)}
   </div>
-</section>}
+</section>{mapOpen?<CampusMapModal onClose={()=>setMapOpen(false)}/>:null}</>}

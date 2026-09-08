@@ -47,6 +47,10 @@ try {
   await page.evaluate((user) => localStorage.setItem("titalks-session-v1", JSON.stringify(user)), demoUser);
   await page.reload();
   await page.getByText("Good afternoon, Riya.").waitFor();
+  await page.getByRole("button", { name: /Open map/i }).click();
+  await page.getByRole("heading", { name: "Find your way around" }).waitFor();
+  await page.getByAltText(/Illustrated map of the TIET campus/i).waitFor();
+  await page.keyboard.press("Escape");
   const desktopShot = join(tmpdir(), "titalks-home.png");
   const mobileShot = join(tmpdir(), "titalks-mobile.png");
   await page.screenshot({ path: desktopShot, fullPage: true });
